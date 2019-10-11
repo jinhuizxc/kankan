@@ -13,7 +13,7 @@
             android:layout_gravity="center"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/kankan"/>
         <TextView
             android:paddingLeft="8dp"
             android:layout_gravity="center"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/kankan"
             android:layout_gravity="center"
             android:id="@+id/main_pic_iv"
             android:layout_width="0dp"

@@ -9,16 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import com.google.gson.Gson;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -34,15 +29,21 @@ public class LoginActivity extends BaseActivity {
     private EditText accountEt;
     private EditText passwordEt;
     private Button loginBtn;
-
     private String account;
     private String password;
-
     private SharedPreferences sp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isTaskRoot()) {
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null &&                       action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
         initLayout();
         initView();
         initData();
@@ -81,7 +82,7 @@ public class LoginActivity extends BaseActivity {
 
     private void login(UserBean userBean) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.100:10086/") //设置网络请求的Url地址
+                .baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
                 .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

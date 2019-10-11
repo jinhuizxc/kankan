@@ -12,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AddActivity extends BaseActivity {
     private Button uploadBtn;
     private Button addBtn;
+    private EditText titleEt;
     private RecyclerView recyclerView;
     private NinePicAdater adapter;
     private List<LocalMedia> selectList = new ArrayList<>();
@@ -92,7 +94,6 @@ public class AddActivity extends BaseActivity {
         if (selectList == null || selectList.size() == 0) {
             Toast.makeText(AddActivity.this, "请选择图片", Toast.LENGTH_SHORT).show();
             return;
-
         }
         showLoadingDialog(this);
         Observable.create(emitter -> {
@@ -110,8 +111,9 @@ public class AddActivity extends BaseActivity {
                         //插入数据库
                         ImageBean bean = new ImageBean();
                         bean.name = name;
-                        bean.path = "http://47.98.147.72:9999/file/ychong/" + name;
+                        bean.path = BaseContract.FTP_HOST_URL + name;
                         bean.uploadTime = currentTime;
+                        bean.title = titleEt.getText().toString();
                         bean.userId = sp.getInt("userId", -1);
                         insertData(bean);
                     }
@@ -154,6 +156,7 @@ public class AddActivity extends BaseActivity {
         addBtn = findViewById(R.id.add_btn);
         recyclerView = findViewById(R.id.recyclerView);
         backIv = findViewById(R.id.left_iv);
+        titleEt = findViewById(R.id.title_et);
 
     }
 
@@ -184,7 +187,7 @@ public class AddActivity extends BaseActivity {
 
     private void insertData(ImageBean bean) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.100:10086/") //设置网络请求的Url地址
+                .baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
                 .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

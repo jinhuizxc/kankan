@@ -6,7 +6,7 @@
    android:padding="3dp"
     android:gravity="center">
     <ImageView
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/kankan"
         android:layout_gravity="center"
         android:id="@+id/pic_iv"
         android:layout_width="wrap_content"

@@ -25,6 +25,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -122,12 +124,13 @@ public class MainActivity extends BaseActivity {
 //                }
             }
         });
-        adapter.setOnClickListener(new MainRecyclerAdapter.OnClickListener() {
-            @Override
-            public void onClick(String path) {
-                if ("mp4".equals(path.substring(path.lastIndexOf(".")+1))){
-                    display(path);
-                }
+        adapter.setOnClickListener(path -> {
+            if ("mp4".equals(path.substring(path.lastIndexOf(".")+1))){
+                //播放MP4视频
+                displayVideo(path);
+            }else if ("jpg".equals(path.substring(path.lastIndexOf(".")+1))){
+                //查看jpg图片
+                displayPic(path);
             }
         });
     }
@@ -212,7 +215,7 @@ public class MainActivity extends BaseActivity {
 
     private void queryAllImage() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.100:10086/") //设置网络请求的Url地址
+                .baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
                 .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -230,7 +233,6 @@ public class MainActivity extends BaseActivity {
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String json = responseBody.string();
-                            Log.e("MainActivity",json);
                             JSONObject jsonObject = new JSONObject(json);
                             String msg = jsonObject.getString("msg");
                             boolean success = jsonObject.getBoolean("success");
@@ -242,6 +244,7 @@ public class MainActivity extends BaseActivity {
                                 bean.path = jsonObject1.getString("path");
                                 bean.uploadTime = jsonObject1.getString("uploadTime");
                                 bean.userId = jsonObject1.getInt("userId");
+                                bean.title = jsonObject1.getString("title");
                                 list.add(bean);
                             }
                             adapter.notifyDataSetChanged();
@@ -263,7 +266,7 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
-    private void display(String path) {
+    private void displayVideo(String path) {
         showLoadingDialog(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_video_display,null);
@@ -279,5 +282,16 @@ public class MainActivity extends BaseActivity {
         displayVv.setMediaController(new MediaController(this));
         displayVv.setVideoURI(uri);
         displayVv.start();
+    }
+    private void displayPic(String path){
+        showLoadingDialog(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.dialog);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_pic_display,null);
+        ImageView picIv = view.findViewById(R.id.pic_iv);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        dialog.show();
+        Uri uri = Uri.parse(path);
+        Glide.with(this).load(uri).placeholder(R.drawable.kankan).into(picIv);
     }
 }

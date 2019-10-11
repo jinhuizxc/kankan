@@ -32,8 +32,13 @@
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/head"
-        android:layout_above="@+id/bottom_ll"
+        android:layout_above="@+id/title_et"
         android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/title_et"
+        android:layout_above="@id/bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <LinearLayout

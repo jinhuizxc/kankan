@@ -55,7 +55,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         if (!TextUtils.isEmpty(title)){
             holder.titleTv.setText(title);
         }
-        Glide.with(context).load(path).placeholder(R.drawable.placeholder).into(holder.picIv);
+        Glide.with(context).load(path).placeholder(R.drawable.kankan).into(holder.picIv);
         holder.picIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
