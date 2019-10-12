@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.google.gson.Gson;
@@ -28,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends BaseActivity {
     private EditText accountEt;
     private EditText passwordEt;
-    private Button loginBtn;
+    private TextView loginTv;
     private String account;
     private String password;
     private SharedPreferences sp;
@@ -51,16 +54,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initListener() {
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkData()) {
-                    showLoadingDialog(LoginActivity.this);
-                    UserBean bean = new UserBean();
-                    bean.account = account;
-                    bean.password = password;
-                    login(bean);
-                }
+        loginTv.setOnClickListener(view -> {
+            if (checkData()) {
+                showLoadingDialog(LoginActivity.this);
+                UserBean bean = new UserBean();
+                bean.account = account;
+                bean.password = password;
+                login(bean);
             }
         });
 
@@ -145,6 +145,12 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initData() {
+//        Window window =this.getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.setStatusBarColor(this.getResources().getColor(R.color.green));
+
+
+
         sp = getSharedPreferences("user", MODE_PRIVATE);
         accountEt.setText(sp.getString("account", ""));
         passwordEt.setText(sp.getString("password", ""));
@@ -154,7 +160,7 @@ public class LoginActivity extends BaseActivity {
     private void initView() {
         accountEt = findViewById(R.id.account_et);
         passwordEt = findViewById(R.id.password_et);
-        loginBtn = findViewById(R.id.login_btn);
+        loginTv = findViewById(R.id.login_tv);
 
     }
 

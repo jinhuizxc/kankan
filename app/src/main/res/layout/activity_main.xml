@@ -14,10 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="56dp">
         <ImageView
+            android:src="@mipmap/back"
+            android:layout_gravity="center"
+            android:visibility="invisible"
             android:id="@+id/left_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="首页"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:id="@+id/title_tv"
             android:layout_width="0dp"
             android:layout_weight="1"

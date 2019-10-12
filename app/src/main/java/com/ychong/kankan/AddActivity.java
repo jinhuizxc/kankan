@@ -136,6 +136,7 @@ public class AddActivity extends BaseActivity {
     protected void addPic() {
         PictureSelector.create(AddActivity.this)
                 .openGallery(PictureMimeType.ofAll())
+                .maxSelectNum(1)
                 .previewImage(true)
                 .previewVideo(true)
                 .isCamera(true)

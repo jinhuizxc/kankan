@@ -33,6 +33,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -79,6 +80,7 @@ public class MainActivity extends BaseActivity {
     private String createTime;
     private LinearLayout headLl;
     private ImageView addIv;
+    private TextView titleTv;
     private boolean isHideBar;
     private RecyclerView recyclerView;
     private MainRecyclerAdapter adapter;
@@ -150,6 +152,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void intiData() {
+        titleTv.setText("首页");
         height = headLl.getHeight();
 
         adapter = new MainRecyclerAdapter(this, list);
@@ -160,6 +163,7 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         addIv = findViewById(R.id.right_iv);
+        titleTv = findViewById(R.id.title_tv);
         headLl = findViewById(R.id.head_ll);
         ivPhoto = findViewById(R.id.iv_photo);
         recyclerView = findViewById(R.id.recyclerView);
@@ -292,6 +296,10 @@ public class MainActivity extends BaseActivity {
         Dialog dialog = builder.create();
         dialog.show();
         Uri uri = Uri.parse(path);
-        Glide.with(this).load(uri).placeholder(R.drawable.kankan).into(picIv);
+        Glide.with(this)
+                .load(uri)
+                .placeholder(R.drawable.kankan)
+                .override(1200,1500)
+                .into(picIv);
     }
 }

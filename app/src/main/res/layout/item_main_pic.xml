@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="3dp"
-    android:layout_marginBottom="32dp"
-    android:orientation="vertical">
-    <LinearLayout
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/kankan"/>
-        <TextView
-            android:paddingLeft="8dp"
-            android:layout_gravity="center"
-            android:id="@+id/author_tv"
-            android:text="游客"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_gravity="center"
-            android:id="@+id/time_tv"
-            android:text="远古时代"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/title_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:src="@drawable/kankan"
-            android:layout_gravity="center"
-            android:id="@+id/main_pic_iv"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="250dp"/>
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
+    android:orientation="vertical"
+    xmlns:andriod="http://schemas.android.com/tools">
+        <LinearLayout
+            android:layout_margin="8dp"
+            android:background="@color/green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/kankan"/>
+                <TextView
+                    android:paddingLeft="8dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/author_tv"
+                    android:text="游客"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/time_tv"
+                    android:text="远古时代"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/kankan"
+                    android:layout_gravity="center"
+                    android:id="@+id/main_pic_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
 </LinearLayout>

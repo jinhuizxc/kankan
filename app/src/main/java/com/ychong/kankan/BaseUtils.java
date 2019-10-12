@@ -20,4 +20,5 @@ public class BaseUtils {
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         return formatter.format(curDate);
     }
+
 }
