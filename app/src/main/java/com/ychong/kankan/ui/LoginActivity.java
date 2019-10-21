@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.google.gson.Gson;
+import com.ychong.kankan.utils.http.ApiService;
+import com.ychong.kankan.utils.BaseContract;
+import com.ychong.kankan.R;
+import com.ychong.kankan.entity.UserBean;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class LoginActivity extends BaseActivity {
     private EditText accountEt;
     private EditText passwordEt;
     private TextView loginTv;
+    private TextView moreTv;
+    private TextView registerTv;
     private String account;
     private String password;
     private SharedPreferences sp;
@@ -63,6 +67,11 @@ public class LoginActivity extends BaseActivity {
                 login(bean);
             }
         });
+        registerTv.setOnClickListener(view -> {
+
+        });
+        moreTv.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this,MoreActivity.class)));
+
 
     }
 
@@ -145,12 +154,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initData() {
-//        Window window =this.getWindow();
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(this.getResources().getColor(R.color.green));
-
-
-
         sp = getSharedPreferences("user", MODE_PRIVATE);
         accountEt.setText(sp.getString("account", ""));
         passwordEt.setText(sp.getString("password", ""));
@@ -161,6 +164,8 @@ public class LoginActivity extends BaseActivity {
         accountEt = findViewById(R.id.account_et);
         passwordEt = findViewById(R.id.password_et);
         loginTv = findViewById(R.id.login_tv);
+        moreTv = findViewById(R.id.more_tv);
+        registerTv = findViewById(R.id.register_tv);
 
     }
 

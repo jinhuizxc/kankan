@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

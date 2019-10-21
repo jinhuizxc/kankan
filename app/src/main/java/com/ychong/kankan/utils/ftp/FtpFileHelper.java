@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.utils.ftp;
 
 import android.util.Log;
 import org.apache.commons.net.ftp.*;

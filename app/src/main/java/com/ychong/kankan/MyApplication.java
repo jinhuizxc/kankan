@@ -3,6 +3,9 @@ package com.ychong.kankan;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.ychong.kankan.entity.DaoMaster;
+import com.ychong.kankan.entity.DaoSession;
+
 public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
     private static DaoSession mDaoSession;

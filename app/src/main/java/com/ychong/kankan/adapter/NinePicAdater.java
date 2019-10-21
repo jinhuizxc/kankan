@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.ychong.kankan.R;
 
 import java.io.File;
 import java.util.List;

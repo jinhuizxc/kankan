@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ychong.kankan.R;
 
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {

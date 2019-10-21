@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.utils;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

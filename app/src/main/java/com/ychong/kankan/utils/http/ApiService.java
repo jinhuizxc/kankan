@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.utils.http;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;

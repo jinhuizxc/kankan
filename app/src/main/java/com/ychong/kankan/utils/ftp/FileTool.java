@@ -1,4 +1,4 @@
-package com.ychong.kankan;
+package com.ychong.kankan.utils.ftp;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
