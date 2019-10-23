@@ -13,8 +13,8 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
-import com.ychong.kankan.BaseActivity;
 import com.ychong.kankan.R;
+import com.ychong.kankan.ui.BaseActivity;
 
 public class BaiDuMapActivity extends BaseActivity {
     private LinearLayout mapLl;

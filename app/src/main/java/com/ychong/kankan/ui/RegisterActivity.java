@@ -94,7 +94,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void register(){
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "");
         RetrofitUtils.getInstance()
                 .getApiService()
                 .register(body)
