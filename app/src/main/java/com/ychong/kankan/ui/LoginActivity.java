@@ -15,6 +15,7 @@ import com.ychong.kankan.utils.http.ApiService;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.UserBean;
+import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,15 +91,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login(UserBean userBean) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
-                .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
         String json = new Gson().toJson(userBean);
-        ApiService apiService = retrofit.create(ApiService.class);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
-        apiService.login(body).subscribeOn(Schedulers.io())
+        RetrofitUtils.getInstance().getApiService().login(body).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
