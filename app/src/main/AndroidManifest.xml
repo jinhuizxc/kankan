@@ -34,25 +34,17 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true">
-<<<<<<< HEAD
-        <activity android:name=".ui.LoginActivity">
-=======
         <activity android:name=".map.baidu.BaiDuMapActivity">
->>>>>>> c74adde5facfb5a4c92559e10ebc30ce1e883bfd
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".ui.AddActivity" />
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.MoreActivity" />
         <activity android:name=".ui.RegisterActivity" />
-=======
-        <activity android:name=".AddActivity" />
-        <activity android:name=".MainActivity" />
 
 
 
@@ -63,7 +55,6 @@
         <service android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote"/>
->>>>>>> c74adde5facfb5a4c92559e10ebc30ce1e883bfd
     </application>
 
 </manifest>

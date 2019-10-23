@@ -3,13 +3,10 @@ package com.ychong.kankan;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
-<<<<<<< HEAD
-import com.ychong.kankan.entity.DaoMaster;
-import com.ychong.kankan.entity.DaoSession;
-=======
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
->>>>>>> c74adde5facfb5a4c92559e10ebc30ce1e883bfd
+import com.ychong.kankan.entity.DaoMaster;
+import com.ychong.kankan.entity.DaoSession;
 
 public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
