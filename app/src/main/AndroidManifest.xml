@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".MyApplication"
@@ -45,8 +46,7 @@
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.MoreActivity" />
         <activity android:name=".ui.RegisterActivity" />
-
-
+        <activity android:name=".map.baidu.PermissionsActivity" />
 
         <!--百度地图-->
         <meta-data
