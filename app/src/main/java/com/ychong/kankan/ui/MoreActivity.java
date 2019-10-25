@@ -12,9 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
+import com.ychong.kankan.map.baidu.BaiDuMapActivity;
 
 public class MoreActivity extends BaseActivity {
     private TextView addressTv;
+    private TextView mapTv;
+    private TextView titleTv;
     private ImageView backIv;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class MoreActivity extends BaseActivity {
         addressTv.setOnClickListener(view -> {
             showAddressDialog(view,addressTv.getText().toString());
         });
+        mapTv.setOnClickListener(view -> BaiDuMapActivity.startActivity(this));
 
     }
 
@@ -39,8 +43,9 @@ public class MoreActivity extends BaseActivity {
 
     private void initView() {
         backIv = findViewById(R.id.left_iv);
+        titleTv = findViewById(R.id.title_tv);
         addressTv = findViewById(R.id.address_tv);
-
+        mapTv = findViewById(R.id.map_tv);
 
     }
 

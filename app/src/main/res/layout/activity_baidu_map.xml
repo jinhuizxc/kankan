@@ -1,7 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/map_ll">
+    android:orientation="vertical">
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/map_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/navigation_input_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/map_ll">
+
+        <EditText
+            android:id="@+id/start_address_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:background="@drawable/edit_bg"
+            android:hint="请输入起点"
+            android:paddingLeft="@dimen/dp_8" />
+
+        <EditText
+            android:id="@+id/end_address_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:background="@drawable/edit_bg"
+            android:hint="请输入终点"
+            android:paddingLeft="@dimen/dp_8" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp_72"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/navigation" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/switch_rg"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/ordinary_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通地图"/>
+            <RadioButton
+                android:id="@+id/satellite_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="卫星地图"/>
+        </RadioGroup>
+            <CheckBox
+                android:id="@+id/real_traffic_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实时路况"/>
+    </LinearLayout>
+
+</RelativeLayout>

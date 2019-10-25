@@ -1,9 +1,14 @@
 package com.ychong.kankan.map.baidu;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,19 +25,20 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.BaseActivity;
+import com.ychong.kankan.ui.MoreActivity;
 import com.ychong.kankan.utils.PermissionsChecker;
 
 public class BaiDuMapActivity extends BaseActivity {
     private LinearLayout mapLl;
+    private RadioButton satelliteRb;
+    private RadioButton ordinaryRb;
+    private CheckBox realTrafficCb;
     private MapView mapView;
     private BaiduMap mBaiduMap;
     private LocationClient mLocationClient;
-    private  boolean isFirstLoc = true;// 是否首次定位
-
-    private static final int REQUEST_CODE = 0; // 请求码
-
-    // 所需的全部权限
-    static final String[] PERMISSIONS = new String[]{
+    private  boolean isFirstLoc = true;
+    private static final int REQUEST_CODE = 0;
+    private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -41,6 +47,10 @@ public class BaiDuMapActivity extends BaseActivity {
     };
 
     private PermissionsChecker mPermissionsChecker; // 权限检测器
+
+    public static void startActivity(Activity activity) {
+        activity.startActivity(new Intent(activity,BaiDuMapActivity.class));
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +62,15 @@ public class BaiDuMapActivity extends BaseActivity {
     }
 
     private void initListener() {
+        ordinaryRb.setOnClickListener(view -> mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL));
+        satelliteRb.setOnClickListener(view -> mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE));
+        realTrafficCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                //开启交通图
+                mBaiduMap.setTrafficEnabled(b);
+            }
+        });
 
     }
 
@@ -83,6 +102,9 @@ public class BaiDuMapActivity extends BaseActivity {
 
     private void initView() {
         mapLl = findViewById(R.id.map_ll);
+        ordinaryRb = findViewById(R.id.ordinary_rb);
+        satelliteRb = findViewById(R.id.satellite_rb);
+        realTrafficCb = findViewById(R.id.real_traffic_cb);
         mapView = new MapView(this);
 
     }
@@ -134,12 +156,8 @@ public class BaiDuMapActivity extends BaseActivity {
                 // MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
                 // 设置缩放比例,更新地图状态
                 float f = mBaiduMap.getMaxZoomLevel();// 19.0
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll,
-                        f - 2);
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, f - 2);
                 mBaiduMap.animateMapStatus(u);
-                //地图位置显示
-                Toast.makeText(BaiDuMapActivity.this, location.getAddrStr(),
-                        Toast.LENGTH_SHORT).show();
             }
 
         }
