@@ -40,6 +40,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:clickable="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/dp_72"
         android:layout_alignParentBottom="true"
@@ -48,6 +49,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/navigation_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/navigation" />

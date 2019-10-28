@@ -23,6 +23,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    <!-- 获取访问手机振动器权限，用于导航过程中的震动提示 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -48,6 +51,7 @@
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".map.baidu.PermissionsActivity" />
         <activity android:name=".map.baidu.BaiDuMapActivity" />
+        <activity android:name=".map.baidu.NavigationActivity" />
 
         <!--百度地图-->
         <meta-data

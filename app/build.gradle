@@ -21,13 +21,14 @@ android {
     greendao {
         schemaVersion 1 //当前数据库版本
     }
-    compileOptions{
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     sourceSets {
         main {
             jniLibs.srcDirs = ['src/main/jniLibs']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
         }
     }
 }
@@ -60,5 +61,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
     //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
     implementation files('libs/BaiduLBS_Android.jar')
-
+    implementation files('libs/IndoorscapeAlbumPlugin.jar')
 }
