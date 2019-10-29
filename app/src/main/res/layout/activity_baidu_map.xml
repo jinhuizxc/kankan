@@ -37,6 +37,10 @@
             android:background="@drawable/edit_bg"
             android:hint="请输入终点"
             android:paddingLeft="@dimen/dp_8" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/address_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout

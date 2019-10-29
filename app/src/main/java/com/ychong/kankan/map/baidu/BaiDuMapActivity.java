@@ -3,17 +3,25 @@ package com.ychong.kankan.map.baidu;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -35,16 +43,25 @@ import com.baidu.mapapi.walknavi.adapter.IWRoutePlanListener;
 import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
 import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
 import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
+import com.baidu.platform.comjni.jninative.tts.WNaviTTSPlayer;
 import com.ychong.kankan.R;
+import com.ychong.kankan.map.baidu.adapter.AddressAdapter;
 import com.ychong.kankan.ui.BaseActivity;
 import com.ychong.kankan.ui.MoreActivity;
 import com.ychong.kankan.utils.PermissionsChecker;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class BaiDuMapActivity extends BaseActivity {
     private LinearLayout mapLl;
     private RadioButton satelliteRb;
     private RadioButton ordinaryRb;
     private CheckBox realTrafficCb;
+    private EditText startAddressEt;
+    private EditText endAddressEt;
     private ImageView navigationIv;//导航
     private MapView mapView;
     private static final int REQUEST_CODE = 0;
@@ -57,22 +74,27 @@ public class BaiDuMapActivity extends BaseActivity {
     };
 
     private PermissionsChecker mPermissionsChecker;
-    private LatLng currLatLng;
+    private LatLng startLatLng;
     private BaiduMap Bmap;
+    private RecyclerView addressRv;
+    private int inputStartOrEnd=0;
 
-    //防止每次定位都重新设置中心点和marker
+    private AddressAdapter adapter;
+    private List<Address> addressList = new ArrayList<>();
+
+    /**
+     * 防止每次定位都重新设置中心点和marker
+     */
     private boolean isFirstLocation = true;
-    //初始化LocationClient定位类
+    /**
+     * 初始化LocationClient定位类
+     */
     private LocationClient mLocationClient = null;
-    //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口，原有BDLocationListener接口
+    /**
+     * BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口，原有BDLocationListener接口
+     */
     private BDAbstractLocationListener myListener = new MyLocationListener();
-    //经纬度
-    private double lat;
-    private double lon;
-    private LatLng startPt;
-    private LatLng endPt;
-    private Marker mStartMarker;
-    private Marker mEndMarker;
+    private LatLng endLatLng;
 
     public static void startActivity(Activity activity) {
         activity.startActivity(new Intent(activity, BaiDuMapActivity.class));
@@ -88,43 +110,134 @@ public class BaiDuMapActivity extends BaseActivity {
     }
 
     private void initListener() {
-        ordinaryRb.setOnClickListener(view -> {Bmap.setMapType(BaiduMap.MAP_TYPE_NORMAL);});
-        satelliteRb.setOnClickListener(view -> {Bmap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);});
+        ordinaryRb.setOnClickListener(view -> {
+            Bmap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+        });
+        satelliteRb.setOnClickListener(view -> {
+            Bmap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+        });
         realTrafficCb.setOnCheckedChangeListener((compoundButton, b) -> Bmap.setTrafficEnabled(b));
         navigationIv.setOnClickListener(view -> {
             startNavigation();
+        });
+        startAddressEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                inputStartOrEnd=0;
+                try {
+                    addressList.clear();
+                    Geocoder geocoder = new Geocoder(BaiDuMapActivity.this, Locale.CHINA);
+                    List<Address> startAddressList = geocoder.getFromLocationName(editable.toString(), 3);
+                    addressList.addAll(startAddressList);
+                    adapter.notifyDataSetChanged();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        endAddressEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                inputStartOrEnd = 1;
+                try {
+                    addressList.clear();
+                    Geocoder geocoder = new Geocoder(BaiDuMapActivity.this, Locale.CHINA);
+                    List<Address> endAddressList = geocoder.getFromLocationName(editable.toString(), 3);
+                    addressList.addAll(endAddressList);
+                    adapter.notifyDataSetChanged();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        adapter.setOnClickListener(position -> {
+            Address address = addressList.get(position);
+            if (inputStartOrEnd==0){
+                startAddressEt.setText(address.getAddressLine(0));
+            }else if (inputStartOrEnd==1){
+                endAddressEt.setText(address.getAddressLine(0));
+            }
+
+            addressList.clear();
+            adapter.notifyDataSetChanged();
         });
 
 
     }
 
     private void startNavigation() {
-    WalkNavigateHelper.getInstance().initNaviEngine(this, new IWEngineInitListener() {
-        @Override
-        public void engineInitSuccess() {
-            //引擎初始化成功
-            Log.e("ddd","引擎初始化成功");
-            routeWalkPlanWithParam();
-
+        if (!getAddress()){
+            return;
         }
+        WalkNavigateHelper.getInstance().initNaviEngine(this, new IWEngineInitListener() {
+            @Override
+            public void engineInitSuccess() {
+                //引擎初始化成功
+                Log.e("ddd", "引擎初始化成功");
+                routeWalkPlanWithParam();
+            }
 
-        @Override
-        public void engineInitFail() {
-            //引擎初始化失败的回调
-            Log.e("ddd","引擎初始化失败");
+            @Override
+            public void engineInitFail() {
+                //引擎初始化失败的回调
+                Log.e("ddd", "引擎初始化失败");
 
+            }
+        });
+    }
+
+    private boolean getAddress() {
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.CHINA);
+            String startAddressName = startAddressEt.getText().toString();
+            String endAddressName = endAddressEt.getText().toString();
+            if (!TextUtils.isEmpty(startAddressName)) {
+                List<Address> startAddressList = geocoder.getFromLocationName(startAddressName, 1);
+                Address startAddress = startAddressList.get(0);
+                startLatLng = new LatLng(startAddress.getLatitude(), startAddress.getLongitude());
+            }
+            if (TextUtils.isEmpty(endAddressName)) {
+                Toast.makeText(this, "终点不能为空", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            List<Address> endAddressList = geocoder.getFromLocationName(endAddressName, 10);
+            Address endAddress = endAddressList.get(0);
+
+            endLatLng = new LatLng(endAddress.getLatitude(), endAddress.getLongitude());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    });
+        return false;
     }
 
     private void routeWalkPlanWithParam() {
-        //起始位置
-        //startPt = new LatLng(40.047416,116.312143);
-        endPt = new LatLng(currLatLng.latitude+0.005,currLatLng.longitude+0.006);
         WalkRouteNodeInfo startNode = new WalkRouteNodeInfo();
-        startNode.setLocation(currLatLng);
+        startNode.setLocation(startLatLng);
         WalkRouteNodeInfo endNode = new WalkRouteNodeInfo();
-        endNode.setLocation(endPt);
+        endNode.setLocation(endLatLng);
         //构造WalkNaviLaunchParam
         WalkNaviLaunchParam mParam = new WalkNaviLaunchParam().
                 startNodeInfo(startNode)
@@ -135,24 +248,23 @@ public class BaiDuMapActivity extends BaseActivity {
                     @Override
                     public void onRoutePlanStart() {
                         //开始算路的回调
-                        Log.e("ddd","开始算路");
+                        Log.e("ddd", "开始算路");
 
                     }
 
                     @Override
                     public void onRoutePlanSuccess() {
-                        Log.e("ddd","算路成功");
+                        Log.e("ddd", "算路成功");
                         //算路成功
                         //跳转至诱导界面
-                        startActivity(new Intent(BaiDuMapActivity.this,NavigationActivity.class));
+                        startActivity(new Intent(BaiDuMapActivity.this, NavigationActivity.class));
 
                     }
 
                     @Override
                     public void onRoutePlanFail(WalkRoutePlanError walkRoutePlanError) {
                         //算路失败
-                        Log.e("ddd","算路失败"+walkRoutePlanError);
-
+                        Log.e("ddd", "算路失败" + walkRoutePlanError);
                     }
                 });
     }
@@ -160,13 +272,15 @@ public class BaiDuMapActivity extends BaseActivity {
 
     private void initData() {
         mapLl.addView(mapView);
+        adapter = new AddressAdapter(this,addressList);
+        addressRv.setLayoutManager(new LinearLayoutManager(this));
+        addressRv.setAdapter(adapter);
         initPermissions();
         initMap();
 
-
-
     }
-    private void initMap(){
+
+    private void initMap() {
         Bmap = mapView.getMap();
         mapView.removeViewAt(1);//去除自带的logo
         //地图上比例尺
@@ -190,6 +304,9 @@ public class BaiDuMapActivity extends BaseActivity {
         satelliteRb = findViewById(R.id.satellite_rb);
         realTrafficCb = findViewById(R.id.real_traffic_cb);
         navigationIv = findViewById(R.id.navigation_iv);
+        startAddressEt = findViewById(R.id.start_address_et);
+        endAddressEt = findViewById(R.id.end_address_et);
+        addressRv = findViewById(R.id.address_rv);
         mapView = new MapView(this);
 
     }
@@ -264,31 +381,7 @@ public class BaiDuMapActivity extends BaseActivity {
         @Override
         public void onReceiveLocation(BDLocation location) {
             //获取定位结果
-            location.getTime();    //获取定位时间
-            location.getLocationID();    //获取定位唯一ID，v7.2版本新增，用于排查定位问题
-            location.getLocType();    //获取定位类型
-            location.getLatitude();    //获取纬度信息
-            location.getLongitude();    //获取经度信息
-            location.getRadius();    //获取定位精准度
-            location.getAddrStr();    //获取地址信息
-            location.getCountry();    //获取国家信息
-            location.getCountryCode();    //获取国家码
-            location.getCity();    //获取城市信息
-            location.getCityCode();    //获取城市码
-            location.getDistrict();    //获取区县信息
-            location.getStreet();    //获取街道信息
-            location.getStreetNumber();    //获取街道码
-            location.getLocationDescribe();    //获取当前位置描述信息
-            location.getPoiList();    //获取当前位置周边POI信息
-
-            location.getBuildingID();    //室内精准定位下，获取楼宇ID
-            location.getBuildingName();    //室内精准定位下，获取楼宇名称
-            location.getFloor();    //室内精准定位下，获取当前位置所处的楼层信息
-            //经纬度
-            lat = location.getLatitude();
-            lon = location.getLongitude();
-            currLatLng = new LatLng(lat,lon);
-
+            startLatLng = new LatLng(location.getLatitude(), location.getLongitude());
             //这个判断是为了防止每次定位都重新设置中心点和marker
             if (isFirstLocation) {
                 isFirstLocation = false;
@@ -297,6 +390,7 @@ public class BaiDuMapActivity extends BaseActivity {
             }
         }
     }
+
     /**
      * 设置中心点和添加marker
      *
