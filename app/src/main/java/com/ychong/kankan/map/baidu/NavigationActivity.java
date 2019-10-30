@@ -6,11 +6,12 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.baidu.mapapi.bikenavi.BikeNavigateHelper;
 import com.baidu.mapapi.walknavi.WalkNavigateHelper;
-import com.ychong.kankan.ui.BaseActivity;
-
 public class NavigationActivity extends Activity {
-    private WalkNavigateHelper mNaviHelper;
+    private WalkNavigateHelper mWalkNavigationHelper;
+    private BikeNavigateHelper mBikeNavigationHelper;
+    private int navigationType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,14 +23,33 @@ public class NavigationActivity extends Activity {
     }
 
     private void initData() {
-        //获取WalkNavigateHelper实例
-         mNaviHelper = WalkNavigateHelper.getInstance();
-        //获取诱导页面地图展示View
-        View view = mNaviHelper.onCreate(this);
-        if (view != null) {
-            setContentView(view);
+        navigationType = getIntent().getIntExtra("navigationType",-1);
+        switch (navigationType){
+            case 0:
+                //获取WalkNavigateHelper实例
+                mWalkNavigationHelper = WalkNavigateHelper.getInstance();
+                //获取诱导页面地图展示View
+                View walkView = mWalkNavigationHelper.onCreate(this);
+                if (walkView != null) {
+                    setContentView(walkView);
+                }
+                mWalkNavigationHelper.startWalkNavi(NavigationActivity.this);
+                //步行
+                break;
+            case 1:
+                //获取BikeNavigateHelper实例
+                mBikeNavigationHelper = BikeNavigateHelper.getInstance();
+                //获取诱导页面地图展示View
+                View bikeView = mBikeNavigationHelper.onCreate(this);
+                if (bikeView != null) {
+                    setContentView(bikeView);
+                }
+                mBikeNavigationHelper.startBikeNavi(NavigationActivity.this);
+                break;
+                default:
+                    break;
         }
-        mNaviHelper.startWalkNavi(NavigationActivity.this);
+
     }
 
     private void initListener() {
@@ -46,19 +66,37 @@ public class NavigationActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        mNaviHelper.resume();
+        if (navigationType==BaiDuMapActivity.WALK_TYPE){
+            //步行
+            mWalkNavigationHelper.resume();
+        }else if (navigationType == BaiDuMapActivity.RADING_TYPE){
+            //骑行
+            mBikeNavigationHelper.resume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mNaviHelper.pause();
+        if (navigationType==BaiDuMapActivity.WALK_TYPE){
+            //步行
+            mWalkNavigationHelper.pause();
+        }else if (navigationType == BaiDuMapActivity.RADING_TYPE){
+            //骑行
+            mBikeNavigationHelper.pause();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mNaviHelper.quit();
+        if (navigationType==BaiDuMapActivity.WALK_TYPE){
+            //步行
+            mWalkNavigationHelper.quit();
+        }else if (navigationType == BaiDuMapActivity.RADING_TYPE){
+            //骑行
+            mBikeNavigationHelper.quit();
+        }
     }
 
 }

@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -28,6 +29,12 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.bikenavi.BikeNavigateHelper;
+import com.baidu.mapapi.bikenavi.adapter.IBEngineInitListener;
+import com.baidu.mapapi.bikenavi.adapter.IBRoutePlanListener;
+import com.baidu.mapapi.bikenavi.model.BikeRoutePlanError;
+import com.baidu.mapapi.bikenavi.params.BikeNaviLaunchParam;
+import com.baidu.mapapi.bikenavi.params.BikeRouteNodeInfo;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -49,21 +56,33 @@ import com.ychong.kankan.map.baidu.adapter.AddressAdapter;
 import com.ychong.kankan.ui.BaseActivity;
 import com.ychong.kankan.ui.MoreActivity;
 import com.ychong.kankan.utils.PermissionsChecker;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class BaiDuMapActivity extends BaseActivity {
+    private static final String TAG = BaiDuMapActivity.class.getSimpleName();
     private LinearLayout mapLl;
     private RadioButton satelliteRb;
     private RadioButton ordinaryRb;
     private CheckBox realTrafficCb;
     private EditText startAddressEt;
     private EditText endAddressEt;
-    private ImageView navigationIv;//导航
+    /**
+     * 导航
+     */
+    private ImageView navigationIv;
+    /**
+     * 定位
+     */
+    private ImageView locationIv;
     private MapView mapView;
+
+    //导航类型
+    public  int navigationType;
+    public static final int WALK_TYPE = 0;
+    public static final int RADING_TYPE = 1;
     private static final int REQUEST_CODE = 0;
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -95,6 +114,10 @@ public class BaiDuMapActivity extends BaseActivity {
      */
     private BDAbstractLocationListener myListener = new MyLocationListener();
     private LatLng endLatLng;
+    private LinearLayout navigationTypeLl;
+    private LinearLayout navigationInputLl;
+    private ImageView walkIv;
+    private ImageView radingIv;
 
     public static void startActivity(Activity activity) {
         activity.startActivity(new Intent(activity, BaiDuMapActivity.class));
@@ -118,7 +141,16 @@ public class BaiDuMapActivity extends BaseActivity {
         });
         realTrafficCb.setOnCheckedChangeListener((compoundButton, b) -> Bmap.setTrafficEnabled(b));
         navigationIv.setOnClickListener(view -> {
-            startNavigation();
+            if (!getAddress()){
+                return;
+            }
+            if (navigationType == WALK_TYPE){
+                //步行
+                startWalkNavigation();
+            }else if (navigationType == RADING_TYPE){
+                //骑行
+                startRadingNavigation();
+            }
         });
         startAddressEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -171,7 +203,6 @@ public class BaiDuMapActivity extends BaseActivity {
                 }
             }
         });
-
         adapter.setOnClickListener(position -> {
             Address address = addressList.get(position);
             if (inputStartOrEnd==0){
@@ -179,35 +210,89 @@ public class BaiDuMapActivity extends BaseActivity {
             }else if (inputStartOrEnd==1){
                 endAddressEt.setText(address.getAddressLine(0));
             }
-
             addressList.clear();
             adapter.notifyDataSetChanged();
         });
+        walkIv.setOnClickListener(view -> walkNavigation());
+        radingIv.setOnClickListener(view -> radingNavigation());
 
+        locationIv.setOnClickListener(view -> startLocation());
+    }
+
+    /**
+     * 选择骑行导航
+     */
+    private void radingNavigation() {
+        navigationType = RADING_TYPE;
+        hideNavigationType();
+    }
+    /**
+     * 选择步行导航
+     */
+    private void walkNavigation() {
+        navigationType = WALK_TYPE;
+        hideNavigationType();
+    }
+
+    /**
+     * 隐藏选择导航类型控件  显示导航地点输入框控件
+     */
+    private void hideNavigationType() {
+        navigationTypeLl.setVisibility(View.GONE);
+        navigationInputLl.setVisibility(View.VISIBLE);
+    }
+    /**
+     * 显示选择导航类型控件  隐藏导航地点输入框控件
+     */
+    private void showNavigationType(){
+        navigationTypeLl.setVisibility(View.VISIBLE);
+        navigationInputLl.setVisibility(View.GONE);
+    }
+
+    /**
+     * 开始骑行导航
+     */
+    private void startRadingNavigation(){
+        BikeNavigateHelper.getInstance().initNaviEngine(this, new IBEngineInitListener() {
+            @Override
+            public void engineInitSuccess() {
+                Toast.makeText(BaiDuMapActivity.this,"骑行引擎初始化成功",Toast.LENGTH_SHORT).show();
+                    routeBikePlanWithParam();
+            }
+
+            @Override
+            public void engineInitFail() {
+
+            }
+        });
 
     }
 
-    private void startNavigation() {
-        if (!getAddress()){
-            return;
-        }
+    /**
+     * 开始步行导航
+     */
+    private void startWalkNavigation() {
         WalkNavigateHelper.getInstance().initNaviEngine(this, new IWEngineInitListener() {
             @Override
             public void engineInitSuccess() {
                 //引擎初始化成功
-                Log.e("ddd", "引擎初始化成功");
+                Log.e(TAG, "步行引擎初始化成功");
                 routeWalkPlanWithParam();
             }
 
             @Override
             public void engineInitFail() {
                 //引擎初始化失败的回调
-                Log.e("ddd", "引擎初始化失败");
+                Log.e(TAG, "步行引擎初始化失败");
 
             }
         });
     }
 
+    /**
+     * 获取输入的地址所转换的坐标
+     * @return
+     */
     private boolean getAddress() {
         try {
             Geocoder geocoder = new Geocoder(this, Locale.CHINA);
@@ -233,6 +318,48 @@ public class BaiDuMapActivity extends BaseActivity {
         return false;
     }
 
+    /**
+     * 骑行算路
+     */
+    private void routeBikePlanWithParam() {
+        BikeRouteNodeInfo startNode = new BikeRouteNodeInfo();
+        startNode.setLocation(startLatLng);
+        BikeRouteNodeInfo endNode = new BikeRouteNodeInfo();
+        endNode.setLocation(endLatLng);
+        //构造BikeNaviLaunchParam
+        BikeNaviLaunchParam mParam = new BikeNaviLaunchParam().
+                startNodeInfo(startNode)
+                .endNodeInfo(endNode);
+        //发起算路
+        BikeNavigateHelper.getInstance()
+                .routePlanWithRouteNode(mParam, new IBRoutePlanListener() {
+                    @Override
+                    public void onRoutePlanStart() {
+                        //开始算路的回调
+                        Toast.makeText(BaiDuMapActivity.this,"开始算路",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onRoutePlanSuccess() {
+                       Toast.makeText(BaiDuMapActivity.this, "算路成功",Toast.LENGTH_SHORT).show();
+                        //算路成功
+                        //跳转至诱导界面
+                        Intent intent = new Intent(BaiDuMapActivity.this,NavigationActivity.class);
+                        intent.putExtra("navigationType",navigationType);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onRoutePlanFail(BikeRoutePlanError bikeRoutePlanError) {
+                        //算路失败
+                        Toast.makeText(BaiDuMapActivity.this, "算路失败"+bikeRoutePlanError.name(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /**
+     * 步行算路
+     */
     private void routeWalkPlanWithParam() {
         WalkRouteNodeInfo startNode = new WalkRouteNodeInfo();
         startNode.setLocation(startLatLng);
@@ -248,28 +375,29 @@ public class BaiDuMapActivity extends BaseActivity {
                     @Override
                     public void onRoutePlanStart() {
                         //开始算路的回调
-                        Log.e("ddd", "开始算路");
-
+                        Toast.makeText(BaiDuMapActivity.this,"开始算路",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onRoutePlanSuccess() {
-                        Log.e("ddd", "算路成功");
-                        //算路成功
+                       Toast.makeText(BaiDuMapActivity.this, "算路成功",Toast.LENGTH_SHORT).show();
                         //跳转至诱导界面
-                        startActivity(new Intent(BaiDuMapActivity.this, NavigationActivity.class));
-
+                        Intent intent = new Intent(BaiDuMapActivity.this,NavigationActivity.class);
+                        intent.putExtra("navigationType",navigationType);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onRoutePlanFail(WalkRoutePlanError walkRoutePlanError) {
                         //算路失败
-                        Log.e("ddd", "算路失败" + walkRoutePlanError);
+                        Toast.makeText(BaiDuMapActivity.this, "算路失败"+walkRoutePlanError.name(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-
+    /**
+     * 初始化数据
+     */
     private void initData() {
         mapLl.addView(mapView);
         adapter = new AddressAdapter(this,addressList);
@@ -280,6 +408,9 @@ public class BaiDuMapActivity extends BaseActivity {
 
     }
 
+    /**
+     * 初始化百度地图
+     */
     private void initMap() {
         Bmap = mapView.getMap();
         mapView.removeViewAt(1);//去除自带的logo
@@ -287,17 +418,27 @@ public class BaiDuMapActivity extends BaseActivity {
         mapView.showScaleControl(false);
         // 隐藏缩放控件
         mapView.showZoomControls(false);
+        startLocation();
+    }
+
+    /**
+     * 开始定位
+     */
+    private void startLocation(){
         // 开启定位图层
         Bmap.setMyLocationEnabled(true);
         //声明LocationClient类
         mLocationClient = new LocationClient(this);
         //注册监听函数
         mLocationClient.registerLocationListener(myListener);
-        initLocation();
+        initLocationConfig();
         //开始定位
         mLocationClient.start();
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
         mapLl = findViewById(R.id.map_ll);
         ordinaryRb = findViewById(R.id.ordinary_rb);
@@ -307,12 +448,26 @@ public class BaiDuMapActivity extends BaseActivity {
         startAddressEt = findViewById(R.id.start_address_et);
         endAddressEt = findViewById(R.id.end_address_et);
         addressRv = findViewById(R.id.address_rv);
+        navigationTypeLl = findViewById(R.id.navigation_type_ll);
+        navigationInputLl = findViewById(R.id.navigation_input_ll);
+        walkIv = findViewById(R.id.walk_iv);
+        radingIv = findViewById(R.id.rading_iv);
+        locationIv = findViewById(R.id.location_iv);
         mapView = new MapView(this);
 
     }
 
+    /**
+     * 初始化布局
+     */
     private void initLayout() {
         setContentView(R.layout.activity_baidu_map);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        showNavigationType();
     }
 
     @Override
@@ -344,7 +499,7 @@ public class BaiDuMapActivity extends BaseActivity {
     /**
      * 配置定位参数
      */
-    private void initLocation() {
+    private void initLocationConfig() {
         LocationClientOption option = new LocationClientOption();
         //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
