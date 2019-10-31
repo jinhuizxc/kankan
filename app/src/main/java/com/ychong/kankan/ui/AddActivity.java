@@ -20,6 +20,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.utils.http.ApiService;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.BaseUtils;
@@ -55,6 +56,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author Administrator
+ * 上传图片
  */
 @RuntimePermissions
 public class AddActivity extends BaseActivity {
@@ -91,7 +93,7 @@ public class AddActivity extends BaseActivity {
             Toast.makeText(AddActivity.this, "请选择图片", Toast.LENGTH_SHORT).show();
             return;
         }
-        showLoadingDialog(this);
+        showProgressDialog(this,"正在上传",false);
         Observable.create(emitter -> {
             try {
                 for (LocalMedia item : selectList) {
@@ -220,14 +222,14 @@ public class AddActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.e("ddddd", e.toString());
-                        hideLoadingDialog();
+                        hideProgressDialog();
 
                     }
 
                     @Override
                     public void onComplete() {
                         Log.e("dddddd", "完成");
-                        hideLoadingDialog();
+                        hideProgressDialog();
                     }
                 });
     }

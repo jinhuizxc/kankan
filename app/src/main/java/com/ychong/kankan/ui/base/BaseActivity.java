@@ -1,9 +1,10 @@
-package com.ychong.kankan.ui;
+package com.ychong.kankan.ui.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ychong.kankan.R;
+import com.ychong.kankan.utils.widget.dialog.ProgressDialog;
 
+/**
+ * Activity 基类
+ */
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
     private LinearLayout mBaseView;
@@ -62,26 +67,23 @@ public class BaseActivity extends AppCompatActivity {
         initStatusBar();
     }
 
-    Dialog dialog;
+    public void showText(String text){
+        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
+    }
 
-    public void showLoadingDialog(Activity activity) {
-        if (dialog==null){
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.dialog);
-            View view = LayoutInflater.from(activity).inflate(R.layout.dialog_progress_bar, null);
-            builder.setView(view);
-            dialog = builder.create();
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
+
+    ProgressDialog dialog;
+    public void showProgressDialog(Context context,String tips, boolean isCancel){
+        if (dialog == null){
+            dialog = new ProgressDialog(context,tips);
+            dialog.setCanceledOnTouchOutside(isCancel);
+            dialog.setCancelable(isCancel);
             dialog.show();
         }
     }
-    public void hideLoadingDialog(){
+    public void hideProgressDialog(){
         if (dialog!=null&&dialog.isShowing()){
             dialog.dismiss();
         }
-    }
-
-    public void showText(String text){
-        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
     }
 }

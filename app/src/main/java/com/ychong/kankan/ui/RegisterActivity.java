@@ -11,9 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
+import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.utils.http.RetrofitUtils;
-
-import org.w3c.dom.Text;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,6 +22,9 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
+/**
+ * 注册
+ */
 public class RegisterActivity extends BaseActivity {
     private ImageView backIv;
     private TextView titleTv;

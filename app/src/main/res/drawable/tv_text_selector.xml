@@ -7,6 +7,6 @@
         <color android:color="@color/green"/>
     </item>
     <item>
-        <color android:color="@color/color_fdd700"/>
+        <color android:color="@color/yellow"/>
     </item>
 </selector>

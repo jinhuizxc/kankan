@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
+        android:textColor="@color/black"
         android:id="@+id/title_et"
         android:layout_above="@id/bottom_ll"
         android:layout_width="match_parent"
@@ -23,12 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:textColor="@color/black"
             android:id="@+id/add_btn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="相册"
             android:layout_height="wrap_content"/>
         <Button
+            android:textColor="@color/black"
             android:id="@+id/upload_btn"
             android:layout_width="0dp"
             android:layout_weight="1"

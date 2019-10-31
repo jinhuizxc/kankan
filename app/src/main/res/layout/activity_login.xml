@@ -20,6 +20,7 @@
         android:paddingRight="16dp"
         android:orientation="vertical">
         <EditText
+            android:textColor="@color/black"
             android:paddingStart="8dp"
             android:background="@drawable/edit_bg"
             android:id="@+id/account_et"
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp" />
         <EditText
+            android:textColor="@color/black"
             android:paddingStart="8dp"
             android:layout_marginTop="16dp"
             android:id="@+id/password_et"
@@ -53,6 +55,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/register_tv"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -60,6 +63,7 @@
                 android:gravity="left|center"
                 android:text="注册"/>
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/more_tv"
                 android:layout_width="0dp"
                 android:layout_weight="1"

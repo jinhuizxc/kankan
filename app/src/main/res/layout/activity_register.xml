@@ -13,6 +13,7 @@
         android:paddingRight="16dp"
         android:orientation="vertical">
         <EditText
+            android:textColor="@color/black"
             android:paddingStart="8dp"
             android:background="@drawable/edit_bg"
             android:id="@+id/account_et"
@@ -20,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp" />
         <EditText
+            android:textColor="@color/black"
             android:paddingStart="8dp"
             android:layout_marginTop="16dp"
             android:id="@+id/password_et"
@@ -29,6 +31,7 @@
             android:layout_height="56dp"
             android:background="@drawable/edit_bg"/>
         <EditText
+            android:textColor="@color/black"
             android:paddingStart="8dp"
             android:layout_marginTop="16dp"
             android:id="@+id/re_password_et"

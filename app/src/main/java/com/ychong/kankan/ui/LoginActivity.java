@@ -5,16 +5,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.google.gson.Gson;
-import com.ychong.kankan.utils.http.ApiService;
-import com.ychong.kankan.utils.BaseContract;
+import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.UserBean;
+import com.ychong.kankan.ui.other.MoreActivity;
 import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import org.json.JSONException;
@@ -27,10 +26,10 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * 登录
+ */
 public class LoginActivity extends BaseActivity {
     private EditText accountEt;
     private EditText passwordEt;
@@ -61,7 +60,7 @@ public class LoginActivity extends BaseActivity {
     private void initListener() {
         loginTv.setOnClickListener(view -> {
             if (checkData()) {
-                showLoadingDialog(LoginActivity.this);
+                showProgressDialog(LoginActivity.this,"正在登录",false);
                 UserBean bean = new UserBean();
                 bean.account = account;
                 bean.password = password;
@@ -71,7 +70,7 @@ public class LoginActivity extends BaseActivity {
         registerTv.setOnClickListener(view -> {
 
         });
-        moreTv.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this,MoreActivity.class)));
+        moreTv.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, MoreActivity.class)));
 
 
     }
@@ -121,13 +120,13 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.e("error", e.toString());
-                        hideLoadingDialog();
+                        hideProgressDialog();
                         showText("登录失败");
                     }
 
                     @Override
                     public void onComplete() {
-                        hideLoadingDialog();
+                        hideProgressDialog();
                     }
                 });
     }

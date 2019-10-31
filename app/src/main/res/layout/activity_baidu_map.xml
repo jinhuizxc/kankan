@@ -24,6 +24,7 @@
         app:layout_constraintTop_toTopOf="@+id/map_ll">
 
         <EditText
+            android:textColor="@color/black"
             android:id="@+id/start_address_et"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_56"
@@ -32,6 +33,7 @@
             android:paddingLeft="@dimen/dp_8" />
 
         <EditText
+            android:textColor="@color/black"
             android:id="@+id/end_address_et"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_56"

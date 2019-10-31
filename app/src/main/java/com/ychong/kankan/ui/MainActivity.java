@@ -6,21 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.utils.http.ApiService;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.entity.ImageBean;
@@ -46,6 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author Administrator
+ * //图片浏览(主界面)
  */
 public class MainActivity extends BaseActivity {
     private ImageView ivPhoto;
@@ -74,9 +69,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     Glide.with(MainActivity.this).resumeRequests();
-                }else {
+                } else {
                     Glide.with(MainActivity.this).pauseRequests();
                 }
             }
@@ -84,7 +79,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.e("dx/dy",dx+"/"+dy);
+                Log.e("dx/dy", dx + "/" + dy);
 //                if (dy>0&&!isHideBar){
 //                    isHideBar=true;
 //                    //上拉
@@ -99,10 +94,10 @@ public class MainActivity extends BaseActivity {
             }
         });
         adapter.setOnClickListener(path -> {
-            if ("mp4".equals(path.substring(path.lastIndexOf(".")+1))){
+            if ("mp4".equals(path.substring(path.lastIndexOf(".") + 1))) {
                 //播放MP4视频
                 displayVideo(path);
-            }else if ("jpg".equals(path.substring(path.lastIndexOf(".")+1))){
+            } else if ("jpg".equals(path.substring(path.lastIndexOf(".") + 1))) {
                 //查看jpg图片
                 displayPic(path);
             }
@@ -110,15 +105,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showTitleBar() {
-        Log.e("titleBar","显示");
-        ObjectAnimator animator = ObjectAnimator.ofFloat(headLl, "translationY", height+100);
+        Log.e("titleBar", "显示");
+        ObjectAnimator animator = ObjectAnimator.ofFloat(headLl, "translationY", height + 100);
         animator.setDuration(1000);
         animator.start();
     }
 
     private void hideTitleBar() {
-        Log.e("titleBar","隐藏");
-        ObjectAnimator animator = ObjectAnimator.ofFloat(headLl, "translationY", -height-100);
+        Log.e("titleBar", "隐藏");
+        ObjectAnimator animator = ObjectAnimator.ofFloat(headLl, "translationY", -height - 100);
         animator.setDuration(1000);
         animator.start();
     }
@@ -154,7 +149,7 @@ public class MainActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
     private void refreshData() {
-        showLoadingDialog(this);
+        showProgressDialog(this,"正在刷新",false);
         queryAllImage();
 //        Observable.create((ObservableOnSubscribe<List<ImageBean>>) emitter -> {
 //            //执行耗时操作
@@ -190,88 +185,65 @@ public class MainActivity extends BaseActivity {
     }
 
     private void queryAllImage() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
                 .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
         ApiService apiService = retrofit.create(ApiService.class);
-        apiService.queryAllImages()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+        apiService.queryAllImages().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseBody>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    String json = responseBody.string();
+                    JSONObject jsonObject = new JSONObject(json);
+                    String msg = jsonObject.getString("msg");
+                    boolean success = jsonObject.getBoolean("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        ImageBean bean = new ImageBean();
+                        JSONObject jsonObject1 = new JSONObject(jsonArray.getString(i));
+                        bean.name = jsonObject1.getString("name");
+                        bean.path = jsonObject1.getString("path");
+                        bean.uploadTime = jsonObject1.getString("uploadTime");
+                        bean.userId = jsonObject1.getInt("userId");
+                        bean.title = jsonObject1.getString("title");
+                        list.add(bean);
                     }
+                    adapter.notifyDataSetChanged();
 
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            String json = responseBody.string();
-                            JSONObject jsonObject = new JSONObject(json);
-                            String msg = jsonObject.getString("msg");
-                            boolean success = jsonObject.getBoolean("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                ImageBean bean = new ImageBean();
-                                JSONObject jsonObject1 = new JSONObject(jsonArray.getString(i));
-                                bean.name = jsonObject1.getString("name");
-                                bean.path = jsonObject1.getString("path");
-                                bean.uploadTime = jsonObject1.getString("uploadTime");
-                                bean.userId = jsonObject1.getInt("userId");
-                                bean.title = jsonObject1.getString("title");
-                                list.add(bean);
-                            }
-                            adapter.notifyDataSetChanged();
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
 
-                        } catch (IOException | JSONException e) {
-                            e.printStackTrace();
-                        }
+            }
 
-                    }
+            @Override
+            public void onError(Throwable e) {
+                hideProgressDialog();
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoadingDialog();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        hideLoadingDialog();
-                    }
-                });
-    }
-    private void displayVideo(String path) {
-        showLoadingDialog(this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_video_display,null);
-        VideoView displayVv = view.findViewById(R.id.display_vv);
-        builder.setView(view);
-        Dialog dialog = builder.create();
-        dialog.show();
-        Uri uri = Uri.parse(path);
-        displayVv.setOnCompletionListener(mediaPlayer -> {
-            hideLoadingDialog();
-            dialog.dismiss();
+            @Override
+            public void onComplete() {
+                hideProgressDialog();
+            }
         });
-        displayVv.setMediaController(new MediaController(this));
-        displayVv.setVideoURI(uri);
-        displayVv.start();
     }
-    private void displayPic(String path){
-        showLoadingDialog(this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.dialog);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_pic_display,null);
-        ImageView picIv = view.findViewById(R.id.pic_iv);
-        builder.setView(view);
-        Dialog dialog = builder.create();
-        dialog.show();
-        Uri uri = Uri.parse(path);
-        Glide.with(this)
-                .load(uri)
-                .placeholder(R.drawable.kankan)
-                .override(1200,1500)
-                .into(picIv);
+
+    private void displayVideo(String path) {
+        Intent intent = new Intent(MainActivity.this, PreViewActivity.class);
+        intent.putExtra(BaseContract.PREVIEW_TYPE, BaseContract.VIDEO_TYPE);
+        intent.putExtra(BaseContract.PATH, path);
+        startActivity(intent);
+    }
+
+    private void displayPic(String path) {
+        Intent intent = new Intent(MainActivity.this, PreViewActivity.class);
+        intent.putExtra(BaseContract.PREVIEW_TYPE, BaseContract.PIC_TYPE);
+        intent.putExtra(BaseContract.PATH, path);
+        startActivity(intent);
     }
 }

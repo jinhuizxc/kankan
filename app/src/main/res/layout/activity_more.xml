@@ -5,10 +5,6 @@
     android:orientation="vertical">
     <include
         layout="@layout/common_head"/>
-    <LinearLayout
-        android:layout_below="@+id/head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:background="@drawable/ll_bg_selector"
             android:paddingLeft="@dimen/dp_8"
@@ -16,51 +12,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="@dimen/sp_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:text="修改地址"/>
+                android:gravity="start"
+                android:text="@string/update_address"/>
             <TextView
+                android:textColor="@color/gray"
                 android:layout_gravity="center"
                 android:textSize="@dimen/sp_16"
-                android:gravity="right|center"
-                android:text="192.168.0.1"
+                android:gravity="end|center"
                 android:id="@+id/address_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"/>
         </LinearLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/map_ll"
             android:background="@drawable/ll_bg_selector"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="@dimen/sp_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|left"
+                android:gravity="start"
                 android:text="进入地图"/>
             <TextView
                 android:layout_gravity="center"
-                android:gravity="right|center"
-                android:id="@+id/map_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"/>
         </LinearLayout>
-
-
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/about_kankan_ll"
+            android:background="@drawable/ll_bg_selector"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/about_kankan"/>
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/about_kankan_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"/>
+        </LinearLayout>
 
 </LinearLayout>
