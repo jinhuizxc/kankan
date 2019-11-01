@@ -14,6 +14,8 @@ import android.view.WindowManager;
 
 import androidx.annotation.RequiresApi;
 
+import com.ychong.kankan.MyApplication;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -49,6 +51,16 @@ public class BaseUtils {
             e.printStackTrace();
         }
         return versionName;
+    }
+
+    public static int dip2px(float dpValue) {
+        final float scale = MyApplication.getAppContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int px2dip(float pxValue) {
+        final float scale = MyApplication.getAppContext().getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
     }
 
 }

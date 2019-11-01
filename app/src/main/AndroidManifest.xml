@@ -107,6 +107,7 @@
             android:name=".ui.PreViewActivity"
             android:label="预览"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".test.TestActivity" />
 
         <!--百度地图-->
         <meta-data

@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
+import com.ychong.kankan.test.TestActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.UserBean;
@@ -19,6 +21,7 @@ import com.ychong.kankan.utils.http.RetrofitUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -59,13 +62,14 @@ public class LoginActivity extends BaseActivity {
 
     private void initListener() {
         loginTv.setOnClickListener(view -> {
-            if (checkData()) {
-                showProgressDialog(LoginActivity.this,"正在登录",false);
-                UserBean bean = new UserBean();
-                bean.account = account;
-                bean.password = password;
-                login(bean);
-            }
+            startActivity(new Intent(LoginActivity.this, TestActivity.class));
+//            if (checkData()) {
+//                showProgressDialog(LoginActivity.this,"正在登录",false);
+//                UserBean bean = new UserBean();
+//                bean.account = account;
+//                bean.password = password;
+//                login(bean);
+//            }
         });
         registerTv.setOnClickListener(view -> {
 

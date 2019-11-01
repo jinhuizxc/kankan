@@ -1,6 +1,7 @@
 package com.ychong.kankan;
 
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.CoordType;
@@ -11,11 +12,17 @@ import com.ychong.kankan.entity.DaoSession;
 public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
     private static DaoSession mDaoSession;
+    private static  Context mContext;
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = getApplicationContext();
         initBaiDuMap();
        // initGreenDao();
+    }
+
+    public static Context getAppContext(){
+        return mContext;
     }
 
     private void initGreenDao(){

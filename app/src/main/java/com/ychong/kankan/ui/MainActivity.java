@@ -151,37 +151,6 @@ public class MainActivity extends BaseActivity {
     private void refreshData() {
         showProgressDialog(this,"正在刷新",false);
         queryAllImage();
-//        Observable.create((ObservableOnSubscribe<List<ImageBean>>) emitter -> {
-//            //执行耗时操作
-//            List<ImageBean> imageBeans =MyApplication.getmDaoSession().getImageBeanDao().loadAll();
-//            Collections.reverse(imageBeans);
-//            emitter.onNext(imageBeans);
-//            emitter.onComplete();
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<ImageBean>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<ImageBean> imageBeans) {
-//                            list.addAll(imageBeans);
-//                            adapter.notifyDataSetChanged();
-//                            hideLoadingDialog();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Log.e("dddd","onComplete");
-//                    }
-//                });
     }
 
     private void queryAllImage() {
