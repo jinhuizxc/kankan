@@ -1,11 +1,15 @@
 package com.ychong.kankan.ui;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -42,6 +46,7 @@ public class LoginActivity extends BaseActivity {
     private String account;
     private String password;
     private SharedPreferences sp;
+    private ImageView iconIv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,14 +67,13 @@ public class LoginActivity extends BaseActivity {
 
     private void initListener() {
         loginTv.setOnClickListener(view -> {
-            startActivity(new Intent(LoginActivity.this, TestActivity.class));
-//            if (checkData()) {
-//                showProgressDialog(LoginActivity.this,"正在登录",false);
-//                UserBean bean = new UserBean();
-//                bean.account = account;
-//                bean.password = password;
-//                login(bean);
-//            }
+            if (checkData()) {
+                showProgressDialog(LoginActivity.this,"正在登录",false);
+                UserBean bean = new UserBean();
+                bean.account = account;
+                bean.password = password;
+                login(bean);
+            }
         });
         registerTv.setOnClickListener(view -> {
 
@@ -152,9 +156,25 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initData() {
+        handler.postDelayed(runnable,500);
         sp = getSharedPreferences("user", MODE_PRIVATE);
         accountEt.setText(sp.getString("account", ""));
         passwordEt.setText(sp.getString("password", ""));
+
+    }
+
+    private void initIcon() {
+        //缩放
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(iconIv,"ScaleX",1f,0.8f,0.6f,0.4f,0.2f,0.1f,0.2f,0.4f,0.6f,0.8f,1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(iconIv,"ScaleY",1f,0.8f,0.6f,0.4f,0.2f,0.1f,0.2f,0.4f,0.6f,0.8f,1f);
+        //平移
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(iconIv, "translationY", 0f, -1f,-2f,-3f,-2f,-1f,0f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(5000);
+        animatorSet.play(scaleX);
+        animatorSet.play(scaleY);
+        animatorSet.start();
+
 
     }
 
@@ -164,10 +184,19 @@ public class LoginActivity extends BaseActivity {
         loginTv = findViewById(R.id.login_tv);
         moreTv = findViewById(R.id.more_tv);
         registerTv = findViewById(R.id.register_tv);
+        iconIv = findViewById(R.id.icon_iv);
 
     }
-
     private void initLayout() {
         setContentView(R.layout.activity_login);
     }
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            initIcon();
+            handler.postDelayed(this, 5000);
+        }
+    };
 }

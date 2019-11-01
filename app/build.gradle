@@ -75,6 +75,10 @@ dependencies {
     //kotlin
     implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //LeakCanary  监测内存泄露
+    debugApi'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseApi'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
 }
 repositories {
     mavenCentral()

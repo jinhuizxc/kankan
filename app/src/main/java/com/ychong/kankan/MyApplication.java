@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.ychong.kankan.entity.DaoMaster;
 import com.ychong.kankan.entity.DaoSession;
 
@@ -13,10 +15,12 @@ public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
     private static DaoSession mDaoSession;
     private static  Context mContext;
+    private RefWatcher refWatcher;
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        initLeakCanary();
         initBaiDuMap();
        // initGreenDao();
     }
@@ -42,5 +46,22 @@ public class MyApplication extends Application {
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
+    }
+
+
+    private void initLeakCanary(){
+        refWatcher = setUpLeakCanary();
+
+    }
+
+    private RefWatcher setUpLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)){
+            return RefWatcher.DISABLED;
+        }
+        return LeakCanary.install(this);
+    }
+    public static RefWatcher getRefWatcher(Context context){
+        MyApplication application = (MyApplication) context.getApplicationContext();
+        return application.refWatcher;
     }
 }

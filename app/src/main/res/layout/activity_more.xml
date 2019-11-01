@@ -6,6 +6,7 @@
     <include
         layout="@layout/common_head"/>
         <LinearLayout
+            android:id="@+id/update_address_ll"
             android:background="@drawable/ll_bg_selector"
             android:paddingLeft="@dimen/dp_8"
             android:paddingRight="@dimen/dp_8"

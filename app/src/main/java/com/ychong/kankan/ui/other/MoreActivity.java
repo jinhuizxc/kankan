@@ -22,6 +22,7 @@ import com.ychong.kankan.utils.widget.dialog.TipsDialogListener;
 public class MoreActivity extends BaseActivity {
     private TextView addressTv;
     private LinearLayout mapLl;
+    private LinearLayout updateAddressLl;
     private TextView titleTv;
     private ImageView backIv;
     private LinearLayout aboutKankanLl;
@@ -36,8 +37,8 @@ public class MoreActivity extends BaseActivity {
 
     private void initListener() {
         backIv.setOnClickListener(view -> finish());
-        addressTv.setOnClickListener(view -> {
-            showAddressDialog(view,addressTv.getText().toString());
+        updateAddressLl.setOnClickListener(view -> {
+            showAddressDialog(addressTv,addressTv.getText().toString());
         });
         mapLl.setOnClickListener(view -> BaiDuMapActivity.startActivity(this));
         aboutKankanLl.setOnClickListener(view -> aboutKankan());
@@ -67,6 +68,7 @@ public class MoreActivity extends BaseActivity {
         titleTv = findViewById(R.id.title_tv);
         addressTv = findViewById(R.id.address_tv);
         mapLl = findViewById(R.id.map_ll);
+        updateAddressLl = findViewById(R.id.update_address_ll);
         aboutKankanLl = findViewById(R.id.about_kankan_ll);
     }
 
