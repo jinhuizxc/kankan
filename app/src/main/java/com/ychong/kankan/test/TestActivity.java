@@ -19,6 +19,9 @@ import com.ychong.kankan.utils.BaseUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RecyclerView刷新仿照  https://github.com/xinzhazha/RecyclerView
+ */
 public class TestActivity extends BaseActivity{
 
     private TestAdapter mAdapter;
