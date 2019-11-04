@@ -1,6 +1,7 @@
 package com.ychong.kankan.ui.other;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.ychong.kankan.R;
 import com.ychong.kankan.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.widget.dialog.InputDialog;
 import com.ychong.kankan.utils.widget.dialog.TipsDialog;
 import com.ychong.kankan.utils.widget.dialog.TipsDialogListener;
@@ -26,6 +28,8 @@ public class MoreActivity extends BaseActivity {
     private TextView titleTv;
     private ImageView backIv;
     private LinearLayout aboutKankanLl;
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +64,8 @@ public class MoreActivity extends BaseActivity {
 
     private void initData() {
         titleTv.setText("更多");
-
+        sp = getSharedPreferences("config",MODE_PRIVATE);
+       addressTv.setText(sp.getString("server_host_url",BaseContract.SERVER_HOST_URL));
     }
 
     private void initView() {
@@ -78,7 +83,13 @@ public class MoreActivity extends BaseActivity {
 
     private void showAddressDialog(View view,String value){
         TextView textView = (TextView)view;
-        new InputDialog(this, value, textView::setText).setTitle("请输入地址")
+        new InputDialog(this, value, text -> {
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("server_host_url",text);
+            editor.apply();
+            editor.commit();
+            textView.setText(text);
+        }).setTitle("请输入地址")
         .show();
     }
 }

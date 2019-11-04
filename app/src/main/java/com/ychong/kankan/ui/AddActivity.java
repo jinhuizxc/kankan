@@ -28,6 +28,7 @@ import com.ychong.kankan.utils.ftp.FtpFileHelper;
 import com.ychong.kankan.entity.ImageBean;
 import com.ychong.kankan.adapter.NinePicAdater;
 import com.ychong.kankan.R;
+import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -185,15 +186,8 @@ public class AddActivity extends BaseActivity {
     }
 
     private void insertData(ImageBean bean) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
-                .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        String json = new Gson().toJson(bean);
-        ApiService apiService = retrofit.create(ApiService.class);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
-        apiService.insertImage(body)
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(bean));
+        RetrofitUtils.getInstance().getApiService().insertImage(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -212,7 +206,7 @@ public class AddActivity extends BaseActivity {
                             Toast.makeText(AddActivity.this, msg, Toast.LENGTH_SHORT).show();
                             if (sucess) {
                                 //上传成功
-                                finish();
+                               onBackPressed();
                             }
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();

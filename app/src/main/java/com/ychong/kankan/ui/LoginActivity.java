@@ -68,14 +68,13 @@ public class LoginActivity extends BaseActivity {
 
     private void initListener() {
         loginTv.setOnClickListener(view -> {
-            startActivity(new Intent(LoginActivity.this,TestActivity.class));
-//            if (checkData()) {
-//                showProgressDialog(LoginActivity.this,"正在登录",false);
-//                UserBean bean = new UserBean();
-//                bean.account = account;
-//                bean.password = password;
-//                login(bean);
-//            }
+            if (checkData()) {
+                showProgressDialog(LoginActivity.this,"正在登录",false);
+                UserBean bean = new UserBean();
+                bean.account = account;
+                bean.password = password;
+                login(bean);
+            }
         });
         registerTv.setOnClickListener(view -> {
 
@@ -197,6 +196,22 @@ public class LoginActivity extends BaseActivity {
             handler.postDelayed(this, 5000);
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (animatorSet!=null){
+            animatorSet.resume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (animatorSet!=null){
+            animatorSet.pause();
+        }
+    }
 
     @Override
     protected void onDestroy() {

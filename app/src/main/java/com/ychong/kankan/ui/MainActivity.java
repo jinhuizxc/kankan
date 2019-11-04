@@ -20,6 +20,7 @@ import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.entity.ImageBean;
 import com.ychong.kankan.adapter.MainRecyclerAdapter;
 import com.ychong.kankan.R;
+import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +34,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -121,10 +124,8 @@ public class MainActivity extends BaseActivity {
     private void intiData() {
         titleTv.setText("首页");
         height = headLl.getHeight();
-
         adapter = new MainRecyclerAdapter(this, list);
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
-        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         recyclerView.setAdapter(adapter);
     }
 
@@ -154,11 +155,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void queryAllImage() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseContract.SERVER_HOST_URL) //设置网络请求的Url地址
-                .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
-        ApiService apiService = retrofit.create(ApiService.class);
-        apiService.queryAllImages().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseBody>() {
+        RetrofitUtils.getInstance().getApiService()
+                .queryAllImages().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseBody>() {
             @Override
             public void onSubscribe(Disposable d) {
 
