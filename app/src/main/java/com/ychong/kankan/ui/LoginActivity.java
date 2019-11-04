@@ -47,6 +47,7 @@ public class LoginActivity extends BaseActivity {
     private String password;
     private SharedPreferences sp;
     private ImageView iconIv;
+    private AnimatorSet animatorSet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,13 +68,14 @@ public class LoginActivity extends BaseActivity {
 
     private void initListener() {
         loginTv.setOnClickListener(view -> {
-            if (checkData()) {
-                showProgressDialog(LoginActivity.this,"正在登录",false);
-                UserBean bean = new UserBean();
-                bean.account = account;
-                bean.password = password;
-                login(bean);
-            }
+            startActivity(new Intent(LoginActivity.this,TestActivity.class));
+//            if (checkData()) {
+//                showProgressDialog(LoginActivity.this,"正在登录",false);
+//                UserBean bean = new UserBean();
+//                bean.account = account;
+//                bean.password = password;
+//                login(bean);
+//            }
         });
         registerTv.setOnClickListener(view -> {
 
@@ -167,15 +169,11 @@ public class LoginActivity extends BaseActivity {
         //缩放
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(iconIv,"ScaleX",1f,0.8f,0.6f,0.4f,0.2f,0.1f,0.2f,0.4f,0.6f,0.8f,1f);
         ObjectAnimator scaleY = ObjectAnimator.ofFloat(iconIv,"ScaleY",1f,0.8f,0.6f,0.4f,0.2f,0.1f,0.2f,0.4f,0.6f,0.8f,1f);
-        //平移
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(iconIv, "translationY", 0f, -1f,-2f,-3f,-2f,-1f,0f);
-        AnimatorSet animatorSet = new AnimatorSet();
+         animatorSet = new AnimatorSet();
         animatorSet.setDuration(5000);
         animatorSet.play(scaleX);
         animatorSet.play(scaleY);
         animatorSet.start();
-
-
     }
 
     private void initView() {
@@ -199,4 +197,13 @@ public class LoginActivity extends BaseActivity {
             handler.postDelayed(this, 5000);
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (animatorSet!=null){
+            animatorSet.cancel();
+            animatorSet=null;
+        }
+    }
 }

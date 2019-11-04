@@ -33,4 +33,7 @@ public interface ApiService {
     //http://192.168.0.12:8033/GPSMetroApi/PatrolManages/PatrolTaskDown
     @POST("GPSMetroApi/PatrolManages/PatrolTaskDown")
     Observable<ResponseBody> PatrolTaskDown(@Body RequestBody body);
+
+    @POST("api/ProjectManage/"+"GetIllegalProjectGrid")
+    Observable<ResponseBody> GetIllegalProjectGrid(@Body RequestBody body);
 }

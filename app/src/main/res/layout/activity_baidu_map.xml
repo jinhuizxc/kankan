@@ -65,6 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/rading"/>
+        <ImageView
+            android:layout_margin="@dimen/dp_8"
+            android:id="@+id/car_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/car"/>
     </LinearLayout>
 
     <LinearLayout

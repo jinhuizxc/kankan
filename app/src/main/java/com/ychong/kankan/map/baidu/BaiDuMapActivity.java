@@ -110,6 +110,7 @@ public class BaiDuMapActivity extends BaseActivity {
     private LinearLayout navigationInputLl;
     private ImageView walkIv;
     private ImageView radingIv;
+    private ImageView carIv;
 
     public static void startActivity(Activity activity) {
         activity.startActivity(new Intent(activity, BaiDuMapActivity.class));
@@ -444,6 +445,7 @@ public class BaiDuMapActivity extends BaseActivity {
         navigationInputLl = findViewById(R.id.navigation_input_ll);
         walkIv = findViewById(R.id.walk_iv);
         radingIv = findViewById(R.id.rading_iv);
+        carIv = findViewById(R.id.car_iv);
         locationIv = findViewById(R.id.location_iv);
         mapView = new MapView(this);
 
