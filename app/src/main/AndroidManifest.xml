@@ -108,6 +108,7 @@
             android:label="预览"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".test.TestActivity" />
+        <activity android:name=".ui.AndroidServerActivity" />
 
         <!--百度地图-->
         <meta-data

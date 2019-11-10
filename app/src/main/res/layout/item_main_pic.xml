@@ -6,8 +6,9 @@
     android:orientation="vertical"
     xmlns:andriod="http://schemas.android.com/tools">
         <LinearLayout
+            android:id="@+id/item_ll"
             android:layout_margin="8dp"
-            android:background="@color/green"
+            android:background="@drawable/selector_item_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"

@@ -78,6 +78,10 @@ dependencies {
     //LeakCanary  监测内存泄露
     debugApi'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseApi'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+
+
+    //Android服务器需要的库
+    implementation 'com.koushikdutta.async:androidasync:2.2.1'
 }
 repositories {
     mavenCentral()

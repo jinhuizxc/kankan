@@ -11,4 +11,6 @@
     <string name="version_number">版本号:</string>
     <string name="about_kankan">关于看看</string>
     <string name="update_address">修改地址</string>
+    <string name="andriod_server">Android服务器：、</string>
+    <string name="android_server">Android服务器：</string>
 </resources>

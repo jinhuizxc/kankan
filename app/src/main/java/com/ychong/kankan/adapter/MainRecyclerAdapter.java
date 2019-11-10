@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                 .override(400,500)
                 .into(holder.picIv);
         holder.picIv.setOnClickListener(view -> onClickListener.onClick(path));
+        holder.itemLl.setOnClickListener(view -> {});
     }
 
     @Override
@@ -64,6 +66,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     }
 
     class MainRecyclerViewHolder extends RecyclerView.ViewHolder {
+        private LinearLayout itemLl;
         private TextView authorTv;
         private TextView uploadTimeTv;
         private TextView titleTv;
@@ -71,6 +74,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         MainRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemLl = itemView.findViewById(R.id.item_ll);
             authorTv = itemView.findViewById(R.id.author_tv);
             uploadTimeTv = itemView.findViewById(R.id.time_tv);
             titleTv = itemView.findViewById(R.id.title_tv);

@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.map.baidu.BaiDuMapActivity;
+import com.ychong.kankan.ui.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.widget.dialog.InputDialog;
@@ -27,6 +28,7 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout updateAddressLl;
     private TextView titleTv;
     private ImageView backIv;
+    private LinearLayout androidServerLl;
     private LinearLayout aboutKankanLl;
     private SharedPreferences sp;
 
@@ -45,6 +47,7 @@ public class MoreActivity extends BaseActivity {
             showAddressDialog(addressTv,addressTv.getText().toString());
         });
         mapLl.setOnClickListener(view -> BaiDuMapActivity.startActivity(this));
+        androidServerLl.setOnClickListener(view -> AndroidServerActivity.startAct(this));
         aboutKankanLl.setOnClickListener(view -> aboutKankan());
 
     }
@@ -74,6 +77,7 @@ public class MoreActivity extends BaseActivity {
         addressTv = findViewById(R.id.address_tv);
         mapLl = findViewById(R.id.map_ll);
         updateAddressLl = findViewById(R.id.update_address_ll);
+        androidServerLl = findViewById(R.id.android_server_ll);
         aboutKankanLl = findViewById(R.id.about_kankan_ll);
     }
 
