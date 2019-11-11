@@ -108,7 +108,7 @@
             android:label="预览"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".test.TestActivity" />
-        <activity android:name=".ui.AndroidServerActivity" />
+        <activity android:name=".ui.androidserver.AndroidServerActivity" />
 
         <!--百度地图-->
         <meta-data
@@ -118,6 +118,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+        <service android:name=".ui.androidserver.WebService" />
     </application>
 
 </manifest>

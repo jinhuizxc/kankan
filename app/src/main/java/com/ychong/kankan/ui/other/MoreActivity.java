@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.map.baidu.BaiDuMapActivity;
-import com.ychong.kankan.ui.AndroidServerActivity;
+import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.widget.dialog.InputDialog;
