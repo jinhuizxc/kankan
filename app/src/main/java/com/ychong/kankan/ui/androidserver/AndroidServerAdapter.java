@@ -1,5 +1,6 @@
 package com.ychong.kankan.ui.androidserver;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,64 +22,79 @@ import com.ychong.kankan.utils.BaseUtils;
 import java.io.File;
 import java.util.List;
 
-public class AndroidServerAdapter extends RecyclerView.Adapter<AndroidServerAdapter.AndroidServerViewHolder> {
+public class AndroidServerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<ApkInfoBean> list;
+    boolean installAllowed = false;
     public AndroidServerAdapter(Context context,List<ApkInfoBean> list){
         this.context = context;
         this.list = list;
     }
     @NonNull
     @Override
-    public AndroidServerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AndroidServerViewHolder viewHolder = new AndroidServerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_apk,parent,false));
-        return viewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == 1) {
+            View view = inflater.inflate(R.layout.empty_view, parent, false);
+            return new EmptyViewHolder(view);
+        } else {
+            return new AndroidServerViewHolder(LayoutInflater.from(
+                    context).inflate(R.layout.layout_book_item, parent,
+                    false));
+        }
     }
-    boolean installAllowed = false;
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull AndroidServerViewHolder holder, int position) {
-            ApkInfoBean item = list.get(position);
-            holder.mTvAppName.setText(item.name + "(v" + item.version + ")");
-            holder.mTvAppSize.setText(item.size);
-            holder.mTvAppPath.setText(item.path);
-            holder.ivIcon.setImageDrawable(item.icon);
-
-            holder.mTvAppInstall.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof AndroidServerViewHolder){
+            AndroidServerViewHolder viewHolder = (AndroidServerViewHolder) holder;
+            ApkInfoBean infoModel = list.get(position);
+            viewHolder.mTvAppName.setText(infoModel.name + "(v" + infoModel.version + ")");
+            viewHolder.mTvAppSize.setText(infoModel.size);
+            viewHolder.mTvAppPath.setText(infoModel.path);
+            viewHolder.ivIcon.setImageDrawable(infoModel.icon);
+            viewHolder.mTvAppInstall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         installAllowed = context.getPackageManager().canRequestPackageInstalls();
                         if (installAllowed) {
-                            BaseUtils.installApkFile(context, new File(item.path));
+                            BaseUtils.installApkFile(context, new File(infoModel.path));
                         } else {
                             Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + context.getPackageName()));
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
-                            BaseUtils.installApkFile(context, new File(item.path));
+                            BaseUtils.installApkFile(context, new File(infoModel.path));
                             return;
                         }
                     } else {
-                        BaseUtils.installApkFile(context, new File(item.path));
+                        BaseUtils.installApkFile(context, new File(infoModel.path));
                     }
                 }
             });
-            holder.mTvAppDelete.setOnClickListener(new View.OnClickListener() {
+            viewHolder.mTvAppDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BaseUtils.delete(context, item.packageName);
+                    BaseUtils.unInstall(context, infoModel.packageName);
                 }
             });
-
-            if (item.installed) {
-                holder.mTvAppDelete.setVisibility(View.VISIBLE);
+            if (infoModel.installed) {
+                viewHolder.mTvAppDelete.setVisibility(View.VISIBLE);
             } else {
-                holder.mTvAppDelete.setVisibility(View.GONE);
+                viewHolder.mTvAppDelete.setVisibility(View.GONE);
             }
-    }
+        }
 
+    }
+    class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        public EmptyViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
     @Override
     public int getItemCount() {
-        return list.size()>0?list.size():1;
+        return list.size() > 0 ? list.size() : 1;
     }
 
     public class AndroidServerViewHolder extends RecyclerView.ViewHolder {

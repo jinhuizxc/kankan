@@ -3,10 +3,12 @@ package com.ychong.kankan.utils;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -24,14 +26,21 @@ import androidx.core.content.FileProvider;
 
 import com.ychong.kankan.MyApplication;
 import com.ychong.kankan.entity.ApkInfoBean;
+import com.ychong.kankan.entity.EventBusMessage;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -45,11 +54,11 @@ public class BaseUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public static String getAppVersionCode(Context context){
+    public static String getAppVersionCode(Context context) {
         long versionCode = 0l;
         try {
             PackageManager pm = context.getPackageManager();
-            PackageInfo info = pm.getPackageInfo(context.getPackageName(),0);
+            PackageInfo info = pm.getPackageInfo(context.getPackageName(), 0);
             versionCode = info.getLongVersionCode();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -57,11 +66,11 @@ public class BaseUtils {
         return String.valueOf(versionCode);
     }
 
-    public static String getAppVersionName(Context context){
+    public static String getAppVersionName(Context context) {
         String versionName = "0.0.0.1";
         try {
             PackageManager pm = context.getPackageManager();
-            PackageInfo info = pm.getPackageInfo(context.getPackageName(),0);
+            PackageInfo info = pm.getPackageInfo(context.getPackageName(), 0);
             versionName = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -114,28 +123,11 @@ public class BaseUtils {
         //获取手机系统的所有APP包名，然后进行一一比较
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         for (int i = 0; i < pinfo.size(); i++) {
-            if (( pinfo.get(i)).packageName
+            if ((pinfo.get(i)).packageName
                     .equalsIgnoreCase(packageName))
                 return true;
         }
         return false;
-    }
-
-    //安装
-    public static void installApkFile(Context context, File file) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //兼容7.0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
-            context.startActivity(intent);
-        }
     }
 
     //卸载
@@ -158,7 +150,7 @@ public class BaseUtils {
                 }
             }
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -193,7 +185,8 @@ public class BaseUtils {
         }
         return appInfo.loadIcon(pm);
     }
-    public static String getApplicationName(Context context,String packageName) {
+
+    public static String getApplicationName(Context context, String packageName) {
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
         try {
@@ -208,6 +201,118 @@ public class BaseUtils {
             return applicationName;
         }
         return packageName;
+    }
+
+    public static String getFileSize(long length) {
+        DecimalFormat df = new DecimalFormat("######0.00");
+        double d1 = 3.23456;
+        double d2 = 0.0;
+        double d3 = 2.0;
+        df.format(d1);
+        df.format(d2);
+        df.format(d3);
+        long l = length / 1000;//KB
+        if (l < 1024) {
+            return df.format(l) + "KB";
+        } else if (l < 1024 * 1024.f) {
+            return df.format((l / 1024.f)) + "MB";
+        }
+        return df.format(l / 1024.f / 1024.f) + "GB";
+    }
+
+    public static String getIndexContent(Context context, String indexHtml) throws IOException {
+        BufferedInputStream bInputStream = null;
+        try {
+            bInputStream = new BufferedInputStream(context.getAssets().open(indexHtml));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            int len = 0;
+            byte[] tmp = new byte[10240];
+            while ((len = bInputStream.read(tmp)) > 0) {
+                baos.write(tmp, 0, len);
+            }
+            return new String(baos.toByteArray(), "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (bInputStream != null) {
+                try {
+                    bInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static String getContentTypeByResourceName(String resourceName) {
+        if (resourceName.endsWith(".css")) {
+            return BaseContract.CSS_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".js")) {
+            return BaseContract.JS_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".swf")) {
+            return BaseContract.SWF_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".png")) {
+            return BaseContract.PNG_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".jpg") || resourceName.endsWith(".jpeg")) {
+            return BaseContract.JPG_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".woff")) {
+            return BaseContract.WOFF_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".ttf")) {
+            return BaseContract.TTF_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".svg")) {
+            return BaseContract.SVG_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".eot")) {
+            return BaseContract.EOT_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".mp3")) {
+            return BaseContract.MP3_CONTENT_TYPE;
+        } else if (resourceName.endsWith(".mp4")) {
+            return BaseContract.MP4_CONTENT_TYPE;
+        }
+        return "";
+    }
+
+    //安装
+    public static void installApkFile(Context context, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //兼容7.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+            context.startActivity(intent);
+        }
+    }
+
+    //卸载
+    public static void unInstall(Context context, String packageName) {
+        try {
+            Uri uri = Uri.parse("package:" + packageName);
+            Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //删除所有文件
+    public static void deleteAll(File fileDir) {
+        File dir = fileDir;
+        if (dir.exists() && dir.isDirectory()) {
+            File[] fileNames = dir.listFiles();
+            if (fileNames != null) {
+                for (File fileName : fileNames) {
+                    fileName.delete();
+                }
+            }
+        }
+        EventBus.getDefault().post(new EventBusMessage(BaseContract.RxBusEventType.LOAD_BOOK_LIST, 0));
     }
 
 
