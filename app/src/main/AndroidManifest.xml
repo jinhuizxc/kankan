@@ -112,6 +112,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".test.TestActivity" />
         <activity android:name=".ui.androidserver.AndroidServerActivity" />
+        <activity android:name=".ui.webbrowse.WebBrowseActivity" />
 
         <!--百度地图-->
         <meta-data

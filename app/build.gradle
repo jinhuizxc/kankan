@@ -73,24 +73,20 @@ dependencies {
     //完整版引入  视频控件
     implementation 'com.shuyu:GSYVideoPlayer:7.1.1'
     //kotlin
-    implementation "androidx.core:core-ktx:1.1.0"
+    implementation 'androidx.core:core-ktx:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     //LeakCanary  监测内存泄露
-    debugApi'com.squareup.leakcanary:leakcanary-android:1.6.2'
-    releaseApi'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
-
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     //EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
-
     //Android服务器需要的库
     implementation 'com.koushikdutta.async:androidasync:2.2.1'
-
     //butterknife绑定控件
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
-
     implementation 'com.google.android.material:material:1.0.0'
+    implementation files('libs/tencent-x5.jar')
 }
 repositories {
     mavenCentral()

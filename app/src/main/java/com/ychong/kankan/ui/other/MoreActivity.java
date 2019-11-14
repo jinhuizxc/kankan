@@ -30,6 +30,7 @@ public class MoreActivity extends BaseActivity {
     private ImageView backIv;
     private LinearLayout androidServerLl;
     private LinearLayout aboutKankanLl;
+    private LinearLayout webBrowseLl;
     private SharedPreferences sp;
 
     @Override
@@ -49,6 +50,14 @@ public class MoreActivity extends BaseActivity {
         mapLl.setOnClickListener(view -> BaiDuMapActivity.startActivity(this));
         androidServerLl.setOnClickListener(view -> AndroidServerActivity.startAct(this));
         aboutKankanLl.setOnClickListener(view -> aboutKankan());
+        webBrowseLl.setOnClickListener(v -> webBrowseClick());
+
+    }
+
+    /**
+     * Web浏览
+     */
+    private void webBrowseClick() {
 
     }
 
@@ -79,6 +88,7 @@ public class MoreActivity extends BaseActivity {
         updateAddressLl = findViewById(R.id.update_address_ll);
         androidServerLl = findViewById(R.id.android_server_ll);
         aboutKankanLl = findViewById(R.id.about_kankan_ll);
+        webBrowseLl = findViewById(R.id.web_browse_ll);
     }
 
     private void initLayout() {

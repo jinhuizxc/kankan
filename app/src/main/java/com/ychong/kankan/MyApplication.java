@@ -2,6 +2,7 @@ package com.ychong.kankan;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.CoordType;
@@ -10,6 +11,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.ychong.kankan.entity.DaoMaster;
 import com.ychong.kankan.entity.DaoSession;
+import com.ychong.kankan.ui.webbrowse.X5Service;
 
 public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
@@ -63,5 +65,10 @@ public class MyApplication extends Application {
     public static RefWatcher getRefWatcher(Context context){
         MyApplication application = (MyApplication) context.getApplicationContext();
         return application.refWatcher;
+    }
+
+    private void initX5(){
+        Intent intent = new Intent(this, X5Service.class);
+        startService(intent);
     }
 }
