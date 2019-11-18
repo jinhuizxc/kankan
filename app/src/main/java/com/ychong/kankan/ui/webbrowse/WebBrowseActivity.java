@@ -17,6 +17,11 @@ public class WebBrowseActivity  extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_web_browse;
+    }
+
     private void initListener() {
 
     }
@@ -30,6 +35,6 @@ public class WebBrowseActivity  extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_web_browse);
+        //setContentView(R.layout.activity_web_browse);
     }
 }

@@ -2,6 +2,7 @@ package com.ychong.kankan.ui;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -49,6 +50,11 @@ public class LoginActivity extends BaseActivity {
     private ImageView iconIv;
     private AnimatorSet animatorSet;
 
+    public static void startAct(Context context) {
+        Intent intent = new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,11 @@ public class LoginActivity extends BaseActivity {
         initView();
         initData();
         initListener();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_login;
     }
 
     private void initListener() {
@@ -185,7 +196,7 @@ public class LoginActivity extends BaseActivity {
 
     }
     private void initLayout() {
-        setContentView(R.layout.activity_login);
+        //setContentView(R.layout.activity_login);
     }
 
     Handler handler = new Handler();

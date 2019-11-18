@@ -65,6 +65,11 @@ public class TestActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_test;
+    }
+
     private void initListener() {
 
     }

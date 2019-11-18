@@ -14,6 +14,7 @@ import com.ychong.kankan.R;
 import com.ychong.kankan.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.kankan.utils.BarUtils;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.widget.dialog.InputDialog;
 import com.ychong.kankan.utils.widget.dialog.TipsDialog;
@@ -40,6 +41,11 @@ public class MoreActivity extends BaseActivity {
         initView();
         initData();
         initListener();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_more;
     }
 
     private void initListener() {
@@ -92,7 +98,7 @@ public class MoreActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_more);
+        //setContentView(R.layout.activity_more);
     }
 
     private void showAddressDialog(View view,String value){

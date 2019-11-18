@@ -16,11 +16,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +97,11 @@ public class AndroidServerActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_android_server;
+    }
+
     private void initListener() {
 
     }
@@ -108,7 +115,7 @@ public class AndroidServerActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_android_server);
+        //setContentView(R.layout.activity_android_server);
     }
 
     private boolean requestPermission() {
@@ -150,7 +157,7 @@ public class AndroidServerActivity extends BaseActivity {
                 break;
             case R.id.right_tv:
                 //更多
-                showDialog();
+                showPopupMenu(view);
                 break;
             case R.id.fab:
                 startServer();
@@ -159,6 +166,24 @@ public class AndroidServerActivity extends BaseActivity {
                 break;
         }
 
+    }
+
+    private void showPopupMenu(View view) {
+        //创建弹出式菜单对象
+        PopupMenu popupMenu = new PopupMenu(this,view);
+        //获取菜单填充器
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        //填充菜单
+        inflater.inflate(R.menu.item_menu,popupMenu.getMenu());
+        //绑定菜单项的点击事件
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                showDialog();
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 
     private void startServer() {
@@ -233,7 +258,9 @@ public class AndroidServerActivity extends BaseActivity {
         }
     }
 
-    //显示确认对话框
+    /**
+     * 显示确认对话框
+     */
     private void showDialog() {
         new TipsDialog(this, "温馨提示：", "确定全部删除吗？", new TipsDialogListener() {
             @Override

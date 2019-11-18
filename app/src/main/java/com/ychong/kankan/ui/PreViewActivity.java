@@ -37,6 +37,11 @@ public class PreViewActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_preview;
+    }
+
     private void initListener() {
 
     }
@@ -134,7 +139,7 @@ public class PreViewActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_preview);
+        //setContentView(R.layout.activity_preview);
     }
 
     @Override

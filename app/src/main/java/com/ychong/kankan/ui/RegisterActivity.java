@@ -46,6 +46,11 @@ public class RegisterActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_register;
+    }
+
     private void initListener() {
         registerTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +78,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_register);
+        //setContentView(R.layout.activity_register);
     }
 
     private boolean checkData() {

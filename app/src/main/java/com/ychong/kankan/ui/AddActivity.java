@@ -79,6 +79,11 @@ public class AddActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_add;
+    }
+
     private void initListener() {
         addBtn.setOnClickListener(view -> addPic());
 
@@ -161,7 +166,7 @@ public class AddActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_add);
+        //setContentView(R.layout.activity_add);
     }
 
     @Override
