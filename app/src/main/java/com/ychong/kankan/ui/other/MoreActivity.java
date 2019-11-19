@@ -43,6 +43,11 @@ public class MoreActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_more;
+    }
+
     private void initListener() {
         backIv.setOnClickListener(view -> finish());
         updateAddressLl.setOnClickListener(view -> {
@@ -93,7 +98,7 @@ public class MoreActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_more);
+        //setContentView(R.layout.activity_more);
     }
 
     private void showAddressDialog(View view,String value){

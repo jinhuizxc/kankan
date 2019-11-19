@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:andriod="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/tools"
+    android:duration="200"
+    andriod:fromYDelta="100%"
+    andriod:toYDelta="0"
+    android:ignore="NamespaceTypo" />

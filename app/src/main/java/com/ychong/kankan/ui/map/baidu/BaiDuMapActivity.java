@@ -121,6 +121,11 @@ public class BaiDuMapActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_baidu_map;
+    }
+
     private void initListener() {
         ordinaryRb.setOnClickListener(view -> {
             Bmap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
@@ -451,7 +456,7 @@ public class BaiDuMapActivity extends BaseActivity {
      * 初始化布局
      */
     private void initLayout() {
-        setContentView(R.layout.activity_baidu_map);
+        //setContentView(R.layout.activity_baidu_map);
     }
 
     @Override

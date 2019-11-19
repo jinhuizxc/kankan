@@ -11,7 +11,7 @@
     <string name="version_number">版本号:</string>
     <string name="about_kankan">关于看看</string>
     <string name="update_address">修改地址</string>
-    <string name="android_server">Android服务器：</string>
+    <string name="android_server">Wifi App安装：</string>
 
     <string name="wlan_enabled">WLAN服务已开启</string>
     <string name="wlan_disabled">WLAN服务未开启</string>

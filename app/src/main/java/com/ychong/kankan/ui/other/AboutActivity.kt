@@ -12,6 +12,10 @@ import com.ychong.kankan.utils.BaseUtils
  * 关于
  */
 class AboutActivity : BaseActivity() {
+    override fun getLayoutId(): Int {
+        return R.layout.activity_about
+    }
+
     private var backIv: ImageView? = null
     private var titleTv: TextView? = null
     private var versionNumberTv: TextView? = null
@@ -41,6 +45,6 @@ class AboutActivity : BaseActivity() {
     }
 
     private fun initLayout() {
-        setContentView(R.layout.activity_about)
+        //setContentView(R.layout.activity_about)
     }
 }

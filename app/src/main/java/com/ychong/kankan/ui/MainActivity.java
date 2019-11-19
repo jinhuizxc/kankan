@@ -66,6 +66,11 @@ public class MainActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
     private void initListener() {
         addIv.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddActivity.class)));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -138,7 +143,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
     }
 
 
