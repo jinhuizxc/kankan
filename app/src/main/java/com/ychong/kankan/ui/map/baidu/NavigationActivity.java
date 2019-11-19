@@ -1,4 +1,4 @@
-package com.ychong.kankan.map.baidu;
+package com.ychong.kankan.ui.map.baidu;
 
 import android.app.Activity;
 import android.os.Bundle;

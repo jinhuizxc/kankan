@@ -1,4 +1,4 @@
-package com.ychong.kankan.map.baidu;
+package com.ychong.kankan.ui.map.baidu;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,7 +31,7 @@ public class PermissionsActivity extends AppCompatActivity {
     private boolean isRequireCheck; // 是否需要系统权限检测, 防止和系统提示框重叠
 
     // 启动当前权限页面的公开接口
-    public static void startPermissionsActivity(Activity activity, int requestCode, String... permissions) {
+    public static void startAct(Activity activity, int requestCode, String... permissions) {
         Intent intent = new Intent(activity, PermissionsActivity.class);
         intent.putExtra(EXTRA_PERMISSIONS, permissions);
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);

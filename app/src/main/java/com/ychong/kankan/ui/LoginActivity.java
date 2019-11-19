@@ -1,5 +1,6 @@
 package com.ychong.kankan.ui;
 
+import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.UserBean;
 import com.ychong.kankan.ui.other.MoreActivity;
+import com.ychong.kankan.utils.PermissionUtils;
 import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import org.json.JSONException;
@@ -48,6 +50,12 @@ public class LoginActivity extends BaseActivity {
     private SharedPreferences sp;
     private ImageView iconIv;
     private AnimatorSet animatorSet;
+
+    public static String[] permission = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.CALL_PHONE};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,6 +165,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initData() {
+        PermissionUtils.checkAndApplyfPermissionActivity(this, permission, 2000);
         handler.postDelayed(runnable,500);
         sp = getSharedPreferences("user", MODE_PRIVATE);
         accountEt.setText(sp.getString("account", ""));

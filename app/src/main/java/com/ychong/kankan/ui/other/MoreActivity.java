@@ -11,9 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
-import com.ychong.kankan.map.baidu.BaiDuMapActivity;
+import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.kankan.ui.webbrowse.WebBrowseActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.widget.dialog.InputDialog;
 import com.ychong.kankan.utils.widget.dialog.TipsDialog;
@@ -58,7 +59,7 @@ public class MoreActivity extends BaseActivity {
      * Web浏览
      */
     private void webBrowseClick() {
-
+        WebBrowseActivity.startAct(this);
     }
 
     private void aboutKankan() {

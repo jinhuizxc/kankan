@@ -15,6 +15,8 @@ public class BaseContract {
     public static final int PIC_TYPE= 1;
     public static final int FILE_TYPE = 2;
 
+    public static final String LOGIN_STATUS = "Login_Status";
+
     /**
      * 手机号正则
      */
@@ -53,6 +55,8 @@ public class BaseContract {
     public static final String EOT_CONTENT_TYPE = "image/vnd.ms-fontobject";
     public static final String MP3_CONTENT_TYPE = "audio/mp3";
     public static final String MP4_CONTENT_TYPE = "video/mpeg4";
+
+    public static final String FLAG_OF_JIGUANG_ALIAS = "FLAG_OF_JI_GUANG_ALIAS"; //极光别名设置状态
 
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/netwokinterruption"
+        android:layout_margin="@dimen/dp_10"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="网络无连接，请检查网络设置"
+        android:layout_margin="@dimen/dp_10"
+        android:textColor="@color/gray"
+        android:textSize="14sp"/>
+    <Button
+        android:id="@+id/net_error_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="刷新"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/refresh_btn_bg"/>
+</LinearLayout>

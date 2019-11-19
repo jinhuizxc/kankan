@@ -1,4 +1,4 @@
-package com.ychong.kankan.map.baidu;
+package com.ychong.kankan.ui.map.baidu;
 
 import android.Manifest;
 import android.app.Activity;
@@ -45,7 +45,7 @@ import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
 import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
 import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
 import com.ychong.kankan.R;
-import com.ychong.kankan.map.baidu.adapter.AddressAdapter;
+import com.ychong.kankan.ui.map.baidu.adapter.AddressAdapter;
 import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.utils.PermissionsChecker;
 import java.io.IOException;
@@ -76,14 +76,10 @@ public class BaiDuMapActivity extends BaseActivity {
     public static final int WALK_TYPE = 0;
     public static final int RADING_TYPE = 1;
     private static final int REQUEST_CODE = 0;
-    private static final String[] PERMISSIONS = new String[]{
+    private static final String[] permission = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
-
     private PermissionsChecker mPermissionsChecker;
     private LatLng startLatLng;
     private BaiduMap Bmap;
@@ -565,8 +561,8 @@ public class BaiDuMapActivity extends BaseActivity {
     public void initPermissions() {
         mPermissionsChecker = new PermissionsChecker(this);
         // 缺少权限时, 进入权限配置页面
-        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-            PermissionsActivity.startPermissionsActivity(this, REQUEST_CODE, PERMISSIONS);
+        if (mPermissionsChecker.lacksPermissions(permission)) {
+            PermissionsActivity.startAct(this, REQUEST_CODE, permission);
         }
     }
 }

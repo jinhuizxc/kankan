@@ -7,17 +7,28 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.didi.virtualapk.PluginManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.ychong.kankan.entity.DaoMaster;
 import com.ychong.kankan.entity.DaoSession;
 import com.ychong.kankan.ui.webbrowse.X5Service;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
     private static DaoSession mDaoSession;
     private static  Context mContext;
     private RefWatcher refWatcher;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        //初始化virtualApk
+        PluginManager.getInstance(base).init();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,6 +36,7 @@ public class MyApplication extends Application {
         initLeakCanary();
         initBaiDuMap();
        // initGreenDao();
+        initJPush();
     }
 
     public static Context getAppContext(){
@@ -70,5 +82,17 @@ public class MyApplication extends Application {
     private void initX5(){
         Intent intent = new Intent(this, X5Service.class);
         startService(intent);
+    }
+
+    /**
+     * 初始化JPush(极光)
+     */
+    private void initJPush() {
+        // 设置开启日志,发布时请关闭日志
+        //JPushInterface.setDebugMode(true);
+        // 初始化 JPush
+        JPushInterface.init(getApplicationContext());
+        //接收，可以再任意处设置
+        //JPushInterface.resumePush(getApplicationContext());
     }
 }

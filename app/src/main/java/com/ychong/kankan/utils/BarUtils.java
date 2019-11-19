@@ -26,6 +26,8 @@ import androidx.annotation.RequiresPermission;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.lang.reflect.Method;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.EXPAND_STATUS_BAR;
 
@@ -614,5 +616,24 @@ public final class BarUtils {
         }
         Log.e("BarUtils", "the view's Context is not an Activity.");
         return null;
+    }
+
+    /**
+     * 判断是否为网址
+     * @param urls
+     * @return
+     */
+    public static boolean isHttpUrl(String urls) {
+        boolean isurl = false;
+        String regex = "(((https|http)?://)?([a-z0-9]+[.])|(www.))"
+                + "\\w+[.|\\/]([a-z0-9]{0,})?[[.]([a-z0-9]{0,})]+((/[\\S&&[^,;\u4E00-\u9FA5]]+)+)?([.][a-z0-9]{0,}+|/?)";//设置正则表达式
+
+        Pattern pat = Pattern.compile(regex.trim());//对比
+        Matcher mat = pat.matcher(urls.trim());
+        isurl = mat.matches();//判断是否匹配
+        if (isurl) {
+            isurl = true;
+        }
+        return isurl;
     }
 }

@@ -1,4 +1,4 @@
-package com.ychong.kankan.map.baidu.adapter;
+package com.ychong.kankan.ui.map.baidu.adapter;
 
 import android.content.Context;
 import android.location.Address;
