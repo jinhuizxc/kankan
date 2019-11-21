@@ -194,11 +194,22 @@ public class WebBrowseActivity  extends BaseActivity {
         Matcher mat = pat.matcher(urls.trim());
         return  mat.matches();//判断是否匹配
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (webView!=null){
+            webView.onResume();
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-        webView.onPause();
-        webView.getSettings().setLightTouchEnabled(false);
+        if (webView!=null){
+            webView.onPause();
+            webView.getSettings().setLightTouchEnabled(false);
+        }
     }
 
     @Override

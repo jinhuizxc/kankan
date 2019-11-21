@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.didi.virtualapk.host'
+//apply plugin: 'com.didi.virtualapk.host'
 
 android {
     compileSdkVersion 29
@@ -106,7 +106,7 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:2.1.6'
 
     //virtualapk
-    implementation 'com.didi.virtualapk:core:0.9.8'
+    //implementation 'com.didi.virtualapk:core:0.9.8'
 }
 repositories {
     mavenCentral()

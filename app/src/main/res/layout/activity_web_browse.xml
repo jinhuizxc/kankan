@@ -5,20 +5,24 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
     <LinearLayout
-        android:paddingRight="@dimen/dp_8"
-        android:paddingLeft="@dimen/dp_8"
+        android:layout_margin="@dimen/dp_8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:background="@drawable/edit_bg"
             android:id="@+id/input_et"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:singleLine="true"
+            android:layout_height="@dimen/dp_40"/>
         <TextView
+            android:layout_marginLeft="@dimen/dp_8"
+            android:background="@drawable/tv_bg_selector"
             android:layout_gravity="center"
             android:id="@+id/search_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="@dimen/dp_40"
             android:text="搜索"/>
     </LinearLayout>
 

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
-import com.didi.virtualapk.PluginManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.ychong.kankan.entity.DaoMaster;
@@ -26,7 +25,7 @@ public class MyApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //初始化virtualApk
-        PluginManager.getInstance(base).init();
+        //PluginManager.getInstance(base).init();
     }
 
     @Override
