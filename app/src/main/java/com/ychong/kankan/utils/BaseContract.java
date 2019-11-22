@@ -59,4 +59,9 @@ public class BaseContract {
     public static final String FLAG_OF_JIGUANG_ALIAS = "FLAG_OF_JI_GUANG_ALIAS"; //极光别名设置状态
 
 
+    public static final String PREFERENCES_NAME_CONFIG= "preferences_name_config";
+
+    public static final String SERVER_HOST_URL_KEY = "server_host_url_key";
+
+
 }

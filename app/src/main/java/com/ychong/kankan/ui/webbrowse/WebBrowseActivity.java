@@ -49,7 +49,6 @@ public class WebBrowseActivity  extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initLayout();
         initView();
         initData();
         initListener();
@@ -173,13 +172,8 @@ public class WebBrowseActivity  extends BaseActivity {
     private void initView() {
         inputEt = findViewById(R.id.input_et);
         searchTv = findViewById(R.id.search_tv);
-        webView  = findViewById(R.id.web_view);
         frameLayout =  findViewById(R.id.error_fragment);
 
-    }
-
-    private void initLayout() {
-        //setContentView(R.layout.activity_web_browse);
     }
 
     /**

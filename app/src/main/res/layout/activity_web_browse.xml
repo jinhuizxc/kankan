@@ -31,9 +31,4 @@
         android:id="@+id/error_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <com.tencent.smtt.sdk.WebView
-        android:visibility="gone"
-        android:id="@+id/web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </LinearLayout>

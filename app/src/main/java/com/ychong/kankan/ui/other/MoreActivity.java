@@ -16,6 +16,7 @@ import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.ui.webbrowse.WebBrowseActivity;
 import com.ychong.kankan.utils.BaseContract;
+import com.ychong.kankan.utils.SPUtils;
 import com.ychong.kankan.utils.widget.dialog.InputDialog;
 import com.ychong.kankan.utils.widget.dialog.TipsDialog;
 import com.ychong.kankan.utils.widget.dialog.TipsDialogListener;
@@ -32,12 +33,11 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout androidServerLl;
     private LinearLayout aboutKankanLl;
     private LinearLayout webBrowseLl;
-    private SharedPreferences sp;
+    private SPUtils mSPUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initLayout();
         initView();
         initData();
         initListener();
@@ -55,7 +55,7 @@ public class MoreActivity extends BaseActivity {
         });
         mapLl.setOnClickListener(view -> BaiDuMapActivity.startActivity(this));
         androidServerLl.setOnClickListener(view -> AndroidServerActivity.startAct(this));
-        aboutKankanLl.setOnClickListener(view -> aboutKankan());
+        aboutKankanLl.setOnClickListener(view -> aboutClick());
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
 
     }
@@ -64,10 +64,10 @@ public class MoreActivity extends BaseActivity {
      * Web浏览
      */
     private void webBrowseClick() {
-        WebBrowseActivity.startAct(this);
+        startActivity(new Intent(this,WebBrowseActivity.class));
     }
 
-    private void aboutKankan() {
+    private void aboutClick() {
         new TipsDialog(this, "您确定要进入关于界面吗?", new TipsDialogListener() {
             @Override
             public void onClick(boolean isConfirm) {
@@ -82,8 +82,8 @@ public class MoreActivity extends BaseActivity {
 
     private void initData() {
         titleTv.setText("更多");
-        sp = getSharedPreferences("config",MODE_PRIVATE);
-       addressTv.setText(sp.getString("server_host_url",BaseContract.SERVER_HOST_URL));
+        mSPUtils = SPUtils.getInstance(BaseContract.PREFERENCES_NAME_CONFIG,MODE_PRIVATE);
+       addressTv.setText(mSPUtils.getString(BaseContract.SERVER_HOST_URL_KEY,BaseContract.SERVER_HOST_URL));
     }
 
     private void initView() {
@@ -97,17 +97,10 @@ public class MoreActivity extends BaseActivity {
         webBrowseLl = findViewById(R.id.web_browse_ll);
     }
 
-    private void initLayout() {
-        //setContentView(R.layout.activity_more);
-    }
-
     private void showAddressDialog(View view,String value){
         TextView textView = (TextView)view;
         new InputDialog(this, value, text -> {
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("server_host_url",text);
-            editor.apply();
-            editor.commit();
+            mSPUtils.put(BaseContract.SERVER_HOST_URL_KEY,text);
             textView.setText(text);
         }).setTitle("请输入地址")
         .show();

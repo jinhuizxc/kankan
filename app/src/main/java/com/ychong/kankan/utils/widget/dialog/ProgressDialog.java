@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,6 +48,10 @@ public class ProgressDialog extends Dialog {
 
     private void initData() {
         tipsTv.setText(tips);
+            Window window = getWindow();
+            if (window!=null){
+                window.setBackgroundDrawableResource(android.R.color.transparent);
+            }
     }
 
     private void initView() {
