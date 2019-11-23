@@ -33,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        BarUtils.setStatusBarColor(this,getResources().getColor(R.color.green));
+        BarUtils.setStatusBarColor(this,getResources().getColor(R.color.bar_grey_90));
     }
 
 

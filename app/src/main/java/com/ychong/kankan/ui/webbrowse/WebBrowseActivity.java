@@ -1,7 +1,5 @@
 package com.ychong.kankan.ui.webbrowse;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -12,10 +10,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
@@ -33,10 +34,14 @@ import com.ychong.kankan.utils.BaseUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Administrator
+ */
 public class WebBrowseActivity  extends BaseActivity {
     private EditText inputEt;
     private TextView searchTv;
     private WebView webView;
+    private LinearLayout webViewLayout;
 
     private boolean isLoading = false;
     private ErrorFragment errorFragment;
@@ -71,12 +76,11 @@ public class WebBrowseActivity  extends BaseActivity {
 
     private void search() {
         String inputStr = inputEt.getText().toString();
-        if (TextUtils.isEmpty(inputStr)|| isHttpUrl(inputStr)){
+        if (TextUtils.isEmpty(inputStr)|| BaseUtils.isHttpUrl(inputStr)){
             inputStr = "http://www.baidu.com";
             inputEt.setText(inputStr);
         }
         webView.loadUrl(inputStr);
-
     }
 
     private void initData() {
@@ -86,6 +90,8 @@ public class WebBrowseActivity  extends BaseActivity {
     }
 
     private void initWebView(){
+        webView = new WebView(getApplicationContext());
+        webViewLayout.addView(webView);
         WebSettings webSetting = webView.getSettings();
         webSetting.setJavaScriptEnabled(true);
         webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -116,6 +122,7 @@ public class WebBrowseActivity  extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView webView, String url) {
                 WebView.HitTestResult hitTestResult = webView.getHitTestResult();
                 if (!TextUtils.isEmpty(url)&&hitTestResult==null){
+                    inputEt.setText(url);
                     webView.loadUrl(url);
                     return true;
                 }
@@ -164,7 +171,7 @@ public class WebBrowseActivity  extends BaseActivity {
     }
     private void initFragment() {
         errorFragment = ErrorFragment.newInstance();
-        FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.error_fragment, errorFragment);
         transaction.commit();
@@ -172,21 +179,9 @@ public class WebBrowseActivity  extends BaseActivity {
     private void initView() {
         inputEt = findViewById(R.id.input_et);
         searchTv = findViewById(R.id.search_tv);
+        webViewLayout = findViewById(R.id.web_view_layout);
         frameLayout =  findViewById(R.id.error_fragment);
 
-    }
-
-    /**
-     * 判断是否为网址
-     * @param urls
-     * @return
-     */
-    public static boolean isHttpUrl(String urls) {
-        String regex = "(((https|http)?://)?([a-z0-9]+[.])|(www.))"
-                + "\\w+[.|\\/]([a-z0-9]{0,})?[[.]([a-z0-9]{0,})]+((/[\\S&&[^,;\u4E00-\u9FA5]]+)+)?([.][a-z0-9]{0,}+|/?)";//设置正则表达式
-        Pattern pat = Pattern.compile(regex.trim());//对比
-        Matcher mat = pat.matcher(urls.trim());
-        return  mat.matches();//判断是否匹配
     }
 
     @Override
@@ -220,7 +215,10 @@ public class WebBrowseActivity  extends BaseActivity {
     @Override
     protected void onDestroy() {
         if (this.webView != null) {
+            webView.setVisibility(View.GONE);
+            webView.removeAllViews();
             webView.destroy();
+            webView =null;
         }
         super.onDestroy();
     }

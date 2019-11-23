@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:paddingLeft="@dimen/dp_3"
             android:background="@drawable/edit_bg"
             android:id="@+id/input_et"
             android:layout_width="0dp"
@@ -25,6 +26,11 @@
             android:layout_height="@dimen/dp_40"
             android:text="搜索"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/web_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
 
     <FrameLayout
         android:visibility="gone"

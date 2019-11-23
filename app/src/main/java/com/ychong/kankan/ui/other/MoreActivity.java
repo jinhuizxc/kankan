@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
+import com.ychong.kankan.ui.ColumnSelectActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
@@ -33,6 +34,7 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout androidServerLl;
     private LinearLayout aboutKankanLl;
     private LinearLayout webBrowseLl;
+    private LinearLayout columnSelectLayout;
     private SPUtils mSPUtils;
 
     @Override
@@ -57,6 +59,7 @@ public class MoreActivity extends BaseActivity {
         androidServerLl.setOnClickListener(view -> AndroidServerActivity.startAct(this));
         aboutKankanLl.setOnClickListener(view -> aboutClick());
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
+        columnSelectLayout.setOnClickListener(view -> ColumnSelectActivity.startAct(this));
 
     }
 
@@ -95,6 +98,7 @@ public class MoreActivity extends BaseActivity {
         androidServerLl = findViewById(R.id.android_server_ll);
         aboutKankanLl = findViewById(R.id.about_kankan_ll);
         webBrowseLl = findViewById(R.id.web_browse_ll);
+        columnSelectLayout = findViewById(R.id.column_select_layout);
     }
 
     private void showAddressDialog(View view,String value){

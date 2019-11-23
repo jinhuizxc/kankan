@@ -23,4 +23,5 @@
     <string name="set_network">设置网络</string>
     <string name="http_address">http://%1$s:%2$d</string>
     <string name="web_browse">Web浏览</string>
+    <string name="column_select">栏目选择:</string>
 </resources>

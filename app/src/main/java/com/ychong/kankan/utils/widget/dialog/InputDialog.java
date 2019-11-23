@@ -84,17 +84,17 @@ public class InputDialog extends Dialog {
         if (!TextUtils.isEmpty(cancelStr)){
             cancelTv.setText(cancelStr);
         }
-
-        //获取当前Activity所在的窗体
-        Window dialogWindow = getWindow();
-        //设置Dialog从窗体底部弹出
-        dialogWindow.setGravity(Gravity.BOTTOM);
-        //获得窗体的属性
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.y = 40;//设置Dialog距离底部的距离
-
-        //将属性设置给窗体
-        dialogWindow.setAttributes(lp);
+//
+//        //获取当前Activity所在的窗体
+//        Window dialogWindow = getWindow();
+//        //设置Dialog从窗体底部弹出
+//        dialogWindow.setGravity(Gravity.BOTTOM);
+//        //获得窗体的属性
+//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        lp.y = 40;//设置Dialog距离底部的距离
+//
+//        //将属性设置给窗体
+//        dialogWindow.setAttributes(lp);
     }
 
     private void initView() {

@@ -45,6 +45,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BaseUtils {
     public static String gainCurrenTime() {
@@ -87,7 +89,18 @@ public class BaseUtils {
         final float scale = MyApplication.getAppContext().getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
-
+    /**
+     * 判断是否为网址
+     * @param urls
+     * @return
+     */
+    public static boolean isHttpUrl(String urls) {
+        String regex = "(((https|http)?://)?([a-z0-9]+[.])|(www.))"
+                + "\\w+[.|\\/]([a-z0-9]{0,})?[[.]([a-z0-9]{0,})]+((/[\\S&&[^,;\u4E00-\u9FA5]]+)+)?([.][a-z0-9]{0,}+|/?)";//设置正则表达式
+        Pattern pat = Pattern.compile(regex.trim());//对比
+        Matcher mat = pat.matcher(urls.trim());
+        return  mat.matches();//判断是否匹配
+    }
     /**
      * 获取本机ip
      */
