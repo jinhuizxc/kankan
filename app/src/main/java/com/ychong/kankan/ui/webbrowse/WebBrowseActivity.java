@@ -177,10 +177,10 @@ public class WebBrowseActivity  extends BaseActivity {
         transaction.commit();
     }
     private void initView() {
-        inputEt = findViewById(R.id.input_et);
-        searchTv = findViewById(R.id.search_tv);
-        webViewLayout = findViewById(R.id.web_view_layout);
-        frameLayout =  findViewById(R.id.error_fragment);
+        inputEt = (EditText) findViewById(R.id.input_et);
+        searchTv = (TextView) findViewById(R.id.search_tv);
+        webViewLayout = (LinearLayout) findViewById(R.id.web_view_layout);
+        frameLayout = (FrameLayout) findViewById(R.id.error_fragment);
 
     }
 

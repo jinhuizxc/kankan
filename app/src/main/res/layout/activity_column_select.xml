@@ -11,8 +11,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:layout_marginLeft="@dimen/dp_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_18"
             android:text="已选择"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/select_recycler_view"
@@ -24,8 +27,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:layout_marginLeft="@dimen/dp_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_18"
             android:text="未选择"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/un_select_recycler_view"

@@ -1,7 +1,5 @@
 package com.ychong.kankan.test;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,18 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.ychong.kankan.R;
-import com.ychong.kankan.ui.LoginActivity;
-import com.ychong.kankan.ui.MainActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.BaseUtils;
 import com.ychong.kankan.utils.http.ApiService;
-import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +29,6 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -124,7 +115,7 @@ public class TestActivity extends BaseActivity {
     }
 
     private void initView() {
-        testRecyclerView = findViewById(R.id.test_recycler_view);
+        testRecyclerView = (TestRecyclerView) findViewById(R.id.test_recycler_view);
 
 
     }

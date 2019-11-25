@@ -3,17 +3,15 @@ package com.ychong.kankan.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.ychong.kankan.R;
-import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.kankan.ui.login.LoginActivity;
+
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 开屏页

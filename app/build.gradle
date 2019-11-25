@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'
+// 注意：主App中请确保添加aspectjx
+apply plugin: 'android-aspectjx'
 //apply plugin: 'com.didi.virtualapk.host'
 
 android {
@@ -66,9 +68,6 @@ dependencies {
     implementation 'com.jpardogo.googleprogressbar:library:1.2.0'
     //图片选择
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
-    //权限申请
-    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
-    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
     //rxjava2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     // 必要rxjava2依赖
@@ -100,13 +99,15 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation files('libs/tencent-x5.jar')
-
     //极光依赖
     implementation 'cn.jiguang.sdk:jpush:3.3.9'
     implementation 'cn.jiguang.sdk:jcore:2.1.6'
+    //Aop 插件
+    implementation 'org.aspectj:aspectjrt:1.8.9'
 
-    //virtualapk
-    //implementation 'com.didi.virtualapk:core:0.9.8'
+    //滑动返回库
+    implementation project(path: ':swipebacklayout')
+    implementation project(path: ':xrecyclerview')
 }
 repositories {
     mavenCentral()

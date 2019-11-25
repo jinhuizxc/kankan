@@ -1,7 +1,9 @@
 package com.ychong.kankan;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -11,6 +13,9 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.ychong.kankan.entity.DaoMaster;
 import com.ychong.kankan.entity.DaoSession;
+import com.ychong.kankan.ui.login.LoginActivity;
+import com.ychong.kankan.ui.permission.GPermission;
+import com.ychong.kankan.ui.permission.PermissionGlobalConfigCallback;
 import com.ychong.kankan.ui.webbrowse.X5Service;
 
 import cn.jpush.android.api.JPushInterface;
@@ -94,4 +99,5 @@ public class MyApplication extends Application {
         //接收，可以再任意处设置
         //JPushInterface.resumePush(getApplicationContext());
     }
+
 }

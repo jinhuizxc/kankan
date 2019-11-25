@@ -1,4 +1,4 @@
-package com.ychong.kankan.ui;
+package com.ychong.kankan.ui.login;
 
 import android.Manifest;
 import android.animation.AnimatorSet;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,21 +18,29 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.ychong.kankan.test.TestActivity;
+import com.ychong.kankan.ui.MainActivity;
+import com.ychong.kankan.ui.RegisterActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.UserBean;
 import com.ychong.kankan.ui.other.MoreActivity;
+import com.ychong.kankan.ui.permission.GPermission;
+import com.ychong.kankan.ui.permission.Permission;
+import com.ychong.kankan.ui.permission.PermissionGlobalConfigCallback;
+import com.ychong.kankan.ui.permission.PermissionPageUtils;
 import com.ychong.kankan.utils.PermissionUtils;
+import com.ychong.kankan.utils.ToastUtils;
+import com.ychong.kankan.utils.fastclick.SingleClick;
+import com.ychong.kankan.utils.http.FreeObserver;
 import com.ychong.kankan.utils.http.RetrofitUtils;
+import com.ychong.kankan.utils.widget.dialog.TipsDialog;
+import com.ychong.kankan.utils.widget.dialog.TipsDialogListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -55,8 +64,7 @@ public class LoginActivity extends BaseActivity {
     public static String[] permission = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CALL_PHONE};
+            Manifest.permission.READ_PHONE_STATE};
     public static void startAct(Context context) {
         Intent intent = new Intent(context,LoginActivity.class);
         context.startActivity(intent);
@@ -65,15 +73,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initPermission();
         if (!isTaskRoot()) {
             Intent intent = getIntent();
             String action = intent.getAction();
-            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null &&                       action.equals(Intent.ACTION_MAIN)) {
-                finish();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null &&action.equals(Intent.ACTION_MAIN)) {
+                onBackPressed();
                 return;
             }
         }
-        initLayout();
         initView();
         initData();
         initListener();
@@ -85,21 +93,24 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initListener() {
-        loginTv.setOnClickListener(view -> {
-            if (checkData()) {
-                showProgressDialog(LoginActivity.this,"正在登录",false);
-                UserBean bean = new UserBean();
-                bean.account = account;
-                bean.password = password;
-                login(bean);
+        loginTv.setOnClickListener(new View.OnClickListener() {
+            //自定义点击事件间隔，自行传入毫秒值即可
+            @SingleClick(2000)
+            @Override
+            public void onClick(View view) {
+                if (LoginActivity.this.checkData()) {
+                    LoginActivity.this.showProgressDialog(LoginActivity.this, "正在登录", false);
+                    UserBean bean = new UserBean();
+                    bean.account = account;
+                    bean.password = password;
+                    LoginActivity.this.login(bean);
+                }
             }
         });
         registerTv.setOnClickListener(view -> {
-
+            RegisterActivity.startAct(this);
         });
         moreTv.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, MoreActivity.class)));
-
-
     }
 
     private boolean checkData() {
@@ -121,14 +132,9 @@ public class LoginActivity extends BaseActivity {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         RetrofitUtils.getInstance().getApiService().login(body).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
+                .subscribe(new FreeObserver<ResponseBody>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
+                    public void onSuccess(ResponseBody responseBody) {
                         try {
                             String json = responseBody.string();
                             JSONObject jsonObject = new JSONObject(json);
@@ -145,15 +151,9 @@ public class LoginActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        Log.e("error", e.toString());
+                    public void onFailure(String message) {
                         hideProgressDialog();
                         showText("登录失败");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        hideProgressDialog();
                     }
                 });
     }
@@ -173,9 +173,11 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
-
+    @Permission(permissions ={Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE})
     private void initData() {
-        PermissionUtils.checkAndApplyfPermissionActivity(this, permission, 2000);
+        //PermissionUtils.checkAndApplyfPermissionActivity(this, permission, 2000);
         handler.postDelayed(runnable,500);
         sp = getSharedPreferences("user", MODE_PRIVATE);
         accountEt.setText(sp.getString("account", ""));
@@ -193,18 +195,14 @@ public class LoginActivity extends BaseActivity {
         animatorSet.play(scaleY);
         animatorSet.start();
     }
-
     private void initView() {
-        accountEt = findViewById(R.id.account_et);
-        passwordEt = findViewById(R.id.password_et);
-        loginTv = findViewById(R.id.login_tv);
-        moreTv = findViewById(R.id.more_tv);
-        registerTv = findViewById(R.id.register_tv);
-        iconIv = findViewById(R.id.icon_iv);
+        accountEt = (EditText) findViewById(R.id.account_et);
+        passwordEt = (EditText) findViewById(R.id.password_et);
+        loginTv = (TextView) findViewById(R.id.login_tv);
+        moreTv = (TextView) findViewById(R.id.more_tv);
+        registerTv = (TextView) findViewById(R.id.register_tv);
+        iconIv = (ImageView) findViewById(R.id.icon_iv);
 
-    }
-    private void initLayout() {
-        //setContentView(R.layout.activity_login);
     }
 
     Handler handler = new Handler();
@@ -240,4 +238,5 @@ public class LoginActivity extends BaseActivity {
             animatorSet=null;
         }
     }
+
 }

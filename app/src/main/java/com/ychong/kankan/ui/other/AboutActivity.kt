@@ -39,9 +39,9 @@ class AboutActivity : BaseActivity() {
     }
 
     private fun initView() {
-        backIv = findViewById(R.id.left_iv)
-        titleTv = findViewById(R.id.title_tv)
-        versionNumberTv = findViewById(R.id.version_number_tv)
+        backIv = findViewById(R.id.left_iv) as ImageView?
+        titleTv = findViewById(R.id.title_tv) as TextView?
+        versionNumberTv = findViewById(R.id.version_number_tv) as TextView?
     }
 
     private fun initLayout() {

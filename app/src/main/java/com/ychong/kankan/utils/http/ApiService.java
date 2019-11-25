@@ -7,6 +7,8 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 public interface ApiService {
     /**
@@ -36,4 +38,7 @@ public interface ApiService {
 
     @POST("api/ProjectManage/"+"GetIllegalProjectGrid")
     Observable<ResponseBody> GetIllegalProjectGrid(@Body RequestBody body);
+
+    @GET
+    Observable<ResponseBody> getBeautys(@Url String url);
 }

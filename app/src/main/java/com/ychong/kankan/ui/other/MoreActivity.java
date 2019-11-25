@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.ColumnSelectActivity;
+import com.ychong.kankan.ui.beauty.BeautyActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.kankan.ui.base.BaseActivity;
@@ -35,6 +36,7 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout aboutKankanLl;
     private LinearLayout webBrowseLl;
     private LinearLayout columnSelectLayout;
+    private LinearLayout beautyLayout;
     private SPUtils mSPUtils;
 
     @Override
@@ -60,6 +62,7 @@ public class MoreActivity extends BaseActivity {
         aboutKankanLl.setOnClickListener(view -> aboutClick());
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
         columnSelectLayout.setOnClickListener(view -> ColumnSelectActivity.startAct(this));
+        beautyLayout.setOnClickListener(v -> BeautyActivity.startAct(this));
 
     }
 
@@ -90,15 +93,16 @@ public class MoreActivity extends BaseActivity {
     }
 
     private void initView() {
-        backIv = findViewById(R.id.left_iv);
-        titleTv = findViewById(R.id.title_tv);
-        addressTv = findViewById(R.id.address_tv);
-        mapLl = findViewById(R.id.map_ll);
-        updateAddressLl = findViewById(R.id.update_address_ll);
-        androidServerLl = findViewById(R.id.android_server_ll);
-        aboutKankanLl = findViewById(R.id.about_kankan_ll);
-        webBrowseLl = findViewById(R.id.web_browse_ll);
-        columnSelectLayout = findViewById(R.id.column_select_layout);
+        backIv = (ImageView) findViewById(R.id.left_iv);
+        titleTv = (TextView) findViewById(R.id.title_tv);
+        addressTv = (TextView) findViewById(R.id.address_tv);
+        mapLl = (LinearLayout) findViewById(R.id.map_ll);
+        updateAddressLl = (LinearLayout) findViewById(R.id.update_address_ll);
+        androidServerLl = (LinearLayout) findViewById(R.id.android_server_ll);
+        aboutKankanLl = (LinearLayout) findViewById(R.id.about_kankan_ll);
+        webBrowseLl = (LinearLayout) findViewById(R.id.web_browse_ll);
+        columnSelectLayout = (LinearLayout) findViewById(R.id.column_select_layout);
+        beautyLayout = (LinearLayout) findViewById(R.id.beauty_layout);
     }
 
     private void showAddressDialog(View view,String value){

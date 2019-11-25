@@ -1,5 +1,7 @@
 package com.ychong.kankan.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.kankan.ui.login.LoginActivity;
 import com.ychong.kankan.utils.http.RetrofitUtils;
 
 import io.reactivex.Observer;
@@ -36,6 +39,11 @@ public class RegisterActivity extends BaseActivity {
     private String account;
     private String password;
     private String rePassword;
+
+    public static void startAct(Context context) {
+        Intent intent = new Intent(context,RegisterActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,12 +77,12 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void initView() {
-        backIv = findViewById(R.id.left_iv);
-        titleTv = findViewById(R.id.title_tv);
-        accountEt = findViewById(R.id.account_et);
-        passwordEt = findViewById(R.id.password_et);
-        rePasswordEt = findViewById(R.id.re_password_et);
-        registerTv = findViewById(R.id.register_tv);
+        backIv = (ImageView) findViewById(R.id.left_iv);
+        titleTv = (TextView) findViewById(R.id.title_tv);
+        accountEt = (EditText) findViewById(R.id.account_et);
+        passwordEt = (EditText) findViewById(R.id.password_et);
+        rePasswordEt = (EditText) findViewById(R.id.re_password_et);
+        registerTv = (TextView) findViewById(R.id.register_tv);
     }
 
     private void initLayout() {

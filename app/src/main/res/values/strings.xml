@@ -24,4 +24,11 @@
     <string name="http_address">http://%1$s:%2$d</string>
     <string name="web_browse">Web浏览</string>
     <string name="column_select">栏目选择:</string>
+
+<!--    权限-->
+    <string name="permission_location_rationale">We need you to confirm location permission request</string>
+    <string name="permission_location_reject">Go to settings to open permission of location</string>
+    <string name="permission_contact_rationale">We need you to confirm contacts permission request</string>
+    <string name="permission_contact_reject">Go to settings to open permission of contacts</string>
+    <string name="beauty">美女：</string>
 </resources>

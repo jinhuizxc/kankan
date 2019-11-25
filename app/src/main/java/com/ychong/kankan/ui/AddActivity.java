@@ -21,6 +21,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.kankan.ui.permission.Permission;
 import com.ychong.kankan.utils.http.ApiService;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.utils.BaseUtils;
@@ -48,18 +49,12 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.RuntimePermissions;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
  * @author Administrator
  * 上传图片
  */
-@RuntimePermissions
 public class AddActivity extends BaseActivity {
     private Button uploadBtn;
     private Button addBtn;
@@ -136,7 +131,7 @@ public class AddActivity extends BaseActivity {
 
     }
 
-    @NeedsPermission(Manifest.permission.CAMERA)
+    @Permission(permissions=Manifest.permission.CAMERA)
     protected void addPic() {
         PictureSelector.create(AddActivity.this)
                 .openGallery(PictureMimeType.ofAll())
@@ -157,11 +152,11 @@ public class AddActivity extends BaseActivity {
     }
 
     private void initView() {
-        uploadBtn = findViewById(R.id.upload_btn);
-        addBtn = findViewById(R.id.add_btn);
-        recyclerView = findViewById(R.id.recyclerView);
-        backIv = findViewById(R.id.left_iv);
-        titleEt = findViewById(R.id.title_et);
+        uploadBtn = (Button) findViewById(R.id.upload_btn);
+        addBtn = (Button) findViewById(R.id.add_btn);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        backIv = (ImageView) findViewById(R.id.left_iv);
+        titleEt = (EditText) findViewById(R.id.title_et);
 
     }
 

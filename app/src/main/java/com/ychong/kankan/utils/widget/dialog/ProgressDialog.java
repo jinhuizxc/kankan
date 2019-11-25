@@ -2,6 +2,8 @@ package com.ychong.kankan.utils.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Window;
@@ -50,7 +52,7 @@ public class ProgressDialog extends Dialog {
         tipsTv.setText(tips);
             Window window = getWindow();
             if (window!=null){
-                window.setBackgroundDrawableResource(android.R.color.transparent);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             }
     }
 

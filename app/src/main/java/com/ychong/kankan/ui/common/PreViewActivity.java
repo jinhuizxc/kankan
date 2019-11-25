@@ -1,5 +1,7 @@
-package com.ychong.kankan.ui;
+package com.ychong.kankan.ui.common;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,6 +29,13 @@ public class PreViewActivity extends BaseActivity {
     private OrientationUtils orientationUtils;
     private ImageView picIv;
     private int preViewType;//预览类型
+
+    public static  void startAct(Context context,int preViewType,String path){
+        Intent intent = new Intent(context,PreViewActivity.class);
+        intent.putExtra(BaseContract.PREVIEW_TYPE,preViewType);
+        intent.putExtra(BaseContract.PATH,path);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,8 +142,8 @@ public class PreViewActivity extends BaseActivity {
     }
 
     private void initView() {
-        videoPlayer = findViewById(R.id.gsy_video_player);
-        picIv = findViewById(R.id.pic_iv);
+        videoPlayer = (StandardGSYVideoPlayer) findViewById(R.id.gsy_video_player);
+        picIv = (ImageView) findViewById(R.id.pic_iv);
 
     }
 

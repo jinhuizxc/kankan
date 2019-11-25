@@ -434,20 +434,20 @@ public class BaiDuMapActivity extends BaseActivity {
      * 初始化控件
      */
     private void initView() {
-        mapLl = findViewById(R.id.map_ll);
-        ordinaryRb = findViewById(R.id.ordinary_rb);
-        satelliteRb = findViewById(R.id.satellite_rb);
-        realTrafficCb = findViewById(R.id.real_traffic_cb);
-        navigationIv = findViewById(R.id.navigation_iv);
-        startAddressEt = findViewById(R.id.start_address_et);
-        endAddressEt = findViewById(R.id.end_address_et);
-        addressRv = findViewById(R.id.address_rv);
-        navigationTypeLl = findViewById(R.id.navigation_type_ll);
-        navigationInputLl = findViewById(R.id.navigation_input_ll);
-        walkIv = findViewById(R.id.walk_iv);
-        radingIv = findViewById(R.id.rading_iv);
-        carIv = findViewById(R.id.car_iv);
-        locationIv = findViewById(R.id.location_iv);
+        mapLl = (LinearLayout) findViewById(R.id.map_ll);
+        ordinaryRb = (RadioButton) findViewById(R.id.ordinary_rb);
+        satelliteRb = (RadioButton) findViewById(R.id.satellite_rb);
+        realTrafficCb = (CheckBox) findViewById(R.id.real_traffic_cb);
+        navigationIv = (ImageView) findViewById(R.id.navigation_iv);
+        startAddressEt = (EditText) findViewById(R.id.start_address_et);
+        endAddressEt = (EditText) findViewById(R.id.end_address_et);
+        addressRv = (RecyclerView) findViewById(R.id.address_rv);
+        navigationTypeLl = (LinearLayout) findViewById(R.id.navigation_type_ll);
+        navigationInputLl = (LinearLayout) findViewById(R.id.navigation_input_ll);
+        walkIv = (ImageView) findViewById(R.id.walk_iv);
+        radingIv = (ImageView) findViewById(R.id.rading_iv);
+        carIv = (ImageView) findViewById(R.id.car_iv);
+        locationIv = (ImageView) findViewById(R.id.location_iv);
         mapView = new MapView(this);
 
     }

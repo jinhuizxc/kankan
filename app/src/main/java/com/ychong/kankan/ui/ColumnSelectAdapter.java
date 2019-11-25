@@ -29,6 +29,19 @@ public class ColumnSelectAdapter extends RecyclerView.Adapter<ColumnSelectAdapte
         this.list = list;
     }
 
+    public void add(int position,String name){
+        if (list!=null){
+            list.add(position,name);
+            notifyItemInserted(position);
+        }
+    }
+    public void remove(int position){
+        if (!list.isEmpty()){
+            list.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
     @NonNull
     @Override
     public ColumnSelectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

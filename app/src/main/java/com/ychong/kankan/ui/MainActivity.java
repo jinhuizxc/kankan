@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.utils.http.ApiService;
+import com.ychong.kankan.ui.common.PreViewActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.entity.ImageBean;
 import com.ychong.kankan.adapter.MainRecyclerAdapter;
@@ -34,12 +34,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author Administrator
@@ -135,11 +130,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        addIv = findViewById(R.id.right_iv);
-        titleTv = findViewById(R.id.title_tv);
-        headLl = findViewById(R.id.head_ll);
-        ivPhoto = findViewById(R.id.iv_photo);
-        recyclerView = findViewById(R.id.recyclerView);
+        addIv = (ImageView) findViewById(R.id.right_iv);
+        titleTv = (TextView) findViewById(R.id.title_tv);
+        headLl = (LinearLayout) findViewById(R.id.head_ll);
+        ivPhoto = (ImageView) findViewById(R.id.iv_photo);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     }
 
     private void initLayout() {
