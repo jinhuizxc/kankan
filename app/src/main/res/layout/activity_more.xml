@@ -161,5 +161,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/local_video_layout"
+            android:background="@drawable/ll_bg_selector"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/local_video"/>
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/local_video_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"/>
+        </LinearLayout>
 
 </LinearLayout>

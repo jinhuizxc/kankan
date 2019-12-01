@@ -108,6 +108,9 @@ dependencies {
     //滑动返回库
     implementation project(path: ':swipebacklayout')
     implementation project(path: ':xrecyclerview')
+
+    //微信存储
+    implementation 'com.tencent:mmkv:1.0.23'
 }
 repositories {
     mavenCentral()

@@ -37,8 +37,7 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     //创建新View，被LayoutManager所调用
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_beauty,viewGroup,false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_beauty,viewGroup,false));
     }
     //将数据与界面进行绑定的操作
     @Override
@@ -66,7 +65,7 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     //获取数据的数量
     @Override
     public int getItemCount() {
-        return list.size();
+        return list==null?0:list.size();
     }
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     public static class ViewHolder extends RecyclerView.ViewHolder {

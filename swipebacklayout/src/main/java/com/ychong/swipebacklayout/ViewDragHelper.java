@@ -490,9 +490,6 @@ public class ViewDragHelper {
     /**
      * Enable edge tracking for the selected edges of the parent view. The
      * callback's
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#onEdgeTouched(int, int)}
-     * and
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#onEdgeDragStarted(int, int)}
      * methods will only be invoked for edges for which edge tracking has been
      * enabled.
      *

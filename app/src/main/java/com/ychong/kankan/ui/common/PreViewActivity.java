@@ -3,12 +3,18 @@ package com.ychong.kankan.ui.common;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
@@ -65,6 +71,7 @@ public class PreViewActivity extends BaseActivity {
         }
         if (preViewType == BaseContract.VIDEO_TYPE) {
             //预览视频
+            videoPlayer = (StandardGSYVideoPlayer) findViewById(R.id.gsy_video_player);
             videoPlayer.setVisibility(View.VISIBLE);
             preViewVideo(path);
         } else if (preViewType == BaseContract.PIC_TYPE) {
@@ -190,5 +197,28 @@ public class PreViewActivity extends BaseActivity {
             videoPlayer.setVideoAllCallBack(null);
         }
         super.onBackPressed();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //监听横竖屏切换
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏
+            Log.e("dddd","横屏");
+            setStatusBarColor(R.color.green);
+        } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //显示状态栏
+            Log.e("dddd","竖屏");
+        }
+    }
+    /**
+     * 修改状态栏颜色，支持4.4以上版本
+     * @param colorId
+     */
+    public  void setStatusBarColor(int colorId) {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(colorId));
     }
 }

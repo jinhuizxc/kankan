@@ -31,4 +31,5 @@
     <string name="permission_contact_rationale">We need you to confirm contacts permission request</string>
     <string name="permission_contact_reject">Go to settings to open permission of contacts</string>
     <string name="beauty">美女：</string>
+    <string name="local_video">本地视频：</string>
 </resources>

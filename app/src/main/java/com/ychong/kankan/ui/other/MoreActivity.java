@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.ColumnSelectActivity;
+import com.ychong.kankan.ui.LocalVideo.LocalVideoActivity;
 import com.ychong.kankan.ui.beauty.BeautyActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
@@ -37,6 +38,7 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout webBrowseLl;
     private LinearLayout columnSelectLayout;
     private LinearLayout beautyLayout;
+    private LinearLayout localVideoLayout;
     private SPUtils mSPUtils;
 
     @Override
@@ -63,6 +65,7 @@ public class MoreActivity extends BaseActivity {
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
         columnSelectLayout.setOnClickListener(view -> ColumnSelectActivity.startAct(this));
         beautyLayout.setOnClickListener(v -> BeautyActivity.startAct(this));
+        localVideoLayout.setOnClickListener(v -> LocalVideoActivity.startAct(this));
 
     }
 
@@ -103,6 +106,7 @@ public class MoreActivity extends BaseActivity {
         webBrowseLl = (LinearLayout) findViewById(R.id.web_browse_ll);
         columnSelectLayout = (LinearLayout) findViewById(R.id.column_select_layout);
         beautyLayout = (LinearLayout) findViewById(R.id.beauty_layout);
+        localVideoLayout = (LinearLayout) findViewById(R.id.local_video_layout);
     }
 
     private void showAddressDialog(View view,String value){

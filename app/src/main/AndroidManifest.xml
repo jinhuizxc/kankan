@@ -119,7 +119,8 @@
         <activity
             android:name=".ui.common.PreViewActivity"
             android:label="预览"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".test.TestActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -147,6 +148,7 @@
         <activity android:name=".ui.ColumnSelectActivity" />
         <activity android:name=".ui.permission.PermissionActivity" />
         <activity android:name=".ui.beauty.BeautyActivity" />
+        <activity android:name=".ui.LocalVideo.LocalVideoActivity" />
 
         <!--百度地图-->
         <meta-data
