@@ -1,2 +1,2 @@
-include ':app', ':swipebacklayout', ':xrecyclerview'
+include ':app', ':swipebacklayout', ':xrecyclerview', ':picandvideo'
 rootProject.name='Kankan'

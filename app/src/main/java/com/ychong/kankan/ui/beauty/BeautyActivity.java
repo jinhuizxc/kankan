@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -36,7 +37,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
-//http://gank.io/api/data/福利/10/1
 public class BeautyActivity extends BaseActivity {
     private XRecyclerView mRecyclerView;
     private List<BeautyBean> listData = new ArrayList<>();
@@ -83,8 +83,10 @@ public class BeautyActivity extends BaseActivity {
 
     private void initData() {
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);//避免多次绘制ui
+        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);//关闭默认动画
 
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
@@ -139,9 +141,7 @@ public class BeautyActivity extends BaseActivity {
                         mRecyclerView.loadMoreComplete();
                         adapter.notifyDataSetChanged();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
 

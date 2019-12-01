@@ -44,6 +44,7 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
         Glide.with(context.getApplicationContext())
                 .load(list.get(position).url)
+                .placeholder(R.drawable.kankan)
                 .into(viewHolder.beautyIv);
         viewHolder.beautyIv.setOnClickListener(
                 new View.OnClickListener() {
@@ -57,11 +58,6 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
         );
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
-    }
-
     //获取数据的数量
     @Override
     public int getItemCount() {
@@ -72,7 +68,7 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
         public ImageView beautyIv;
         public ViewHolder(View view){
             super(view);
-            beautyIv = (ImageView) view.findViewById(R.id.beauty_iv);
+            beautyIv =  view.findViewById(R.id.beauty_iv);
         }
     }
 }

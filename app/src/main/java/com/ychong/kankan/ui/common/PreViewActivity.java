@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -30,7 +31,7 @@ import java.io.File;
 /**
  * 预览视频  图片  文件
  */
-public class PreViewActivity extends BaseActivity {
+public class PreViewActivity extends AppCompatActivity {
     private StandardGSYVideoPlayer videoPlayer;
     private OrientationUtils orientationUtils;
     private ImageView picIv;
@@ -51,8 +52,9 @@ public class PreViewActivity extends BaseActivity {
         initData();
         initListener();
     }
-
-    @Override
+    private void initLayout(){
+        setContentView(getLayoutId());
+    }
     public int getLayoutId() {
         return R.layout.activity_preview;
     }
@@ -103,12 +105,12 @@ public class PreViewActivity extends BaseActivity {
         //需要判断图片类型 来自本地还是网络
         if (path.contains("http://") || path.contains("https://")) {
             //来自网络
-            Glide.with(this).load(path).placeholder(R.drawable.kankan).override(1200, 1500).into(picIv);
+            Glide.with(getApplicationContext()).load(path).placeholder(R.drawable.kankan).override(1200, 1500).into(picIv);
         } else {
             //来自本地
             File file = new File(path);
             if (file.exists()) {
-                Glide.with(this).load(file).placeholder(R.drawable.kankan).override(1200, 1500).into(picIv);
+                Glide.with(getApplicationContext()).load(file).placeholder(R.drawable.kankan).override(1200, 1500).into(picIv);
             } else {
                 Toast.makeText(this, "本地文件不存在", Toast.LENGTH_SHORT).show();
                 onBackPressed();
@@ -152,10 +154,6 @@ public class PreViewActivity extends BaseActivity {
         videoPlayer = (StandardGSYVideoPlayer) findViewById(R.id.gsy_video_player);
         picIv = (ImageView) findViewById(R.id.pic_iv);
 
-    }
-
-    private void initLayout() {
-        //setContentView(R.layout.activity_preview);
     }
 
     @Override

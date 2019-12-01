@@ -28,6 +28,7 @@ import com.ychong.swipebacklayout.SwipeBackLayout;
 public abstract class BaseActivity extends SwipeBackActivity {
 
     private SwipeBackLayout mSwipeBackLayout;
+    private Context context = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,11 +79,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
             @Override
             public void onPermissionReject(String permission, int reject) {
-                new TipsDialog(BaseActivity.this, "权限未同意，跳转到设置界面，自行设置权限", new TipsDialogListener() {
+                new TipsDialog(context, "权限未同意，跳转到设置界面，自行设置权限", new TipsDialogListener() {
                     @Override
                     public void onClick(boolean isConfirm) {
                         if (isConfirm){
-                            new PermissionPageUtils(BaseActivity.this).jumpPermissionPage();
+                            new PermissionPageUtils(context).jumpPermissionPage();
                         }else {
                             System.exit(0);
                         }
