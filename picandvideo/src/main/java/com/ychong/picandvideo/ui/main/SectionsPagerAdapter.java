@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.ychong.picandvideo.R;
+import com.ychong.picandvideo.ui.main.picture.BeautyFragment;
+import com.ychong.picandvideo.ui.main.video.LocalVideoFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -27,9 +29,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        switch (position){
+            case 0:
+                //图片
+                return BeautyFragment.newInstance();
+            case 1:
+                //视频
+                return LocalVideoFragment.newInstance();
+        }
+        return null;
     }
 
     @Nullable

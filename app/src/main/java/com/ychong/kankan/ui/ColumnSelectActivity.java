@@ -9,12 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ychong.kankan.R;
-import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.ui.other.MoreActivity;
+import com.ychong.baselib.base.BaseActivity;
 import com.ychong.kankan.utils.animator.FlyAnimator;
 
 import java.util.ArrayList;

@@ -13,9 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
-import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.ui.login.LoginActivity;
-import com.ychong.kankan.utils.http.RetrofitUtils;
+import com.ychong.baselib.base.BaseActivity;
+import com.ychong.baselib.utils.http.RetrofitUtils;
+import com.ychong.kankan.utils.ApiService;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -110,8 +110,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void register(){
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "");
-        RetrofitUtils.getInstance()
-                .getApiService()
+        RetrofitUtils.getInstance(this).getRetrofit().create(ApiService.class)
                 .register(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

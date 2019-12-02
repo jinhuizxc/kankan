@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.ApkInfoBean;
-import com.ychong.kankan.utils.BaseUtils;
+import com.ychong.baselib.utils.BaseUtils;
 
 import java.io.File;
 import java.util.List;

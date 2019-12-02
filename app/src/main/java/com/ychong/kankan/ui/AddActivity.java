@@ -20,16 +20,15 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.ui.permission.Permission;
-import com.ychong.kankan.utils.http.ApiService;
+import com.ychong.baselib.base.BaseActivity;
+import com.ychong.kankan.utils.ApiService;
 import com.ychong.kankan.utils.BaseContract;
-import com.ychong.kankan.utils.BaseUtils;
-import com.ychong.kankan.utils.ftp.FtpFileHelper;
+import com.ychong.baselib.utils.BaseUtils;
+import com.ychong.baselib.utils.ftp.FtpFileHelper;
 import com.ychong.kankan.entity.ImageBean;
 import com.ychong.kankan.adapter.NinePicAdater;
 import com.ychong.kankan.R;
-import com.ychong.kankan.utils.http.RetrofitUtils;
+import com.ychong.baselib.utils.http.RetrofitUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,8 +129,6 @@ public class AddActivity extends BaseActivity {
                 });
 
     }
-
-    @Permission(permissions=Manifest.permission.CAMERA)
     protected void addPic() {
         PictureSelector.create(AddActivity.this)
                 .openGallery(PictureMimeType.ofAll())
@@ -187,7 +184,7 @@ public class AddActivity extends BaseActivity {
 
     private void insertData(ImageBean bean) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(bean));
-        RetrofitUtils.getInstance().getApiService().insertImage(body)
+        RetrofitUtils.getInstance(this).getRetrofit().create(ApiService.class).insertImage(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {

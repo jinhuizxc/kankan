@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api 'androidx.appcompat:appcompat:1.1.0'
+    testApi 'junit:junit:4.12'
+    androidTestApi 'androidx.test.ext:junit:1.1.1'
+    androidTestApi 'androidx.test.espresso:espresso-core:3.2.0'
+    api project(path: ':xrecyclerview')
+    api project(path: ':swipebacklayout')
+
+    //图片加载Glide
+    api 'com.github.bumptech.glide:glide:4.9.0'
+    //FTP连接
+    api files('libs/commons-net-3.0.1.jar')
+    //数据库 greenDao
+    api 'org.greenrobot:greendao:3.2.2'
+    //加载控件
+    api 'com.jpardogo.googleprogressbar:library:1.2.0'
+    //图片选择
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
+    //rxjava2
+    api 'io.reactivex.rxjava2:rxjava:2.2.9'
+    // 必要rxjava2依赖
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    // 必要rxandrroid依赖，切线程时需要用到
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
+    // 必要retrofit依赖
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    // 必要依赖，解析json字符所用
+    api 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    //完整版引入  视频控件
+    api 'com.shuyu:GSYVideoPlayer:7.1.1'
+    //EventBus
+    api 'org.greenrobot:eventbus:3.1.1'
+    //沪江Aop 插件
+    api 'org.aspectj:aspectjrt:1.8.9'
+    //LeakCanary  监测内存泄露
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+}

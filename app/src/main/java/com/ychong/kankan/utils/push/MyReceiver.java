@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.ychong.kankan.utils.BaseContract;
-import com.ychong.kankan.utils.SPUtils;
-import com.ychong.kankan.utils.ToastUtils;
+import com.ychong.baselib.utils.SPUtils;
+import com.ychong.baselib.utils.ToastUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.Serializable;
@@ -66,7 +66,7 @@ public class MyReceiver extends BroadcastReceiver {
                     if (isLogin) {
 
                     } else {
-                        ToastUtils.showShort("未登录",true);
+                        ToastUtils.showShort(context,"未登录",true);
                     }
                 } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                     Logger.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

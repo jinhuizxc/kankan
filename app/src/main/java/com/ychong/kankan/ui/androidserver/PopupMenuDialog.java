@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ychong.kankan.R;
-import com.ychong.kankan.entity.EventBusMessage;
+import com.ychong.baselib.entity.EventBusMessage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

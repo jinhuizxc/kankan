@@ -46,7 +46,7 @@ import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
 import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.map.baidu.adapter.AddressAdapter;
-import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.baselib.base.BaseActivity;
 import com.ychong.kankan.utils.PermissionsChecker;
 import java.io.IOException;
 import java.util.ArrayList;

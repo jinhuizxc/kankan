@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -28,11 +27,8 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.ychong.kankan.R;
-import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.utils.BaseUtils;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.ychong.baselib.base.BaseActivity;
+import com.ychong.baselib.utils.BaseUtils;
 
 /**
  * @author Administrator

@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.ychong.kankan.R
-import com.ychong.kankan.ui.base.BaseActivity
-import com.ychong.kankan.utils.BaseUtils
+import com.ychong.baselib.base.BaseActivity
+import com.ychong.baselib.utils.BaseUtils
 
 /**
  * 关于
@@ -35,7 +35,7 @@ class AboutActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun initData() {
         titleTv!!.text = getString(R.string.about_kankan)
-        versionNumberTv!!.text = "V"+BaseUtils.getAppVersionName(this)
+        versionNumberTv!!.text = "V"+ BaseUtils.getAppVersionName(this)
     }
 
     private fun initView() {

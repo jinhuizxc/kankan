@@ -58,40 +58,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //FTP连接
-    implementation files('libs/commons-net-3.0.1.jar')
-    //图片加载Glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    //数据库 greenDao
-    implementation 'org.greenrobot:greendao:3.2.2'
-    //加载控件
-    implementation 'com.jpardogo.googleprogressbar:library:1.2.0'
-    //图片选择
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
-    //rxjava2
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
-    // 必要rxjava2依赖
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    // 必要rxandrroid依赖，切线程时需要用到
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    // 必要retrofit依赖
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    // 必要依赖，解析json字符所用
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
     //百度地图
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/IndoorscapeAlbumPlugin.jar')
-    //完整版引入  视频控件
-    implementation 'com.shuyu:GSYVideoPlayer:7.1.1'
     //kotlin
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //LeakCanary  监测内存泄露
-    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.2'
-    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
-    //EventBus
-    implementation 'org.greenrobot:eventbus:3.1.1'
+
     //Android服务器需要的库
     implementation 'com.koushikdutta.async:androidasync:2.2.1'
     //butterknife绑定控件
@@ -102,8 +75,6 @@ dependencies {
     //极光依赖
     implementation 'cn.jiguang.sdk:jpush:3.3.9'
     implementation 'cn.jiguang.sdk:jcore:2.1.6'
-    //Aop 插件
-    implementation 'org.aspectj:aspectjrt:1.8.9'
 
     //滑动返回库
     implementation project(path: ':swipebacklayout')
@@ -111,6 +82,8 @@ dependencies {
 
     //微信存储
     implementation 'com.tencent:mmkv:1.0.23'
+    implementation project(path: ':baselib')
+    implementation project(path: ':picandvideo')
 }
 repositories {
     mavenCentral()

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Parcelable;
-import com.ychong.kankan.entity.EventBusMessage;
+import com.ychong.baselib.entity.EventBusMessage;
 import org.greenrobot.eventbus.EventBus;
 
 public class WifiConnectChangedReceiver extends BroadcastReceiver {

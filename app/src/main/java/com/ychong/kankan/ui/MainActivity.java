@@ -14,13 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.ychong.kankan.ui.base.BaseActivity;
-import com.ychong.kankan.ui.common.PreViewActivity;
+import com.ychong.baselib.base.BaseActivity;
+import com.ychong.kankan.utils.ApiService;
+import com.ychong.picandvideo.ui.main.common.PreViewActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.kankan.entity.ImageBean;
 import com.ychong.kankan.adapter.MainRecyclerAdapter;
 import com.ychong.kankan.R;
-import com.ychong.kankan.utils.http.RetrofitUtils;
+import com.ychong.baselib.utils.http.RetrofitUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_main_pv;
     }
 
     private void initListener() {
@@ -138,7 +139,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initLayout() {
-        //setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main_pv);
     }
 
 
@@ -155,7 +156,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void queryAllImage() {
-        RetrofitUtils.getInstance().getApiService()
+        RetrofitUtils.getInstance(this).getRetrofit().create(ApiService.class)
                 .queryAllImages().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseBody>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -1,9 +1,7 @@
 package com.ychong.kankan;
 
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -11,18 +9,12 @@ import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.ychong.kankan.entity.DaoMaster;
-import com.ychong.kankan.entity.DaoSession;
-import com.ychong.kankan.ui.login.LoginActivity;
-import com.ychong.kankan.ui.permission.GPermission;
-import com.ychong.kankan.ui.permission.PermissionGlobalConfigCallback;
 import com.ychong.kankan.ui.webbrowse.X5Service;
 
 import cn.jpush.android.api.JPushInterface;
 
 public class MyApplication extends Application {
     public static final String DB_NAME= "kankan.db";
-    private static DaoSession mDaoSession;
     private static  Context mContext;
     private RefWatcher refWatcher;
 
@@ -48,13 +40,6 @@ public class MyApplication extends Application {
     }
 
     private void initGreenDao(){
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,DB_NAME);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster master = new DaoMaster(db);
-        mDaoSession = master.newSession();
-    }
-    public static DaoSession getmDaoSession(){
-        return mDaoSession;
     }
 
 

@@ -1,12 +1,19 @@
-apply plugin: 'com.android.application'
+if (isRunAlone.toBoolean()){
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+}
+
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-
-
     defaultConfig {
-        applicationId "com.ychong.picandvideo"
+        if(isRunAlone.toBoolean()){
+            //单独调试时添加applicationId  集成调试时移除
+            applicationId "com.ychong.picandvideo"
+        }
+
         minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
@@ -14,7 +21,20 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    sourceSets{
+        main{
+            //单独调试和集成调试时使用不同的AndroidManifest.xml文件
+            if (isRunAlone.toBoolean()){
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+            }else{
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -34,4 +54,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation project(path: ':baselib')
 }

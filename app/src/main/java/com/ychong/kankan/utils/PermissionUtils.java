@@ -11,6 +11,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.ychong.baselib.utils.ToastUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -126,32 +128,32 @@ public class PermissionUtils {
             //用户勾选了不再询问,提示用户手动打开权限
             switch (permission) {
                 case Manifest.permission.CAMERA:
-                    ToastUtils.showShort("相机权限已被禁止，请在应用管理中打开权限",true);
+                    ToastUtils.showShort(activity,"相机权限已被禁止，请在应用管理中打开权限",true);
                     break;
                 case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                    ToastUtils.showShort("文件权限已被禁止，请在应用管理中打开权限",true);
+                    ToastUtils.showShort(activity,"文件权限已被禁止，请在应用管理中打开权限",true);
                     break;
                 case Manifest.permission.RECORD_AUDIO:
-                    ToastUtils.showShort("录制音频权限已被禁止，请在应用管理中打开权限",true);
+                    ToastUtils.showShort(activity,"录制音频权限已被禁止，请在应用管理中打开权限",true);
                     break;
                 case Manifest.permission.ACCESS_FINE_LOCATION:
-                    ToastUtils.showShort("位置权限已被禁止，请在应用管理中打开权限",true);
+                    ToastUtils.showShort(activity,"位置权限已被禁止，请在应用管理中打开权限",true);
                     break;
             }
         } else {
             //用户没有勾选了不再询问,拒绝了权限申请
             switch (permission) {
                 case Manifest.permission.CAMERA:
-                    ToastUtils.showShort("没有相机权限",true);
+                    ToastUtils.showShort(activity,"没有相机权限",true);
                     break;
                 case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                    ToastUtils.showShort("没有文件读取权限",true);
+                    ToastUtils.showShort(activity,"没有文件读取权限",true);
                     break;
                 case Manifest.permission.RECORD_AUDIO:
-                    ToastUtils.showShort("没有录制音频权限",true);
+                    ToastUtils.showShort(activity,"没有录制音频权限",true);
                     break;
                 case Manifest.permission.ACCESS_FINE_LOCATION:
-                    ToastUtils.showShort("没有位置权限",true);
+                    ToastUtils.showShort(activity,"没有位置权限",true);
                     break;
             }
         }

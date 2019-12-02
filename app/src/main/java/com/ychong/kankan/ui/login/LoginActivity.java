@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,23 +17,16 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.ychong.baselib.utils.fastclick.SingleClick;
+import com.ychong.baselib.utils.http.FreeObserver;
 import com.ychong.kankan.ui.MainActivity;
 import com.ychong.kankan.ui.RegisterActivity;
-import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.baselib.base.BaseActivity;
 import com.ychong.kankan.R;
 import com.ychong.kankan.entity.UserBean;
 import com.ychong.kankan.ui.other.MoreActivity;
-import com.ychong.kankan.ui.permission.GPermission;
-import com.ychong.kankan.ui.permission.Permission;
-import com.ychong.kankan.ui.permission.PermissionGlobalConfigCallback;
-import com.ychong.kankan.ui.permission.PermissionPageUtils;
-import com.ychong.kankan.utils.PermissionUtils;
-import com.ychong.kankan.utils.ToastUtils;
-import com.ychong.kankan.utils.fastclick.SingleClick;
-import com.ychong.kankan.utils.http.FreeObserver;
-import com.ychong.kankan.utils.http.RetrofitUtils;
-import com.ychong.kankan.utils.widget.dialog.TipsDialog;
-import com.ychong.kankan.utils.widget.dialog.TipsDialogListener;
+import com.ychong.baselib.utils.http.RetrofitUtils;
+import com.ychong.kankan.utils.ApiService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,7 +65,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initPermission();
+        //initPermission();
         if (!isTaskRoot()) {
             Intent intent = getIntent();
             String action = intent.getAction();
@@ -130,7 +122,7 @@ public class LoginActivity extends BaseActivity {
     private void login(UserBean userBean) {
         String json = new Gson().toJson(userBean);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
-        RetrofitUtils.getInstance().getApiService().login(body).subscribeOn(Schedulers.io())
+        RetrofitUtils.getInstance(this).getRetrofit().create(ApiService.class).login(body).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new FreeObserver<ResponseBody>() {
                     @Override
@@ -173,9 +165,6 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
-    @Permission(permissions ={Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE})
     private void initData() {
         //PermissionUtils.checkAndApplyfPermissionActivity(this, permission, 2000);
         handler.postDelayed(runnable,500);

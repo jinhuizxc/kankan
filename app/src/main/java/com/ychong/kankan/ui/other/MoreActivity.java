@@ -1,7 +1,6 @@
 package com.ychong.kankan.ui.other;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,17 +11,14 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.ColumnSelectActivity;
-import com.ychong.kankan.ui.LocalVideo.LocalVideoActivity;
-import com.ychong.kankan.ui.beauty.BeautyActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
-import com.ychong.kankan.ui.base.BaseActivity;
+import com.ychong.baselib.base.BaseActivity;
 import com.ychong.kankan.ui.webbrowse.WebBrowseActivity;
 import com.ychong.kankan.utils.BaseContract;
-import com.ychong.kankan.utils.SPUtils;
-import com.ychong.kankan.utils.widget.dialog.InputDialog;
-import com.ychong.kankan.utils.widget.dialog.TipsDialog;
-import com.ychong.kankan.utils.widget.dialog.TipsDialogListener;
+import com.ychong.baselib.utils.SPUtils;
+import com.ychong.baselib.widget.dialog.InputDialog;
+import com.ychong.picandvideo.PVMainActivity;
 
 /**
  * 更多界面
@@ -37,8 +33,7 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout aboutKankanLl;
     private LinearLayout webBrowseLl;
     private LinearLayout columnSelectLayout;
-    private LinearLayout beautyLayout;
-    private LinearLayout localVideoLayout;
+    private LinearLayout pvLayout;
     private SPUtils mSPUtils;
 
     @Override
@@ -57,15 +52,14 @@ public class MoreActivity extends BaseActivity {
     private void initListener() {
         backIv.setOnClickListener(view -> finish());
         updateAddressLl.setOnClickListener(view -> {
-            showAddressDialog(addressTv,addressTv.getText().toString());
+            showAddressDialog(addressTv, addressTv.getText().toString());
         });
         mapLl.setOnClickListener(view -> BaiDuMapActivity.startActivity(this));
         androidServerLl.setOnClickListener(view -> AndroidServerActivity.startAct(this));
         aboutKankanLl.setOnClickListener(view -> aboutClick());
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
         columnSelectLayout.setOnClickListener(view -> ColumnSelectActivity.startAct(this));
-        beautyLayout.setOnClickListener(v -> BeautyActivity.startAct(this));
-        localVideoLayout.setOnClickListener(v -> LocalVideoActivity.startAct(this));
+        pvLayout.setOnClickListener(v -> PVMainActivity.startAct(this));
 
     }
 
@@ -73,26 +67,17 @@ public class MoreActivity extends BaseActivity {
      * Web浏览
      */
     private void webBrowseClick() {
-        startActivity(new Intent(this,WebBrowseActivity.class));
+        startActivity(new Intent(this, WebBrowseActivity.class));
     }
 
     private void aboutClick() {
-        new TipsDialog(this, "您确定要进入关于界面吗?", new TipsDialogListener() {
-            @Override
-            public void onClick(boolean isConfirm) {
-                if (isConfirm){
-                    startActivity(new Intent(MoreActivity.this,AboutActivity.class));
-                }
-            }
-        }).setConfirm("是的")
-                .setCancelStr("没有啊")
-                .show();
+        startActivity(new Intent(MoreActivity.this, AboutActivity.class));
     }
 
     private void initData() {
         titleTv.setText("更多");
-        mSPUtils = SPUtils.getInstance(BaseContract.PREFERENCES_NAME_CONFIG,MODE_PRIVATE);
-       addressTv.setText(mSPUtils.getString(BaseContract.SERVER_HOST_URL_KEY,BaseContract.SERVER_HOST_URL));
+        mSPUtils = SPUtils.getInstance(BaseContract.PREFERENCES_NAME_CONFIG, MODE_PRIVATE);
+        addressTv.setText(mSPUtils.getString(BaseContract.SERVER_HOST_URL_KEY, BaseContract.SERVER_HOST_URL));
     }
 
     private void initView() {
@@ -105,16 +90,15 @@ public class MoreActivity extends BaseActivity {
         aboutKankanLl = (LinearLayout) findViewById(R.id.about_kankan_ll);
         webBrowseLl = (LinearLayout) findViewById(R.id.web_browse_ll);
         columnSelectLayout = (LinearLayout) findViewById(R.id.column_select_layout);
-        beautyLayout = (LinearLayout) findViewById(R.id.beauty_layout);
-        localVideoLayout = (LinearLayout) findViewById(R.id.local_video_layout);
+        pvLayout = (LinearLayout) findViewById(R.id.pv_layout);
     }
 
-    private void showAddressDialog(View view,String value){
-        TextView textView = (TextView)view;
+    private void showAddressDialog(View view, String value) {
+        TextView textView = (TextView) view;
         new InputDialog(this, value, text -> {
-            mSPUtils.put(BaseContract.SERVER_HOST_URL_KEY,text);
+            mSPUtils.put(BaseContract.SERVER_HOST_URL_KEY, text);
             textView.setText(text);
         }).setTitle("请输入地址")
-        .show();
+                .show();
     }
 }
