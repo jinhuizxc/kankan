@@ -122,10 +122,6 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
-            android:name=".test.TestActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.androidserver.AndroidServerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
@@ -146,9 +142,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.ColumnSelectActivity" />
-        <activity android:name="com.ychong.baselib.permission.PermissionActivity" />
-        <activity android:name="com.ychong.picandvideo.ui.main.picture.BeautyActivity" />
-        <activity android:name="com.ychong.picandvideo.ui.main.video.LocalVideoActivity" />
 
         <!--百度地图-->
         <meta-data

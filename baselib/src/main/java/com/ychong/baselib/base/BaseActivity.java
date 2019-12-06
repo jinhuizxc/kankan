@@ -39,7 +39,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
         // 滑动退出的效果只能从边界滑动才有效果，如果要扩大touch的范围，可以调用这个方法
         mSwipeBackLayout.setEdgeSize(200);
         setContentView(getLayoutId());
-        BarUtils.setStatusBarColor(this,getResources().getColor(R.color.bar_grey_90));
+        BarUtils.setStatusBarColor(this,getResources().getColor(R.color.gray));
         //initPermission();
     }
 
