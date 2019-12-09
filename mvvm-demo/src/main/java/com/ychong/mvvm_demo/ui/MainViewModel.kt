@@ -1,4 +1,4 @@
-package com.ychong.mvvm_demo
+package com.ychong.mvvm_demo.ui
 
 import androidx.lifecycle.ViewModel
 import com.ychong.mvvm_demo.data.WeatherRepository

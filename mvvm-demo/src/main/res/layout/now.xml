@@ -1,0 +1,30 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="weather"
+            type="com.ychong.mvvm_demo.data.model.Weather" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/degreeText"
+            android:layout_gravity="end"
+            android:text="@{weather.now.degree()}"
+            android:textColor="#ffffff"
+            android:textSize="60sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/weatherInfoText"
+            android:layout_gravity="end"
+            android:text="@{weather.now.more.info}"
+            android:textColor="#ffffff"
+            android:textSize="20sp"/>
+    </LinearLayout>
+</layout>
+

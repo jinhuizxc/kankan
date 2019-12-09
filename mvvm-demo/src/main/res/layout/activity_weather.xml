@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.ychong.mvvm_demo.ui.weather.WeatherViewModel" />
+        <variable
+            name="resId"
+            type="Integer" />
+        <variable
+            name="init"
+            type="Boolean" />
+    </data>
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@color/colorPrimary">
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/bingPicImg"
+           android:scaleType="centerCrop"
+           bind:loadBingPic="@{viewModel.bingPicUrl}"/>
+
+       <androidx.drawerlayout.widget.DrawerLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/drawerLayout">
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/swipeRefresh"
+                bind:refreshing="@{viewModel.refreshing}"
+                bind:onRefreshListener="@{()->viewModel.onRefresh()}"
+                bind:colorSchemeResources="@{resId}">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/weatherLayout"
+                    android:visibility="@{viewModel.weatherInitialized?View.VISIBLE:VIEW.INVISIBLE}"
+                    android:scrollbars="none"
+                    android:overScrollMode="never">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:fitsSystemWindows="true">
+                        <include layout="@layout/title" bind:weather="@{viewModel.weather}"/>
+                        <include layout="@layout/now" bind:weather="@{viewModel.weather}"/>
+                        <include layout="@layout/forecast" bind:weather="@{viewModel.weather}"/>
+                        <include layout="@layout/aqi" bind:weather="@{viewModel.weather}"/>
+                        <include layout="@layout/suggestion" bind:weather="@{viewModel.weather}"/>
+
+                    </LinearLayout>
+                </ScrollView>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+       </androidx.drawerlayout.widget.DrawerLayout>
+
+   </FrameLayout>
+</layout>
