@@ -2,10 +2,9 @@ package com.ychong.mvvm_demo.data.db
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.core.content.edit
 import com.google.gson.Gson
 import com.ychong.mvvm_demo.CoolWeatherApplication
-import com.ychong.mvvm_demo.data.model.Weather
+import com.ychong.mvvm_demo.data.model.weather.Weather
 
 class WeatherDao{
     fun cacheWeatherInfo(weather: Weather?){
@@ -16,11 +15,11 @@ class WeatherDao{
         }
     }
 
-    fun getCachedWeatherInfo():Weather?{
+    fun getCachedWeatherInfo(): Weather?{
         val weatherInfo = PreferenceManager.getDefaultSharedPreferences(CoolWeatherApplication.context)
                 .getString("weather",null)
         if (weatherInfo!=null){
-            return Gson().fromJson(weatherInfo,Weather::class.java)
+            return Gson().fromJson(weatherInfo, Weather::class.java)
         }
         return null
     }

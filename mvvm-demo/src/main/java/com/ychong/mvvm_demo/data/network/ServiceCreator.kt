@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object ServiceCreator {
-    private const val BASE_URL = ""
+    private const val BASE_URL = "http://guolin.tech/"
     private val httpClient = OkHttpClient.Builder()
 
     private val builder = Retrofit.Builder()

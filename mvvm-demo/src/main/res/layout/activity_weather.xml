@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
-    <data>
+    <data class="ActivityWeatherBinding">
         <import type="android.view.View"/>
         <variable
             name="viewModel"
@@ -39,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/weatherLayout"
-                    android:visibility="@{viewModel.weatherInitialized?View.VISIBLE:VIEW.INVISIBLE}"
+                    android:visibility="@{viewModel.weatherInitialized?View.VISIBLE:View.INVISIBLE}"
                     android:scrollbars="none"
                     android:overScrollMode="never">
                     <LinearLayout
@@ -52,11 +51,16 @@
                         <include layout="@layout/forecast" bind:weather="@{viewModel.weather}"/>
                         <include layout="@layout/aqi" bind:weather="@{viewModel.weather}"/>
                         <include layout="@layout/suggestion" bind:weather="@{viewModel.weather}"/>
-
                     </LinearLayout>
                 </ScrollView>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+           <fragment
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/chooseAreaFragment"
+               android:name="com.ychong.mvvm_demo.ui.area.ChooseAreaFragment"
+               android:layout_gravity="start"/>
        </androidx.drawerlayout.widget.DrawerLayout>
 
    </FrameLayout>

@@ -9,7 +9,7 @@ class CoolWeatherApplication :Application(){
     override fun onCreate() {
         super.onCreate()
         LitePal.initialize(this)
-        context = this;
+        context = this
     }
     companion object{
         @SuppressLint("StaticFieldLeak")

@@ -1,0 +1,47 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class="ItemForecastBinding">
+        <variable
+            name="forecast"
+            type="com.ychong.mvvm_demo.data.model.weather.Forecast" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateText"
+            android:layout_weight="2"
+            android:text="@{forecast.date}"
+            android:textColor="#ffffff"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/infoText"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@{forecast.more.info}"
+            android:textColor="#ffffff"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/maxText"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@{forecast.temperature.max}"
+            android:textColor="#ffffff"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/minText"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@{forecast.temperature.min}"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+</layout>

@@ -1,6 +1,7 @@
 package com.ychong.mvvm_demo.data.network
 
 import android.telecom.Call
+import android.util.Log
 import com.ychong.mvvm_demo.data.network.api.PlaceService
 import com.ychong.mvvm_demo.data.network.api.WeatherService
 import okhttp3.Response
@@ -30,6 +31,7 @@ class CoolWeatherNetwork {
 
                 override fun onResponse(call: retrofit2.Call<T>, response: retrofit2.Response<T>) {
                     val body = response.body()
+                    Log.e("json",body.toString())
                     if (body != null) continuation.resume(body)
                     else continuation.resumeWithException(RuntimeException("response body is null"))
                 }

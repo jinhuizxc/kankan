@@ -1,9 +1,9 @@
-package com.ychong.mvvm_demo.data.model
+package com.ychong.mvvm_demo.data.model.weather
 
 class Forecast {
     var date:String = ""
-    lateinit var temperature:Temperature
-    lateinit var more:More
+    lateinit var temperature: Temperature
+    lateinit var more: More
 
     inner class Temperature{
         var max  = ""

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ychong.mvvm_demo.data.WeatherRepository
-import com.ychong.mvvm_demo.data.model.Weather
+import com.ychong.mvvm_demo.data.model.weather.Weather
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(private val repository: WeatherRepository) :ViewModel(){
@@ -28,7 +28,7 @@ class WeatherViewModel(private val repository: WeatherRepository) :ViewModel(){
         getBingPic(false)
     }
 
-    fun refreshWeather(){
+     fun refreshWeather(){
         refreshing.value = true
         launch({
             weather.value = repository.refreshWeather(weatherId)
@@ -37,6 +37,7 @@ class WeatherViewModel(private val repository: WeatherRepository) :ViewModel(){
         },{
             refreshing.value = false
         })
+        getBingPic(true)
     }
     fun isWeatherCached() = repository.isWeatherCached()
 

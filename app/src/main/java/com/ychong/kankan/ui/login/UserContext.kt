@@ -1,10 +1,6 @@
 package com.ychong.kankan.ui.login
 
 import android.app.Activity
-import android.preference.Preference
-import com.tencent.mmkv.MMKV
-import java.security.Key
-import java.util.prefs.Preferences
 
 object UserContext {
     //持久化存储  登录地址

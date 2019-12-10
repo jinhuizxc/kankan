@@ -1,5 +1,6 @@
 package com.ychong.mvvm_demo.ui.area
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.MutableLiveData

@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PlaceService {
-    @GET("api/china}")
+    @GET("api/china")
     fun getProvinces():Call<MutableList<Province>>
 
     @GET("api/china/{provinceId}")

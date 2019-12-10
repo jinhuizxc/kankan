@@ -1,7 +1,11 @@
 package com.ychong.mvvm_demo.data.model.place
 
+import com.google.gson.annotations.SerializedName
 import org.litepal.crud.LitePalSupport
 
-class Province(val provinceName:String,val provinceCode:Int):LitePalSupport(){
-    val id = 0
+class Province(@SerializedName("name") val provinceName:String,@SerializedName("id") val provinceCode:Int):LitePalSupport(){
+    @Transient val id = 0
+    override fun toString(): String {
+        return "Province(provinceName='$provinceName', provinceCode=$provinceCode, id=$id)"
+    }
 }

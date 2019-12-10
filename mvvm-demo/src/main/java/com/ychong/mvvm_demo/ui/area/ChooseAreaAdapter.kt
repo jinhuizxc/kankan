@@ -1,25 +1,35 @@
 package com.ychong.mvvm_demo.ui.area
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.ychong.mvvm_demo.R
+import com.ychong.mvvm_demo.databinding.ItemSimpleBinding
 
-class ChooseAreaAdapter(context: Context,private val resId:Int,private val dataList:List<String>):ArrayAdapter<String>(context,resId,dataList){
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val bind:SimpleItemBinding?
-        val view = if (convertView==null){
-            val v = LayoutInflater.from(context).inflate(resId,parent,false)
-            bind = DataBindingUtil.bind(v)
-            v.tag = bind
-            v
-        }else{
-            bind = convertView.tag as SimpleItemBinding
-            convertView
-        }
-        bind?.data = dataList[position]
-        return view
+class ChooseAreaAdapter(private var dataList:List<String>)
+    : RecyclerView.Adapter<ChooseAreaAdapter.ChooseAreaViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseAreaViewHolder {
+       val binding = DataBindingUtil.inflate<ItemSimpleBinding>(
+               LayoutInflater.from(parent.context),
+               R.layout.item_simple,
+               parent,
+               false
+       )
+        return ChooseAreaViewHolder(binding)
     }
+
+    override fun getItemCount(): Int= dataList.size
+
+    override fun onBindViewHolder(holder: ChooseAreaViewHolder, position: Int) {
+        holder.bind(dataList[position])
+    }
+    class ChooseAreaViewHolder(private val binding:ItemSimpleBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(data:String){
+            binding.data = data
+            binding.executePendingBindings()
+        }
+    }
+
 }

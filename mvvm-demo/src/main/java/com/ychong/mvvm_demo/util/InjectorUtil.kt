@@ -14,4 +14,5 @@ object InjectorUtil {
     fun getChooseAreaModelFactory() = ChooseAreaModelFactory(getPlaceRepository())
     private fun getPlaceRepository() = PlaceRepository.getInstance(CoolWeatherDatabase.getPlaceDao(),CoolWeatherNetwork.getInstance())
 
+    fun getWeatherModelFactory() = MainModelFactory(getWeatherRepository())
 }

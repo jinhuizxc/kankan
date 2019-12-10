@@ -1,6 +1,6 @@
 package com.ychong.mvvm_demo.data.network.api
 
-import com.ychong.mvvm_demo.data.model.HeWeather
+import com.ychong.mvvm_demo.data.model.weather.HeWeather
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

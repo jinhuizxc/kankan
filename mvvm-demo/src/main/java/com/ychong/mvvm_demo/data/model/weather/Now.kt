@@ -1,8 +1,8 @@
-package com.ychong.mvvm_demo.data.model
+package com.ychong.mvvm_demo.data.model.weather
 
 class Now {
     var temperature = ""
-    lateinit var more:More
+    lateinit var more: More
 
     fun degree() = "$temperature℃"
 
