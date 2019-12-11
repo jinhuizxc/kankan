@@ -1,15 +1,17 @@
 package com.ychong.mvvm_demo.data.model.weather
 
+import com.google.gson.annotations.SerializedName
+
 class Forecast {
     var date:String = ""
-    lateinit var temperature: Temperature
-    lateinit var more: More
+    @SerializedName("tmp") lateinit var temperature: Temperature
+    @SerializedName("cond") lateinit var more: More
 
     inner class Temperature{
         var max  = ""
         var min = ""
     }
     inner class More{
-        var info = ""
+        @SerializedName("txt_d") var info = ""
     }
 }

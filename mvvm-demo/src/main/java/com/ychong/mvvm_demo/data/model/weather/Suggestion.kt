@@ -1,17 +1,19 @@
 package com.ychong.mvvm_demo.data.model.weather
 
+import com.google.gson.annotations.SerializedName
+
 class Suggestion {
-    lateinit var comfort: Comfort
-    lateinit var carWash: CarWash
+    @SerializedName("comf") lateinit var comfort: Comfort
+    @SerializedName("cw") lateinit var carWash: CarWash
     lateinit var sport: Sport
 
     inner class Comfort{
-        var info = ""
+        @SerializedName("txt") var info = ""
     }
     inner class CarWash{
-        var info = ""
+        @SerializedName("txt") var info = ""
     }
     inner class Sport{
-        var info = ""
+        @SerializedName("txt") var info = ""
     }
 }

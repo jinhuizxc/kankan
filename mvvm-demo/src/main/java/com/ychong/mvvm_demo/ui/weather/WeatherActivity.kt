@@ -10,11 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.ychong.mvvm_demo.R
 import com.ychong.mvvm_demo.databinding.ActivityWeatherBinding
+import com.ychong.mvvm_demo.util.InjectorUtil
 import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.title.*
 
 class WeatherActivity : AppCompatActivity() {
-    val viewModel by lazy { ViewModelProviders.of(this).get(WeatherViewModel::class.java) }
+    val viewModel by lazy { ViewModelProviders.of(this,InjectorUtil.getWeatherModelFactory()).get(WeatherViewModel::class.java) }
 
     private val binding by lazy { DataBindingUtil.setContentView<ActivityWeatherBinding>(this, R.layout.activity_weather) }
 

@@ -7,8 +7,12 @@ import org.litepal.LitePal
 
 class PlaceDao {
     fun getProvinceList(): MutableList<Province> = LitePal.findAll(Province::class.java)
-    fun getCityList(provinceId: Int): MutableList<City> = LitePal.where("provinceId = ?", provinceId.toString()).find(City::class.java)
-    fun getCountyList(cityId: Int): MutableList<County> = LitePal.where("cityId", cityId.toString()).find(County::class.java)
+    fun getCityList(provinceId: Int): MutableList<City> =
+        LitePal.where("provinceId = ?", provinceId.toString()).find(City::class.java)
+
+    fun getCountyList(cityId: Int): MutableList<County> =
+        LitePal.where("cityId = ?", cityId.toString()).find(County::class.java)
+
     fun saveProvinceList(provinceList: List<Province>?) {
         if (provinceList != null && provinceList.isNotEmpty()) {
             LitePal.saveAll(provinceList)

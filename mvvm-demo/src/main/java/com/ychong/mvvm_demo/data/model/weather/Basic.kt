@@ -1,12 +1,14 @@
 package com.ychong.mvvm_demo.data.model.weather
 
+import com.google.gson.annotations.SerializedName
+
 class Basic {
-    var cityName = ""
-    var weatherId = ""
+    @SerializedName("city") var cityName = ""
+    @SerializedName("id") var weatherId = ""
     lateinit var update: Update
 
     inner class Update{
-        var updateTime = ""
+        @SerializedName("loc") var updateTime = ""
         fun time() = updateTime.split(" ")[1]
     }
 }

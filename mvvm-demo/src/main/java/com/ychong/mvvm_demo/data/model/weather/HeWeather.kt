@@ -1,5 +1,7 @@
 package com.ychong.mvvm_demo.data.model.weather
 
+import com.google.gson.annotations.SerializedName
+
 class HeWeather {
-    var weather:List<Weather>? = null
+    @SerializedName("HeWeather") var weather:List<Weather>? = null
 }

@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ychong.mvvm_demo.R
-import com.ychong.mvvm_demo.databinding.FragmentChooseAreaBinding
+import com.ychong.mvvm_demo.databinding.FragmentChooseAreaBindingImpl
 import com.ychong.mvvm_demo.ui.MainActivity
 import com.ychong.mvvm_demo.ui.weather.WeatherActivity
 import com.ychong.mvvm_demo.util.InjectorUtil
@@ -27,7 +27,7 @@ class ChooseAreaFragment :Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_choose_area,container,false)
-        val binding = DataBindingUtil.bind<FragmentChooseAreaBinding>(view)
+        val binding = DataBindingUtil.bind<FragmentChooseAreaBindingImpl>(view)
         binding?.viewModel = viewModel
         return view
     }
@@ -37,6 +37,12 @@ class ChooseAreaFragment :Fragment(){
         adapter = ChooseAreaAdapter(viewModel.dataList)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
+        adapter.setListener(object :ChooseAreaAdapter.ItemClickListener{
+            override fun onClick(view: View, position:Int) {
+                viewModel.onListViewItemClick(view,position)
+            }
+
+        })
         observe()
     }
     private fun observe(){

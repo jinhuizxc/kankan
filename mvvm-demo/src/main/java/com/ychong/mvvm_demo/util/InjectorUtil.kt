@@ -6,6 +6,7 @@ import com.ychong.mvvm_demo.data.WeatherRepository
 import com.ychong.mvvm_demo.data.db.CoolWeatherDatabase
 import com.ychong.mvvm_demo.data.network.CoolWeatherNetwork
 import com.ychong.mvvm_demo.ui.area.ChooseAreaModelFactory
+import com.ychong.mvvm_demo.ui.weather.WeatherModelFactory
 
 object InjectorUtil {
     fun getMainModelFactory() = MainModelFactory(getWeatherRepository())
@@ -14,5 +15,5 @@ object InjectorUtil {
     fun getChooseAreaModelFactory() = ChooseAreaModelFactory(getPlaceRepository())
     private fun getPlaceRepository() = PlaceRepository.getInstance(CoolWeatherDatabase.getPlaceDao(),CoolWeatherNetwork.getInstance())
 
-    fun getWeatherModelFactory() = MainModelFactory(getWeatherRepository())
+    fun getWeatherModelFactory() = WeatherModelFactory(getWeatherRepository())
 }

@@ -3,9 +3,11 @@ package com.ychong.mvvm_demo.ui.area
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ychong.mvvm_demo.CoolWeatherApplication
 import com.ychong.mvvm_demo.data.PlaceRepository
 import com.ychong.mvvm_demo.data.model.place.City
 import com.ychong.mvvm_demo.data.model.place.County
@@ -75,7 +77,7 @@ class ChooseAreaViewModel(private val repository: PlaceRepository):ViewModel(){
         }
     }
 
-    fun onListViewItemClick(parent:AdapterView<*>,view:View,position:Int,id:Long){
+    fun onListViewItemClick(view:View,position:Int){
         when{
             currentLevel.value == LEVEL_PROVINCE->{
                 selectedProvince = provinces[position]

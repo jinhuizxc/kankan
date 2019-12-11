@@ -1,12 +1,14 @@
 package com.ychong.mvvm_demo.data.model.weather
 
+import com.google.gson.annotations.SerializedName
+
 class Now {
-    var temperature = ""
-    lateinit var more: More
+    @SerializedName("tmp") var temperature = ""
+    @SerializedName("cond") lateinit var more: More
 
     fun degree() = "$temperature℃"
 
     inner class More{
-        var info = ""
+        @SerializedName("txt") var info = ""
     }
 }
