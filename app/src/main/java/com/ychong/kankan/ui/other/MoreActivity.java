@@ -14,6 +14,7 @@ import com.ychong.kankan.ui.ColumnSelectActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.baselib.base.BaseActivity;
+import com.ychong.kankan.ui.music.MusicActivity;
 import com.ychong.kankan.ui.webbrowse.WebBrowseActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.baselib.utils.SPUtils;
@@ -34,6 +35,7 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout webBrowseLl;
     private LinearLayout columnSelectLayout;
     private LinearLayout pvLayout;
+    private LinearLayout musicLayout;
     private SPUtils mSPUtils;
 
     @Override
@@ -60,6 +62,7 @@ public class MoreActivity extends BaseActivity {
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
         columnSelectLayout.setOnClickListener(view -> ColumnSelectActivity.startAct(this));
         pvLayout.setOnClickListener(v -> PVMainActivity.startAct(this));
+        musicLayout.setOnClickListener(v -> MusicActivity.startAct(this));
 
     }
 
@@ -91,6 +94,7 @@ public class MoreActivity extends BaseActivity {
         webBrowseLl = (LinearLayout) findViewById(R.id.web_browse_ll);
         columnSelectLayout = (LinearLayout) findViewById(R.id.column_select_layout);
         pvLayout = (LinearLayout) findViewById(R.id.pv_layout);
+        musicLayout = (LinearLayout) findViewById(R.id.music_layout);
     }
 
     private void showAddressDialog(View view, String value) {
