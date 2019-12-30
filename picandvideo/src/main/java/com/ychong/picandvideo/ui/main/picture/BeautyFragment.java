@@ -65,7 +65,7 @@ public class BeautyFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_beauty, container, false);
+        View view = inflater.inflate(getLayoutId(), container, false);
         initView(view);
         return view;
     }
@@ -132,7 +132,7 @@ public class BeautyFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-        mRecyclerView = (XRecyclerView) view.findViewById(R.id.beauty_recycler_view);
+        mRecyclerView =  view.findViewById(R.id.beauty_recycler_view);
     }
 
     private void getBeautys(int rows, int pages) {

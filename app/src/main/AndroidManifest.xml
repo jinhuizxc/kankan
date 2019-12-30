@@ -154,7 +154,7 @@
         <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="sFu2LAVQ38cVYNAU7kaYZiQ3lPbpi32Z" />
+            android:value="szhIwYGlB5D96YgGPNRLX0tYt2Be8YuO" />
 
         <!--监听apk状态-->
         <provider

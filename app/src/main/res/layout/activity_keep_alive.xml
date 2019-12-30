@@ -89,11 +89,11 @@
                 <TextView
                     android:background="@drawable/tv_bg_selector"
                     android:layout_marginLeft="@dimen/dp_0"
-                    android:layout_width="@dimen/dp_80"
+                    android:layout_width="@dimen/dp_100"
                     android:layout_height="@dimen/dp_30"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="未开启"
+                    android:text="设置后台运行"
                     android:id="@+id/switch_background_operation_permission_tv"/>
             </LinearLayout>
             <HorizontalScrollView

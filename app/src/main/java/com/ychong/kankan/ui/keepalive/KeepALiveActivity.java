@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KeepALiveActivity extends BaseActivity {
+    private ImageView backIv;
+    private TextView titleTv;
     private KeepALiveUtils mKeepALiveUtils;
     private TextView switchSuspensionWindowTv;
     private TextView switchBatteryOptimizationWhiteListTv;
@@ -49,6 +52,7 @@ public class KeepALiveActivity extends BaseActivity {
     }
 
     private void initListener() {
+        backIv.setOnClickListener(v -> onBackPressed());
         switchSuspensionWindowTv.setOnClickListener(v -> {
             requestSuspensionWindow();
         });
@@ -69,12 +73,14 @@ public class KeepALiveActivity extends BaseActivity {
     }
 
     private void initData() {
-
+        titleTv.setText("保活权限设置");
         initSwitch();
 
     }
 
     private void initView() {
+        backIv = (ImageView) findViewById(R.id.left_iv);
+        titleTv = (TextView) findViewById(R.id.title_tv);
         switchSuspensionWindowTv = (TextView) findViewById(R.id.switch_suspension_window_tv);
         switchBatteryOptimizationWhiteListTv = (TextView) findViewById(R.id.switch_battery_optimization_white_list_tv);
         switchBackgroundOperationPermissionTv = (TextView) findViewById(R.id.switch_background_operation_permission_tv);
