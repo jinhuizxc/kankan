@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
-    private KeepALiveUtils mKeepALiveUtils;
+
 
     public static void startAct(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -181,14 +181,6 @@ public class LoginActivity extends BaseActivity {
         passwordEt.setText(sp.getString("password", ""));
 
 
-        mKeepALiveUtils = KeepALiveUtils.newInstance(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!mKeepALiveUtils.isIgnoringBatteryOptimizations()) {
-                mKeepALiveUtils.requestIgnoreBatteryOptimizations();
-            }
-        }
-
-
     }
 
     private void initIcon() {
@@ -243,19 +235,6 @@ public class LoginActivity extends BaseActivity {
         if (animatorSet != null) {
             animatorSet.cancel();
             animatorSet = null;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == KeepALiveUtils.INTENT_CODE) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (mKeepALiveUtils.isIgnoringBatteryOptimizations()){
-                    //允许
-                    mKeepALiveUtils.selfStartUp();
-                }
-            }
         }
     }
 }

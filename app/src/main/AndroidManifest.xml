@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ychong.kankan">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
@@ -33,6 +34,8 @@
     <uses-permission android:name="android.permission.READ_SETTINGS" />
     <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--悬浮窗-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- Required -->
     <permission
@@ -121,9 +124,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.ychong.picandvideo.ui.main.common.PreViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="预览"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.androidserver.AndroidServerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -131,8 +134,8 @@
         <activity
             android:name=".ui.webbrowse.WebBrowseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:process=":webView"/>
+            android:process=":webView"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -146,14 +149,14 @@
         </activity>
         <activity android:name=".ui.ColumnSelectActivity" />
         <activity android:name=".ui.music.MusicActivity" />
-        <activity android:name=".ui.other.KeepALiveActivity" />
+        <activity android:name=".ui.keepalive.KeepALiveActivity" />
 
         <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="sFu2LAVQ38cVYNAU7kaYZiQ3lPbpi32Z" />
 
-<!--监听apk状态-->
+        <!--监听apk状态-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -174,7 +177,7 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-<!--极光集成-->
+        <!--极光集成-->
         <service
             android:name=".utils.push.PushService"
             android:enabled="true"
@@ -203,7 +206,7 @@
         <receiver
             android:name=".utils.push.MyJPushMessageReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="com.ychong.kankan" />
