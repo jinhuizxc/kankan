@@ -11,14 +11,21 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.view.GestureDetectorCompat;
-import androidx.core.view.ScaleGestureDetectorCompat;
+
+import com.ychong.picandvideo.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +33,8 @@ import java.io.InputStream;
 /**
  *
  */
-public class BigView extends ImageView implements GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener {
+public class BigView extends AppCompatImageView implements GestureDetector.OnGestureListener,
+        ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = BigView.class.getSimpleName();
     private Context context;
     private int slideX = 0;
@@ -93,48 +101,6 @@ public class BigView extends ImageView implements GestureDetector.OnGestureListe
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                downX = event.getRawX();
-//                downY = event.getRawY();
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                float moveX = event.getRawX();
-//                float moveY = event.getRawY();
-//                slideX = (int) (moveX - downX);
-//                slideY = (int) (moveY - downY);
-//                if (mImageWidth > getWidth()) {
-//                    mRect.offset(-slideX, 0);
-//                    if (mRect.right > mImageWidth) {
-//                        mRect.right = mImageWidth;
-//                        mRect.left = mRect.right - getWidth();
-//                    }
-//                    if (mRect.left < 0) {
-//                        mRect.left = 0;
-//                        mRect.right = getWidth();
-//                    }
-//                    invalidate();
-//                }
-//                if (mImageHeight > getHeight()) {
-//                    mRect.offset(0, -slideY);
-//                    if (mRect.bottom > mImageHeight) {
-//                        mRect.bottom = mImageHeight;
-//                        mRect.top = mRect.bottom - getHeight();
-//                    }
-//                    if (mRect.top < 0) {
-//                        mRect.top = 0;
-//                        mRect.bottom = getHeight();
-//                    }
-//                    invalidate();
-//                }
-//                downX = moveX;
-//                downY = moveY;
-//                break;
-//            default:
-//                break;
-//        }
-
-        //将事件交给GestureDetectorCompat处理
         if (gestureDetectorCompat.onTouchEvent(event)){
             return true;
         }
@@ -147,6 +113,15 @@ public class BigView extends ImageView implements GestureDetector.OnGestureListe
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        //拿到原来宽高，高度的mode和size
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+
+
         mRect.left = 0;
         mRect.right = getMeasuredWidth() + mRect.left;
         mRect.top = 0;
@@ -191,6 +166,8 @@ public class BigView extends ImageView implements GestureDetector.OnGestureListe
     public void onLongPress(MotionEvent e) {
         //手指按在屏幕一段时间，并且没有松开
         Log.e(TAG, "手指按在屏幕一段时间，并且没有松开");
+        //显示弹窗保存图片至本地
+        showDialog(e.getX(),e.getY());
 
     }
 
@@ -209,8 +186,7 @@ public class BigView extends ImageView implements GestureDetector.OnGestureListe
                 && scaleFactor>1.0f || currentScale<maxScale && currentScale>minScale){
             matrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
         }
-
-        return false;
+        return true;
     }
 
     @Override
@@ -222,4 +198,18 @@ public class BigView extends ImageView implements GestureDetector.OnGestureListe
     public void onScaleEnd(ScaleGestureDetector detector) {
 
     }
+
+    private void showDialog(float x, float y){
+        PopupWindow popupWindow = new PopupWindow(this, GridView.MarginLayoutParams.WRAP_CONTENT,GridView.MarginLayoutParams.WRAP_CONTENT);
+        View view = LayoutInflater.from(context).inflate(R.layout.popup_menu,null);
+        TextView saveTv = view.findViewById(R.id.save_tv);
+        popupWindow.setContentView(view);
+        popupWindow.setFocusable(true);//true点击空白处消失
+        popupWindow.showAtLocation(this, Gravity.NO_GRAVITY,(int) (x),(int)(y));
+
+        saveTv.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+    }
+
 }

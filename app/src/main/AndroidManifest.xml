@@ -146,6 +146,7 @@
         </activity>
         <activity android:name=".ui.ColumnSelectActivity" />
         <activity android:name=".ui.music.MusicActivity" />
+        <activity android:name=".ui.other.KeepALiveActivity" />
 
         <!--百度地图-->
         <meta-data
