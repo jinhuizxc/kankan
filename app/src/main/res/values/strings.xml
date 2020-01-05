@@ -33,4 +33,7 @@
     <string name="beauty">美女：</string>
     <string name="local_video">本地视频：</string>
     <string name="pic_video">图片与视频：</string>
+    <string name="music">音乐：</string>
+    <string name="zoom_view">缩放控件：</string>
+    <string name="keep_alive_permission_setting">保活权限设置：</string>
 </resources>

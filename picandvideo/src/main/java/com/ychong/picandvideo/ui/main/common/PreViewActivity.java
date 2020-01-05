@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,8 +25,13 @@ import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.ychong.picandvideo.R;
 import com.ychong.picandvideo.utils.BaseContract;
+import com.ychong.picandvideo.utils.BigView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 预览视频  图片  文件
@@ -47,7 +53,7 @@ public class PreViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initLayout();
-        initView();
+         initView();
         initData();
         initListener();
     }

@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -14,9 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
+import com.ychong.baselib.keepalive.KeepALiveUtils;
 import com.ychong.baselib.utils.fastclick.SingleClick;
 import com.ychong.baselib.utils.http.FreeObserver;
 import com.ychong.kankan.ui.MainActivity;
@@ -30,6 +34,7 @@ import com.ychong.kankan.utils.ApiService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,8 +62,10 @@ public class LoginActivity extends BaseActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
+
+
     public static void startAct(Context context) {
-        Intent intent = new Intent(context,LoginActivity.class);
+        Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
 
@@ -69,7 +76,7 @@ public class LoginActivity extends BaseActivity {
         if (!isTaskRoot()) {
             Intent intent = getIntent();
             String action = intent.getAction();
-            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null &&action.equals(Intent.ACTION_MAIN)) {
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
                 onBackPressed();
                 return;
             }
@@ -165,25 +172,28 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
+
     private void initData() {
         //PermissionUtils.checkAndApplyfPermissionActivity(this, permission, 2000);
-        handler.postDelayed(runnable,500);
+        handler.postDelayed(runnable, 500);
         sp = getSharedPreferences("user", MODE_PRIVATE);
         accountEt.setText(sp.getString("account", ""));
         passwordEt.setText(sp.getString("password", ""));
+
 
     }
 
     private void initIcon() {
         //缩放
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(iconIv,"ScaleX",1f,0.8f,0.6f,0.4f,0.2f,0.1f,0.2f,0.4f,0.6f,0.8f,1f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(iconIv,"ScaleY",1f,0.8f,0.6f,0.4f,0.2f,0.1f,0.2f,0.4f,0.6f,0.8f,1f);
-         animatorSet = new AnimatorSet();
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(iconIv, "ScaleX", 1f, 0.8f, 0.6f, 0.4f, 0.2f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(iconIv, "ScaleY", 1f, 0.8f, 0.6f, 0.4f, 0.2f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f);
+        animatorSet = new AnimatorSet();
         animatorSet.setDuration(5000);
         animatorSet.play(scaleX);
         animatorSet.play(scaleY);
         animatorSet.start();
     }
+
     private void initView() {
         accountEt = (EditText) findViewById(R.id.account_et);
         passwordEt = (EditText) findViewById(R.id.password_et);
@@ -206,7 +216,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (animatorSet!=null){
+        if (animatorSet != null) {
             animatorSet.resume();
         }
     }
@@ -214,7 +224,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (animatorSet!=null){
+        if (animatorSet != null) {
             animatorSet.pause();
         }
     }
@@ -222,10 +232,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (animatorSet!=null){
+        if (animatorSet != null) {
             animatorSet.cancel();
-            animatorSet=null;
+            animatorSet = null;
         }
     }
-
 }

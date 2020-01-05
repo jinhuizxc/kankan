@@ -11,14 +11,17 @@ import androidx.annotation.Nullable;
 
 import com.ychong.kankan.R;
 import com.ychong.kankan.ui.ColumnSelectActivity;
+import com.ychong.kankan.ui.keepalive.KeepALiveActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.baselib.base.BaseActivity;
+import com.ychong.kankan.ui.music.MusicActivity;
 import com.ychong.kankan.ui.webbrowse.WebBrowseActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.baselib.utils.SPUtils;
 import com.ychong.baselib.widget.dialog.InputDialog;
 import com.ychong.picandvideo.PVMainActivity;
+import com.ychong.picandvideo.ui.main.zoom.ZoomViewActivity;
 
 /**
  * 更多界面
@@ -34,6 +37,9 @@ public class MoreActivity extends BaseActivity {
     private LinearLayout webBrowseLl;
     private LinearLayout columnSelectLayout;
     private LinearLayout pvLayout;
+    private LinearLayout musicLayout;
+    private LinearLayout zoomViewLayout;
+    private LinearLayout keepALiveLayout;
     private SPUtils mSPUtils;
 
     @Override
@@ -59,7 +65,12 @@ public class MoreActivity extends BaseActivity {
         aboutKankanLl.setOnClickListener(view -> aboutClick());
         webBrowseLl.setOnClickListener(v -> webBrowseClick());
         columnSelectLayout.setOnClickListener(view -> ColumnSelectActivity.startAct(this));
-        pvLayout.setOnClickListener(v -> PVMainActivity.startAct(this));
+        pvLayout.setOnClickListener(v -> {
+            PVMainActivity.startAct(this);
+        });
+        musicLayout.setOnClickListener(v -> MusicActivity.startAct(this));
+        zoomViewLayout.setOnClickListener(v -> ZoomViewActivity.startAct(this));
+        keepALiveLayout.setOnClickListener(v -> KeepALiveActivity.startAct(this));
 
     }
 
@@ -91,6 +102,9 @@ public class MoreActivity extends BaseActivity {
         webBrowseLl = (LinearLayout) findViewById(R.id.web_browse_ll);
         columnSelectLayout = (LinearLayout) findViewById(R.id.column_select_layout);
         pvLayout = (LinearLayout) findViewById(R.id.pv_layout);
+        musicLayout = (LinearLayout) findViewById(R.id.music_layout);
+        zoomViewLayout = (LinearLayout) findViewById(R.id.zoom_view_layout);
+        keepALiveLayout = (LinearLayout) findViewById(R.id.keep_alive_layout);
     }
 
     private void showAddressDialog(View view, String value) {
