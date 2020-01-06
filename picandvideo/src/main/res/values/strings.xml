@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PicAndVideo</string>
+    <string name="app_name" translatable="false">PicAndVideo</string>
     <string name="tab_text_1">图片</string>
     <string name="tab_text_2">视频</string>
 </resources>

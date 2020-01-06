@@ -15,7 +15,6 @@ import com.ychong.kankan.ui.keepalive.KeepALiveActivity;
 import com.ychong.kankan.ui.map.baidu.BaiDuMapActivity;
 import com.ychong.kankan.ui.androidserver.AndroidServerActivity;
 import com.ychong.baselib.base.BaseActivity;
-import com.ychong.kankan.ui.music.MusicActivity;
 import com.ychong.kankan.ui.webbrowse.WebBrowseActivity;
 import com.ychong.kankan.utils.BaseContract;
 import com.ychong.baselib.utils.SPUtils;
@@ -68,7 +67,7 @@ public class MoreActivity extends BaseActivity {
         pvLayout.setOnClickListener(v -> {
             PVMainActivity.startAct(this);
         });
-        musicLayout.setOnClickListener(v -> MusicActivity.startAct(this));
+        //musicLayout.setOnClickListener(v -> MusicMainActivity.Companion.startAct(this));
         zoomViewLayout.setOnClickListener(v -> ZoomViewActivity.startAct(this));
         keepALiveLayout.setOnClickListener(v -> KeepALiveActivity.startAct(this));
 

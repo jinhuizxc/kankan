@@ -1,2 +1,2 @@
-include ':app', ':swipebacklayout', ':xrecyclerview', ':picandvideo', ':baselib', ':mvvm-demo'
+include ':app', ':swipebacklayout', ':xrecyclerview', ':picandvideo', ':baselib', ':mvvm-demo', ':music'
 rootProject.name='Kankan'
